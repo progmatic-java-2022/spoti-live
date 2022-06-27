@@ -1,4 +1,4 @@
-package hu.progmatic.spotilive.zenekaradminfelulet;
+package hu.progmatic.spotilive.zenekar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

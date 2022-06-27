@@ -1,4 +1,4 @@
-package hu.progmatic.spotilive.zenekaradminfelulet;
+package hu.progmatic.spotilive.zenekar;
 
 import lombok.Builder;
 import lombok.Data;

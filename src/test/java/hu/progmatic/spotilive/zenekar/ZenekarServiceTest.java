@@ -1,4 +1,4 @@
-package hu.progmatic.spotilive.zenekaradminfelulet;
+package hu.progmatic.spotilive.zenekar;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
