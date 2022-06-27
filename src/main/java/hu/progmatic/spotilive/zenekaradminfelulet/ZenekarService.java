@@ -22,7 +22,7 @@ public class ZenekarService {
     }
 
     public void deleteById(Integer id) {
-    zenekarRepository.deleteById(id);
+        zenekarRepository.deleteById(id);
     }
 
     public List<ZenekarDto> findAllDto() {
@@ -44,5 +44,9 @@ public class ZenekarService {
         Zenekar zenekar = zenekarRepository.getReferenceById(dto.getId());
         zenekar.setNev(dto.getNev());
         return ZenekarDto.factory(zenekar);
+    }
+
+    public int count() {
+        return (int) zenekarRepository.count();
     }
 }

@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.zenekaradminfelulet;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -25,23 +26,17 @@ class ZenekarServiceTest {
 
         assertNotNull(mentettDto.getId());
         assertEquals("Teszt Zenekar", mentettDto.getNev());
+        zenekarService.deleteById(mentettDto.getId());
     }
 
-    @Test
-    void listaUres() {
-        List<ZenekarDto> lekertZenekarok = zenekarService.findAllDto();
-        assertThat(lekertZenekarok).hasSize(0);
-    }
-
-    @BeforeEach
-    void setUp() {
-        zenekarService.deleteAll();
-    }
     @Nested
     public class LetezoZenekarralTest {
-
-
         ZenekarDto testZenekar;
+
+        @AfterEach
+        void tearDown() {
+            zenekarService.deleteById(testZenekar.getId());
+        }
 
         @BeforeEach
         void setUp() {
@@ -51,18 +46,21 @@ class ZenekarServiceTest {
 
         @Test
         void deleteTest() {
+            ZenekarDto deletezenekar = zenekarService.createZenekar(ZenekarDto.builder().nev("Delete zenekar").build());
             List<ZenekarDto> lekertZenekarok = zenekarService.findAllDto();
             assertThat(lekertZenekarok)
-                    .hasSize(1);
-            zenekarService.deleteById(testZenekar.getId());
+                    .extracting(ZenekarDto::getNev)
+                    .contains("Delete zenekar");
+            zenekarService.deleteById(deletezenekar.getId());
             lekertZenekarok = zenekarService.findAllDto();
             assertThat(lekertZenekarok)
-                    .hasSize(0);
+                    .extracting(ZenekarDto::getNev)
+                    .doesNotContain("Delete zenekar");
         }
 
         @Test
         void getByNameTest() {
-            assertEquals(testZenekar.getNev(),zenekarService.getByName("Teszt Zenekar").getNev());
+            assertEquals(testZenekar.getNev(), zenekarService.getByName("Teszt Zenekar").getNev());
         }
 
         @Test
@@ -72,7 +70,7 @@ class ZenekarServiceTest {
                     .nev("Edited name")
                     .build();
             var modositott = zenekarService.editZenekarNev(dto);
-            assertEquals("Edited name",modositott.getNev());
+            assertEquals("Edited name", modositott.getNev());
 
         }
     }
