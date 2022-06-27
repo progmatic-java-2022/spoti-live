@@ -17,10 +17,6 @@ public class ZenekarService {
         return ZenekarDto.factory(zenekarRepository.save(zenekar));
     }
 
-    public void deleteAll() {
-        zenekarRepository.deleteAll();
-    }
-
     public void deleteById(Integer id) {
         zenekarRepository.deleteById(id);
     }
