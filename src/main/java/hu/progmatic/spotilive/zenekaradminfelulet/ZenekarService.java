@@ -15,4 +15,12 @@ public class ZenekarService {
         Zenekar zenekar = Zenekar.builder().nev(zenekarDto.getNev()).build();
         return ZenekarDto.factory(zenekarRepository.save(zenekar));
     }
+
+    public void deleteAll() {
+        zenekarRepository.deleteAll();
+    }
+
+    public void deleteById(Integer id) {
+
+    }
 }
