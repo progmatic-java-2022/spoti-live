@@ -35,4 +35,12 @@ public class ZenekarService {
     public ZenekarDto getByName(String nev) {
         return ZenekarDto.factory(zenekarRepository.getZenekarByNevContainingIgnoreCase(nev));
     }
+
+    public ZenekarDto getById(Integer id) {
+        return ZenekarDto.factory(zenekarRepository.getReferenceById(id));
+    }
+
+    public ZenekarDto editZenekar(ZenekarDto dto) {
+        return null;
+    }
 }

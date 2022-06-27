@@ -65,5 +65,17 @@ class ZenekarServiceTest {
         void getByNameTest() {
             assertEquals(testZenekar.getNev(),zenekarService.getByName("Teszt Zenekar").getNev());
         }
+
+        @Test
+        void editTest() {
+            ZenekarDto dto = ZenekarDto.builder()
+                    .id(testZenekar.getId())
+                    .nev("Edited name")
+                    .build();
+            zenekarService.editZenekar(dto);
+            var modositott = zenekarService.getById(testZenekar.getId());
+            assertEquals("Edited name",modositott.getNev());
+
+        }
     }
 }
