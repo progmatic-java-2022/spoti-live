@@ -22,10 +22,13 @@ public class ZenekarService {
     }
 
     public void deleteById(Integer id) {
-
+    zenekarRepository.deleteById(id);
     }
 
     public List<ZenekarDto> findAllDto() {
-        return null;
+        return zenekarRepository.findAll()
+                .stream()
+                .map(ZenekarDto::factory)
+                .toList();
     }
 }

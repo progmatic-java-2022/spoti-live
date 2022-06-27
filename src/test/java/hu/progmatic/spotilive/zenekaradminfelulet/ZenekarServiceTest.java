@@ -45,7 +45,6 @@ class ZenekarServiceTest {
         }
 
         @Test
-        @Disabled
         void deleteTest() {
             List<ZenekarDto> lekertZenekarok = zenekarService.findAllDto();
             assertThat(lekertZenekarok)
@@ -54,7 +53,6 @@ class ZenekarServiceTest {
             lekertZenekarok = zenekarService.findAllDto();
             assertThat(lekertZenekarok)
                     .hasSize(0);
-
 
         }
     }
