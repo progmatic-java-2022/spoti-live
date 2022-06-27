@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 class ZenekarServiceTest {
 
@@ -13,7 +14,11 @@ class ZenekarServiceTest {
     ZenekarService zenekarService;
 
     @Test
-    @Disabled
     void createZenekar() {
+        ZenekarDto zenekarDto = ZenekarDto.builder().nev("Teszt Zenekar").build();
+        ZenekarDto mentettDto = zenekarService.createZenekar(zenekarDto);
+
+        assertNotNull(mentettDto.getId());
+        assertEquals("Teszt Zenekar",mentettDto.getNev());
     }
 }
