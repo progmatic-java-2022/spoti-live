@@ -40,7 +40,9 @@ public class ZenekarService {
         return ZenekarDto.factory(zenekarRepository.getReferenceById(id));
     }
 
-    public ZenekarDto editZenekar(ZenekarDto dto) {
-        return null;
+    public ZenekarDto editZenekarNev(ZenekarDto dto) {
+        Zenekar zenekar = zenekarRepository.getReferenceById(dto.getId());
+        zenekar.setNev(dto.getNev());
+        return ZenekarDto.factory(zenekar);
     }
 }

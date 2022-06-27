@@ -1,7 +1,6 @@
 package hu.progmatic.spotilive.zenekaradminfelulet;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,8 +71,7 @@ class ZenekarServiceTest {
                     .id(testZenekar.getId())
                     .nev("Edited name")
                     .build();
-            zenekarService.editZenekar(dto);
-            var modositott = zenekarService.getById(testZenekar.getId());
+            var modositott = zenekarService.editZenekarNev(dto);
             assertEquals("Edited name",modositott.getNev());
 
         }
