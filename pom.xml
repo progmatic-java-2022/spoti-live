@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>hu.progmatic</groupId>
-	<artifactId>kozos-projekt</artifactId>
+	<artifactId>spoti-live</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spoti-live</name>
 	<description>Spoti live</description>
@@ -90,10 +90,6 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
     </dependencies>
 
 	<build>

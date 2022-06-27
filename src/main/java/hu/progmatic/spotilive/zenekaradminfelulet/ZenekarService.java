@@ -31,4 +31,8 @@ public class ZenekarService {
                 .map(ZenekarDto::factory)
                 .toList();
     }
+
+    public ZenekarDto getByName(String nev) {
+        return null;
+    }
 }
