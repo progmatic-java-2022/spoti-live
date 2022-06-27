@@ -28,4 +28,8 @@ public class ZenekarService {
     public List<ZenekarDto> findAllDto() {
         return null;
     }
+
+    public ZenekarDto getByName(String nev) {
+        return null;
+    }
 }
