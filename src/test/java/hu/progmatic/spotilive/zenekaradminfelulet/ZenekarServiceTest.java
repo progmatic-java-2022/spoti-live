@@ -45,6 +45,7 @@ class ZenekarServiceTest {
         }
 
         @Test
+        @Disabled
         void listaUres() {
             List<ZenekarDto> lekertZenekarok = zenekarService.findAllDto();
             assertThat(lekertZenekarok).hasSize(0);
@@ -63,6 +64,7 @@ class ZenekarServiceTest {
         }
 
         @Test
+        @Disabled
         void getByNameTest() {
             assertEquals(testZenekar.getNev(),zenekarService.getByName("Teszt Zenekar").getNev());
         }
