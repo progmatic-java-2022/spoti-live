@@ -73,5 +73,11 @@ class ZenekarServiceTest {
             assertEquals("Edited name", modositott.getNev());
 
         }
+
+        @Test
+        void getByIdTest() {
+
+            assertEquals(testZenekar.getId(), zenekarService.getById(testZenekar.getId()).getId());
+        }
     }
 }
