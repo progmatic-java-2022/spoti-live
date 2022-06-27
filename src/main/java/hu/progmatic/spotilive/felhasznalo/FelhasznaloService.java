@@ -2,6 +2,8 @@ package hu.progmatic.spotilive.felhasznalo;
 
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,7 @@ import java.util.Optional;
 @Service
 @Log
 @Transactional
-public class FelhasznaloService implements InitializingBean {
+public class FelhasznaloService {
 
   private final FelhasznaloRepository felhasznaloRepository;
   private final PasswordEncoder encoder;
@@ -52,8 +54,8 @@ public class FelhasznaloService implements InitializingBean {
     return felhasznaloRepository.findByNev(nev);
   }
 
-  @Override
-  public void afterPropertiesSet() {
+  @EventListener(ContextRefreshedEvent.class)
+  public void init() {
     if (felhasznaloRepository.count() == 0) {
       add(new UjFelhasznaloCommand("admin", "adminpass", UserType.ADMIN));
       add(new UjFelhasznaloCommand("user", "user", UserType.USER));
