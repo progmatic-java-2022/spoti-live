@@ -28,13 +28,19 @@ class ZenekarServiceTest {
         assertEquals("Teszt Zenekar", mentettDto.getNev());
     }
 
+    @Test
+    void listaUres() {
+        List<ZenekarDto> lekertZenekarok = zenekarService.findAllDto();
+        assertThat(lekertZenekarok).hasSize(0);
+    }
+
     @BeforeEach
     void setUp() {
         zenekarService.deleteAll();
     }
-
     @Nested
     public class LetezoZenekarralTest {
+
 
         ZenekarDto testZenekar;
 
@@ -42,13 +48,6 @@ class ZenekarServiceTest {
         void setUp() {
             testZenekar = ZenekarDto.builder().nev("Teszt Zenekar").build();
             testZenekar = zenekarService.createZenekar(testZenekar);
-        }
-
-        @Test
-        @Disabled
-        void listaUres() {
-            List<ZenekarDto> lekertZenekarok = zenekarService.findAllDto();
-            assertThat(lekertZenekarok).hasSize(0);
         }
 
         @Test
@@ -63,7 +62,6 @@ class ZenekarServiceTest {
         }
 
         @Test
-        @Disabled
         void getByNameTest() {
             assertEquals(testZenekar.getNev(),zenekarService.getByName("Teszt Zenekar").getNev());
         }

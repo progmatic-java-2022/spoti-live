@@ -33,6 +33,6 @@ public class ZenekarService {
     }
 
     public ZenekarDto getByName(String nev) {
-        return null;
+        return ZenekarDto.factory(zenekarRepository.getZenekarByNevContainingIgnoreCase(nev));
     }
 }
