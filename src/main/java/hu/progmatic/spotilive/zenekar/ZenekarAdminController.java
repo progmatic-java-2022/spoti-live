@@ -2,9 +2,14 @@ package hu.progmatic.spotilive.zenekar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -14,8 +19,28 @@ public class ZenekarAdminController {
     @Autowired
     private ZenekarService zenekarService;
 
-    @GetMapping("/admin")
+    @GetMapping("/zenekarKarbantartas")
     public String oldalbetoltes(){
+        return "zenekar_admin";
+    }
+
+//    @PostMapping("/admin/zenekar/delete/{id}")
+//    public String delete (
+//            @PathVariable("id") Integer id
+//    ){
+//        zenekarService.deleteById(id);
+//        return "zenekar_admin";
+//    }
+
+    @PostMapping("/zenekarKarbantartas/zenekar/")
+    public String addZenekar (Model model, @ModelAttribute("zenekarPeldany") @Valid ZenekarDto dto,
+                              BindingResult bindingResult){
+        if (!bindingResult.hasErrors()){
+           var ujZenekar = zenekarService.createZenekar(dto);
+           model.addAttribute("zenekarPeldany", ujZenekar);
+
+            return "redirect:/zenekarKarbantartas";
+        }
         return "zenekar_admin";
     }
 
@@ -24,6 +49,14 @@ public class ZenekarAdminController {
        return zenekarService.findAllDto();
     }
 
+    @ModelAttribute("zenekarPeldany")
+    public ZenekarDto zenekarDto(){
+        return ZenekarDto.builder().build();
+    }
 
+    @ModelAttribute("adminCim")
+    public String adminCim(){
+        return "Hello Admin";
+    }
 
 }
