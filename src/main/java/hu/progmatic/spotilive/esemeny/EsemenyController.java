@@ -59,7 +59,7 @@ public class EsemenyController {
     ) {
         if (!bindingResult.hasErrors()) {
             esemenyService.createEsemeny(ujEsemeny);
-            return "/esemeny";
+            return "redirect:/esemeny";
         }
         return "/esemenyek";
     }
