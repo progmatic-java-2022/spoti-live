@@ -1,4 +1,4 @@
-package hu.progmatic.spotilive.zenekaradminfelulet;
+package hu.progmatic.spotilive.zenekar;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -71,9 +71,14 @@ class ZenekarServiceTest {
                     .id(testZenekar.getId())
                     .nev("Edited name")
                     .build();
-            var modositott = zenekarService.editZenekarNev(dto);
+            var modositott = zenekarService.editZenekar(dto);
             assertEquals("Edited name", modositott.getNev());
 
+        }
+
+        @Test
+        void getByIdTest() {
+            assertEquals(testZenekar.getId(), zenekarService.getById(testZenekar.getId()).getId());
         }
     }
 }

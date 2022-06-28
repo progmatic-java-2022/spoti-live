@@ -1,7 +1,7 @@
 package hu.progmatic.spotilive.demo;
 
-import hu.progmatic.spotilive.zenekaradminfelulet.ZenekarDto;
-import hu.progmatic.spotilive.zenekaradminfelulet.ZenekarService;
+import hu.progmatic.spotilive.zenekar.ZenekarDto;
+import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;

@@ -1,4 +1,4 @@
-package hu.progmatic.spotilive.zenekaradminfelulet;
+package hu.progmatic.spotilive.zenekar;
 
 import hu.progmatic.spotilive.felhasznalo.UjFelhasznaloCommand;
 import hu.progmatic.spotilive.felhasznalo.UserType;
@@ -44,9 +44,11 @@ public class ZenekarService {
         return ZenekarDto.factory(zenekarRepository.getReferenceById(id));
     }
 
-    public ZenekarDto editZenekarNev(ZenekarDto dto) {
+    public ZenekarDto editZenekar(ZenekarDto dto) {
         Zenekar zenekar = zenekarRepository.getReferenceById(dto.getId());
         zenekar.setNev(dto.getNev());
+        zenekar.setEmail(dto.getEmail());
+        zenekar.setLeiras(dto.getLeiras());
         return ZenekarDto.factory(zenekar);
     }
 
