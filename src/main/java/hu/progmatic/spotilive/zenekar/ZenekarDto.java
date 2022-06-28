@@ -12,7 +12,6 @@ import javax.validation.constraints.NotBlank;
 public class ZenekarDto {
     private Integer id;
     @NotBlank(message = "Nem lehet üres")
-    @Column(unique = true)
     private String nev;
     @Email(message = "Helyes formátum kell")
     private String email;

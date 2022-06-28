@@ -20,8 +20,6 @@ public class Zenekar {
     @Column(unique = true)
     private String nev;
     @Column(unique = true)
-//    @NotBlank
-//    @Email(regexp = ".*@.*",message = "miiii")
     private String email;
     @Column(unique = true)
     private String telefonszam;
