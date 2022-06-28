@@ -19,6 +19,7 @@ public class Zenekar {
     @Column(unique = true)
     private String nev;
     @Column(unique = true)
+    @NotBlank
     private String email;
     @Column(unique = true)
     private String telefonszam;

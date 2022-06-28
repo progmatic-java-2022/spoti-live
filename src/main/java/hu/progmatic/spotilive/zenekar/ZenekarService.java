@@ -21,7 +21,7 @@ public class ZenekarService {
 
 
     public ZenekarDto createZenekar(ZenekarDto zenekarDto) {
-        Zenekar zenekar = Zenekar.builder().nev(zenekarDto.getNev()).build();
+        Zenekar zenekar = Zenekar.builder().nev(zenekarDto.getNev()).email(zenekarDto.getEmail()).build();
         return ZenekarDto.factory(zenekarRepository.save(zenekar));
     }
 
