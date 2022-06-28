@@ -50,20 +50,20 @@ public class EsemenyController {
         }
         return "/esemenyek";
     }
-//
-//    @PostMapping("/esemeny")
-//    public String termekHozzaadas(
-//            @ModelAttribute("formEsemenyPeldany") @Valid EsemenyDto ujEsemeny,
-//            BindingResult bindingResult,
-//            Model model
-//    ) {
-//        if (!bindingResult.hasErrors()) {
-//            esemenyService.createEsemeny(ujEsemeny);
-//            return "redirect:/esemeny";
-//        }
-//        return "esemeny";
-//    }
-//
+
+    @PostMapping("/esemeny")
+    public String termekHozzaadas(
+            @ModelAttribute("formEsemenyPeldany") @Valid EsemenyDto ujEsemeny,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        if (!bindingResult.hasErrors()) {
+            esemenyService.createEsemeny(ujEsemeny);
+            return "redirect:/esemeny";
+        }
+        return "/esemenyek";
+    }
+
     @ModelAttribute("esemenyekLista")
     public List<EsemenyDto> getEsemenyekLista() {
         return esemenyService.findAllEsemeny();

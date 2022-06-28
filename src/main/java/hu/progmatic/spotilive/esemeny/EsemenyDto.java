@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class EsemenyDto {
     private Integer id;
-    @NotEmpty
+    @NotEmpty(message = "Nem lehet üres")
     private String nev;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @NotNull(message = "Meg kell adni időpontot!")
