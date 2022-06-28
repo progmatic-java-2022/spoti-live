@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -21,7 +22,7 @@ public class Esemeny {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @NotBlank
+    @NotEmpty
     private String nev;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH-mm")
     @NotNull

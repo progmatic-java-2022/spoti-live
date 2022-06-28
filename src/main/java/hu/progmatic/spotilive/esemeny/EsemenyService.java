@@ -52,4 +52,5 @@ public class EsemenyService {
         modositando.setIdopont(modositott.getIdoPont());
 
     }
+
 }

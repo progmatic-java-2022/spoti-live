@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
@@ -13,10 +14,10 @@ import java.time.LocalDateTime;
 @Builder
 public class EsemenyDto {
     private Integer id;
-    @NotBlank
+    @NotEmpty
     private String nev;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    @NotNull
+    @NotNull(message = "Meg kell adni időpontot!")
     private LocalDateTime idoPont;
 
     public static EsemenyDto factory(Esemeny esemeny) {
