@@ -21,14 +21,14 @@ public class ZenekarAdminController {
     private ZenekarService zenekarService;
 
     @GetMapping("/zenekarKarbantartas")
-    public String oldalbetoltes(){
+    public String oldalbetoltes() {
         return "zenekar_admin";
     }
 
     @PostMapping("/zenekar/delete/{id}")
-    public String delete (
+    public String delete(
             @PathVariable("id") Integer id
-    ){
+    ) {
         zenekarService.deleteById(id);
         return "redirect:/zenekarKarbantartas";
     }
@@ -40,20 +40,20 @@ public class ZenekarAdminController {
     }
 
     @PostMapping("/zenekarKarbantartas/zenekar/")
-    public String addZenekar (Model model, @ModelAttribute("zenekarPeldany") @Valid ZenekarDto dto,
-                              BindingResult bindingResult){
+    public String addZenekar(Model model, @ModelAttribute("zenekarPeldany") @Valid ZenekarDto dto,
+                             BindingResult bindingResult) {
         model.addAttribute("ujZenekarError", null);
         if ((!dto.getTelefonszam()
                 .matches("(?<elotag>\\+36-?[\\d]{2})?" +
                         "(?<masikelotag>06-?[\\d]{2})?(?<elvalaszto1>[\\-\\/])?" +
                         "([\\d]{7})?(?<utotagkotojellel>[\\d]{3}-[\\d]{4})") && (!dto.getTelefonszam().equals(""))))
-            bindingResult.addError(new FieldError("zenekarPeldany", "telefonszam","Helyes formátum pl.: 0630-164-1922"));
+            bindingResult.addError(new FieldError("zenekarPeldany", "telefonszam", "Helyes formátum pl.: 0630-164-1922"));
 
         if (!bindingResult.hasErrors()) {
             try {
                 var ujZenekar = zenekarService.createZenekar(dto);
                 model.addAttribute("zenekarPeldany", ujZenekar);
-            }catch (AddZenekarExeption e){
+            } catch (AddZenekarExeption e) {
                 model.addAttribute("ujZenekarError", e.getMessage());
                 return "zenekar_admin";
             }
@@ -88,8 +88,9 @@ public class ZenekarAdminController {
     public String adminCim() {
         return "Hello Admin";
     }
+
     @ModelAttribute("ujZenekarError")
-    public String zenekarError(){
+    public String zenekarError() {
         return null;
     }
 }
