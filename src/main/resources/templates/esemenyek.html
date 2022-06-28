@@ -55,7 +55,7 @@
 <h3 th:if="${formEsemenyPeldany.id != null}">Termék szerkesztése</h3>
 
 <form
-        th:action="@{'/esemeny/{id}'(id=${formEsemenyPeldany})}"
+        th:action="@{'/esemeny/{id}'(id=${formEsemenyPeldany.getId()})}"
         method="post" th:object="${formEsemenyPeldany}" class="row">
     <div class="col">
         <label>

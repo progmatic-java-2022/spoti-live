@@ -26,7 +26,8 @@ public class EsemenyService {
     }
 
     public EsemenyDto getById(Integer id) {
-        return EsemenyDto.factory(esemenyRepository.getReferenceById(id));
+        Esemeny referenceById = esemenyRepository.getReferenceById(id);
+        return EsemenyDto.factory(referenceById);
     }
 
     public void deleteEsemeny(Integer id) {
