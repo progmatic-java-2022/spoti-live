@@ -61,6 +61,13 @@
     <form
             th:action="@{'/zenekarKarbantartas/zenekar/{id}'(id=${zenekarPeldany.getId()})}"
             method="post" th:object="${zenekarPeldany}" class="row">
+        <div class="form-row">
+            <div th:if="${ujZenekarError != null}"
+                 class="alert alert-danger"
+                 th:text="${ujZenekarError}">
+                Hibaüzenet
+            </div>
+            </div>
         <div class="col">
             <label>
                 <input type="text"
