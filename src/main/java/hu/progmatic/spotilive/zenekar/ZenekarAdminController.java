@@ -42,10 +42,10 @@ public class ZenekarAdminController {
     @PostMapping("/zenekarKarbantartas/zenekar/")
     public String addZenekar (Model model, @ModelAttribute("zenekarPeldany") @Valid ZenekarDto dto,
                               BindingResult bindingResult){
-        if (!dto.getTelefonszam()
+        if ((!dto.getTelefonszam()
                 .matches("(?<elotag>\\+36-?[\\d]{2})?" +
                         "(?<masikelotag>06-?[\\d]{2})?(?<elvalaszto1>[\\-\\/])?" +
-                        "([\\d]{7})?(?<utotagkotojellel>[\\d]{3}-[\\d]{4})"))
+                        "([\\d]{7})?(?<utotagkotojellel>[\\d]{3}-[\\d]{4})") && (!dto.getTelefonszam().equals(""))))
             bindingResult.addError(new FieldError("zenekarPeldany", "telefonszam","Helyes formátum pl.: 0630-164-1922"));
 
         if (!bindingResult.hasErrors()){
