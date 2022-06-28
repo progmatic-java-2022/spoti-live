@@ -18,11 +18,13 @@ public class DemoService {
 
     @EventListener(ContextRefreshedEvent.class)
     public void init() {
-    if(zenekarService.count() == 0){
-        zenekarService.createZenekar(ZenekarDto.builder()
-                .nev(DEMO_ZENEKAR)
-                .email("teszt@gmail.com")
-                .build());
-    }
+        if (zenekarService.count() == 0) {
+            zenekarService.createZenekar(ZenekarDto.builder()
+                    .nev(DEMO_ZENEKAR)
+                    .email("teszt@gmail.com")
+                    .telefonszam("0630-111-2222")
+                    .leiras("Demo leírás")
+                    .build());
+        }
     }
 }
