@@ -1,11 +1,9 @@
-package hu.progmatic.spotilive.zenekaradminfelulet;
+package hu.progmatic.spotilive.zenekar;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Getter
@@ -17,8 +15,14 @@ public class Zenekar {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @NotBlank
+    @Column(unique = true)
     private String nev;
+    @Column(unique = true)
+    @NotBlank
     private String email;
+    @Column(unique = true)
+    private String telefonszam;
     private String leiras;
 
 }
