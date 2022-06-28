@@ -20,9 +20,6 @@ public class EsemenyDto {
     private LocalDateTime idoPont;
 
     public static EsemenyDto factory(Esemeny esemeny) {
-        if (esemeny==null) {
-            return null;
-        }
         return EsemenyDto
                 .builder()
                 .id(esemeny.getId())

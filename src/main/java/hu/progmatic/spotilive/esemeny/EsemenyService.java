@@ -37,5 +37,19 @@ public class EsemenyService {
         return (int) esemenyRepository.count();
     }
 
+    public List<EsemenyDto> findAllEsemeny() {
+        return esemenyRepository.findAll().stream().map(EsemenyDto::factory).toList();
+    }
 
+
+    public void deleteAllEsemeny() {
+        esemenyRepository.deleteAll();
+    }
+
+    public void udpate(EsemenyDto modositott,Integer id) {
+        var modositando = esemenyRepository.getReferenceById(id);
+        modositando.setNev(modositott.getNev());
+        modositando.setIdopont(modositott.getIdoPont());
+
+    }
 }
