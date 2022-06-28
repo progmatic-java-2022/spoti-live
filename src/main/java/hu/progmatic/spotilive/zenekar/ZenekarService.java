@@ -16,7 +16,7 @@ public class ZenekarService {
 
     public static final String TEST_ZENEKAR = "Teszt zenekar 1";
     @Autowired
-    ZenekarRepository zenekarRepository;
+   private ZenekarRepository zenekarRepository;
 
 
 

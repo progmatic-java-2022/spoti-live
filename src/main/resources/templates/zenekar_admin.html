@@ -16,7 +16,7 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 
-<h1 th:text="${}">Hello</h1>
+<!--<h1 th:text="${}">Hello</h1>-->
 <ul>
     <table class="table table-success table-striped">
         <thead>
@@ -24,104 +24,104 @@
             <th scope="col">Id</th>
             <th scope="col">Nev</th>
             <th scope="col">Email</th>
-            <th scope="col"></th>
-            <th scope="col">Ár</th>
+            <th scope="col">Telefon</th>
+            <th scope="col">Leírás</th>
             <th scope="col"></th>
             <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="aru : ${aruk}">
-            <th th:text = "${aru.getId()}">0</th>
-            <td th:text = "${aru.getMegnevezes()}">Valamuáru</td>
-            <td th:text = "${aru.getGyarto()}">Gyártó</td>
-            <td th:text = "${aru.getGyartasiDatum()}">2020-01-01</td>
-            <td th:text = "${aru.getAr()}">10000</td>
+        <tr th:each="zenekar : ${zenekarLista}">
+            <th th:text = "${zenekar.id}">Id</th>
+            <td th:text = "${zenekar.nev}">Nev</td>
+            <td th:text = "${zenekar.email}">Email</td>
+            <td th:text = "${zenekar.telefonszam}">Telefon</td>
+            <td th:text = "${zenekar.leiras}">Leírás</td>
             <td>
-                <div class="row">
-                    <div class="col">
-                        <form th:action="@{'/minta/webshop/{id}'(id=${aru.getId()})}" method="get">
-                            <input type="submit" class="btn btn-primary" value="Módosít"/>
-                        </form>
-                    </div>
-                    <div class="col">
-                        <form th:action="@{'/minta/webshop/delete/{id}'(id=${aru.getId()})}" method="post">
-                            <input type="submit" class="btn btn-danger" value="Törlés"/>
-                        </form>
-                    </div>
-                </div>
+<!--                <div class="row">-->
+<!--                    <div class="col">-->
+<!--                        <form th:action="@{'/admin/zenekar/{id}'(id=${})}" method="get">-->
+<!--                            <input type="submit" class="btn btn-primary" value="Módosít"/>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                    <div class="col">-->
+<!--                        <form th:action="@{'/admin/zenekar/delete/{id}'(id=${})}" method="post">-->
+<!--                            <input type="submit" class="btn btn-danger" value="Törlés"/>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
             </td>
 
         </tr>
         </tbody>
     </table>
-    <hr>
-    <h3 th:if="${formAruPeldany.getId() == null}">Új áru létrehozása</h3>
-    <h3 th:if="${formAruPeldany.getId() != null}">Áru szerkesztése</h3>
-    <form
-            th:action="@{'/minta/webshop/{id}'(id=${formAruPeldany.getId()})}"
-            method="post" th:object="${formAruPeldany}" class="row">
-        <div class="col">
-            <label>
-                <input type="text"
-                       class="form-control"
-                       placeholder="Aru név"
-                       th:field="*{megnevezes}"
-                       th:classappend="${#fields.hasErrors('megnevezes')} ? 'is-invalid' : 'is-valid'"/>
-                <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('megnevezes')}"
-                     th:errors="*{megnevezes}">
-                    Hibaüzenet
-                </div>
-            </label>
-        </div>
-        <div class="col">
-            <label>
-                <input type="text"
-                       class="form-control"
-                       placeholder="Gyártó"
-                       th:field="*{gyarto}"
-                       th:classappend="${#fields.hasErrors('gyarto')} ? 'is-invalid' : 'is-valid'"/>
-                <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('gyarto')}"
-                     th:errors="*{gyarto}">
-                    Hibaüzenet
-                </div>
-            </label>
-        </div>
-        <div class="col">
-            <label>
-                <input type="date"
-                       class="form-control"
-                       placeholder="Gyártási dátuma"
-                       th:field="*{gyartasiDatum}"
-                       th:classappend="${#fields.hasErrors('gyartasiDatum')} ? 'is-invalid' : 'is-valid'"/>
-                <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('gyartasiDatum')}"
-                     th:errors="*{gyartasiDatum}">
-                    Hibaüzenet
-                </div>
-            </label>
-        </div>
-        <div class="col">
-            <label>
-                <input type="number"
-                       class="form-control"
-                       placeholder="Ár"
-                       th:field="*{ar}"
-                       th:classappend="${#fields.hasErrors('ar')} ? 'is-invalid' : 'is-valid'"/>
-                <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('ar')}"
-                     th:errors="*{ar}">
-                    Hibaüzenet
-                </div>
-            </label>
-        </div>
-        <div class="col">
-            <input th:if="${formAruPeldany.getId() == null}" class="btn btn-primary" type="submit" value="Hozzáad"/>
-            <input th:if="${formAruPeldany.getId() != null}" class="btn btn-primary" type="submit" value="Módosít"/>
-        </div>
-    </form>
+<!--    <hr>-->
+<!--    <h3 th:if="${formAruPeldany.getId() == null}">Új áru létrehozása</h3>-->
+<!--    <h3 th:if="${formAruPeldany.getId() != null}">Áru szerkesztése</h3>-->
+<!--    <form-->
+<!--            th:action="@{'/admin/zenekar/{id}'(id=${formAruPeldany.getId()})}"-->
+<!--            method="post" th:object="${formAruPeldany}" class="row">-->
+<!--        <div class="col">-->
+<!--            <label>-->
+<!--                <input type="text"-->
+<!--                       class="form-control"-->
+<!--                       placeholder="Aru név"-->
+<!--                       th:field="*{megnevezes}"-->
+<!--                       th:classappend="${#fields.hasErrors('megnevezes')} ? 'is-invalid' : 'is-valid'"/>-->
+<!--                <div class="invalid-feedback"-->
+<!--                     th:if="${#fields.hasErrors('megnevezes')}"-->
+<!--                     th:errors="*{megnevezes}">-->
+<!--                    Hibaüzenet-->
+<!--                </div>-->
+<!--            </label>-->
+<!--        </div>-->
+<!--        <div class="col">-->
+<!--            <label>-->
+<!--                <input type="text"-->
+<!--                       class="form-control"-->
+<!--                       placeholder="Email"-->
+<!--                       th:field="*{}"-->
+<!--                       th:classappend="${#fields.hasErrors('')} ? 'is-invalid' : 'is-valid'"/>-->
+<!--                <div class="invalid-feedback"-->
+<!--                     th:if="${#fields.hasErrors('')}"-->
+<!--                     th:errors="*{}">-->
+<!--                    Hibaüzenet-->
+<!--                </div>-->
+<!--            </label>-->
+<!--        </div>-->
+<!--        <div class="col">-->
+<!--            <label>-->
+<!--                <input type="date"-->
+<!--                       class="form-control"-->
+<!--                       placeholder="Telefonszám"-->
+<!--                       th:field="*{}"-->
+<!--                       th:classappend="${#fields.hasErrors('')} ? 'is-invalid' : 'is-valid'"/>-->
+<!--                <div class="invalid-feedback"-->
+<!--                     th:if="${#fields.hasErrors('')}"-->
+<!--                     th:errors="*{}">-->
+<!--                    Hibaüzenet-->
+<!--                </div>-->
+<!--            </label>-->
+<!--        </div>-->
+<!--        <div class="col">-->
+<!--            <label>-->
+<!--                <input type="number"-->
+<!--                       class="form-control"-->
+<!--                       placeholder="Leírás"-->
+<!--                       th:field="*{}"-->
+<!--                       th:classappend="${#fields.hasErrors('')} ? 'is-invalid' : 'is-valid'"/>-->
+<!--                <div class="invalid-feedback"-->
+<!--                     th:if="${#fields.hasErrors('')}"-->
+<!--                     th:errors="*{}">-->
+<!--                    Hibaüzenet-->
+<!--                </div>-->
+<!--            </label>-->
+<!--        </div>-->
+<!--        <div class="col">-->
+<!--            <input th:if="${formAruPeldany.getId() == null}" class="btn btn-primary" type="submit" value="Hozzáad"/>-->
+<!--            <input th:if="${formAruPeldany.getId() != null}" class="btn btn-primary" type="submit" value="Módosít"/>-->
+<!--        </div>-->
+<!--    </form>-->
 
 </ul>
 </body>
