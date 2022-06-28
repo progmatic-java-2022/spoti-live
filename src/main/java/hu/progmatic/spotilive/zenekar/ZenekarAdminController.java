@@ -24,7 +24,7 @@ public class ZenekarAdminController {
         return "zenekar_admin";
     }
 
-    @PostMapping("/admin/zenekar/delete/{id}")
+    @PostMapping("/zenekar/delete/{id}")
     public String delete (
             @PathVariable("id") Integer id
     ){
@@ -32,7 +32,7 @@ public class ZenekarAdminController {
         return "redirect:/zenekarKarbantartas";
     }
 
-    @GetMapping("/admin/zenekar/edit/{id}")
+    @GetMapping("/zenekar/edit/{id}")
     public String zenekarModositas(Model model, @PathVariable("id") Integer id) {
         model.addAttribute("zenekarPeldany", zenekarService.getById(id));
         return "zenekar_admin";

@@ -40,12 +40,12 @@
             <td>
                 <div class="row">
                     <div class="col">
-                        <form th:action="@{'/admin/zenekar/edit/{id}'(id=${zenekar.id})}" method="get">
+                        <form th:action="@{'/zenekar/edit/{id}'(id=${zenekar.id})}" method="get">
                             <input type="submit" class="btn btn-primary" value="Módosít"/>
                         </form>
                     </div>
                     <div class="col">
-                        <form th:action="@{'/admin/zenekar/delete/{id}'(id=${zenekar.id})}" method="post">
+                        <form th:action="@{'/zenekar/delete/{id}'(id=${zenekar.id})}" method="post">
                             <input type="submit" class="btn btn-danger" value="Törlés"/>
                         </form>
                     </div>
