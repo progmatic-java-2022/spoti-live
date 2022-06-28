@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Column;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -11,9 +12,10 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class ZenekarDto {
     private Integer id;
-    @NotBlank(message = "Nem lehet üres")
+    @NotBlank(message = "Mező kitöltése kötelező!")
     private String nev;
-    @Email(message = "Helyes formátum kell")
+    @NotBlank(message = "Mező kitöltése kötelező!")
+    @Email(message = "Létező email cím megadása kötelező!")
     private String email;
     private String telefonszam;
     private String leiras;

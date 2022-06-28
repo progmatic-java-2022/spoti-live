@@ -1,10 +1,6 @@
 package hu.progmatic.spotilive.zenekar;
 
-import hu.progmatic.spotilive.felhasznalo.UjFelhasznaloCommand;
-import hu.progmatic.spotilive.felhasznalo.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,6 +17,12 @@ public class ZenekarService {
 
 
     public ZenekarDto createZenekar(ZenekarDto zenekarDto) {
+        if(zenekarRepository.findByNev(zenekarDto.getNev()).isPresent()){
+            throw new AddZenekarExeption("Zenekar már létezik ilyen névvel");
+        }
+        if(zenekarRepository.findByEmail(zenekarDto.getEmail()).isPresent()){
+            throw new AddZenekarExeption("Zenekar már létezik ilyen email címmel");
+        }
         Zenekar zenekar = Zenekar.builder()
                 .nev(zenekarDto.getNev())
                 .email(zenekarDto.getEmail())
