@@ -67,7 +67,7 @@
                        class="form-control"
                        placeholder="Zenekar név"
                        th:field="*{nev}"
-                       th:classappend="${#fields.hasErrors('nev')} ? 'is-invalid' : 'is-valid'"/>
+                       th:classappend="${#fields.hasErrors('nev')} ? 'is-valid' : 'is-invalid'"/>
                 <div class="invalid-feedback"
                      th:if="${#fields.hasErrors('nev')}"
                      th:errors="*{nev}">
@@ -124,5 +124,26 @@
     </form>
 
 </ul>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
 </body>
 </html>
