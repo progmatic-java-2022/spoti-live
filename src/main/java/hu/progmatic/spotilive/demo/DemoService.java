@@ -19,7 +19,10 @@ public class DemoService {
     @EventListener(ContextRefreshedEvent.class)
     public void init() {
     if(zenekarService.count() == 0){
-        zenekarService.createZenekar(ZenekarDto.builder().nev(DEMO_ZENEKAR).build());
+        zenekarService.createZenekar(ZenekarDto.builder()
+                .nev(DEMO_ZENEKAR)
+                .email("teszt@gmail.com")
+                .build());
     }
     }
 }

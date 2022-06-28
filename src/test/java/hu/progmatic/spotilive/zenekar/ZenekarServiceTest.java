@@ -21,7 +21,7 @@ class ZenekarServiceTest {
 
     @Test
     void createZenekar() {
-        ZenekarDto zenekarDto = ZenekarDto.builder().nev("Teszt Zenekar").build();
+        ZenekarDto zenekarDto = ZenekarDto.builder().nev("Teszt Zenekar").email("teszt2@gmail.com").build();
         ZenekarDto mentettDto = zenekarService.createZenekar(zenekarDto);
 
         assertNotNull(mentettDto.getId());
@@ -40,13 +40,13 @@ class ZenekarServiceTest {
 
         @BeforeEach
         void setUp() {
-            testZenekar = ZenekarDto.builder().nev("Teszt Zenekar").build();
+            testZenekar = ZenekarDto.builder().nev("Teszt Zenekar").email("teszt3@gmail.com").build();
             testZenekar = zenekarService.createZenekar(testZenekar);
         }
 
         @Test
         void deleteTest() {
-            ZenekarDto deletezenekar = zenekarService.createZenekar(ZenekarDto.builder().nev("Delete zenekar").build());
+            ZenekarDto deletezenekar = zenekarService.createZenekar(ZenekarDto.builder().nev("Delete zenekar").email("teszt4@gmail.com").build());
             List<ZenekarDto> lekertZenekarok = zenekarService.findAllDto();
             assertThat(lekertZenekarok)
                     .extracting(ZenekarDto::getNev)
@@ -68,6 +68,7 @@ class ZenekarServiceTest {
             ZenekarDto dto = ZenekarDto.builder()
                     .id(testZenekar.getId())
                     .nev("Edited name")
+                    .email("teszt5@gmail.com")
                     .build();
             var modositott = zenekarService.editZenekar(dto);
             assertEquals("Edited name", modositott.getNev());
