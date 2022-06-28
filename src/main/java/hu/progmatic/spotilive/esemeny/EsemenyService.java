@@ -43,18 +43,10 @@ public class EsemenyService {
     }
 
 
-    public void deleteAllEsemeny() {
-        esemenyRepository.deleteAll();
-    }
-
     public void udpate(EsemenyDto modositott,Integer id) {
         var modositando = esemenyRepository.getReferenceById(id);
         modositando.setNev(modositott.getNev());
         modositando.setIdopont(modositott.getIdoPont());
 
-    }
-
-    public EsemenyDto getEsemenyByNev(String nev) {
-        return EsemenyDto.factory(esemenyRepository.findEsemenyByNevContainingIgnoreCase(nev));
     }
 }
