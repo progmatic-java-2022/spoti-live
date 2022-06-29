@@ -43,7 +43,7 @@ public class ZeneKarbantartasService {
         zene.setCim(dto.getCim());
         zene.setEloado(dto.getEloado());
         zene.setHosszMp(dto.getHosszMp());
-        zene.setTagek(dto.g());
+        //zene.setTagek(dto.g());
 
 
         return ZeneDto.factory(zene);
