@@ -18,10 +18,13 @@ public class ZenekarService {
 
     public ZenekarDto createZenekar(ZenekarDto zenekarDto) {
         if(zenekarRepository.findByNev(zenekarDto.getNev()).isPresent()){
-            throw new AddZenekarExeption("Zenekar már létezik ilyen névvel");
+            throw new AddZenekarExeption("Zenekar már létezik ilyen névvel!");
         }
         if(zenekarRepository.findByEmail(zenekarDto.getEmail()).isPresent()){
-            throw new AddZenekarExeption("Zenekar már létezik ilyen email címmel");
+            throw new AddZenekarExeption("Zenekar már létezik ilyen email címmel!");
+        }
+        if(zenekarDto.getTelefonszam() != null && zenekarRepository.findByTelefonszam(zenekarDto.getTelefonszam()).isPresent()){
+            throw new AddZenekarExeption("Zenekar már létezik ilyen telefonszámmal'");
         }
         Zenekar zenekar = Zenekar.builder()
                 .nev(zenekarDto.getNev())

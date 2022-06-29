@@ -8,4 +8,5 @@ public interface ZenekarRepository extends JpaRepository<Zenekar, Integer> {
     Zenekar getZenekarByNevContainingIgnoreCase(String nev);
     Optional<Zenekar> findByNev(String nev);
     Optional<Zenekar> findByEmail(String email);
+    Optional<Zenekar> findByTelefonszam(String telefonszam);
 }
