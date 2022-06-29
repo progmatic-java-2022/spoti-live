@@ -37,12 +37,12 @@
         <td>
             <div class="row">
                 <div class="col">
-                    <form th:action="@{'/esemeny/{id}'(id =${esemeny.id})}" method="get">
+                    <form th:if="${esemenyModositasJogVan}" th:action="@{'/esemeny/{id}'(id =${esemeny.id})}" method="get">
                         <input type="submit" class="btn btn-warning" value="Módosít">
                     </form>
                 </div>
                 <div class="col">
-                    <form th:action="@{'/esemeny/delete/{id}'(id =${esemeny.id})}" method="post">
+                    <form th:if="${adminModositasJogVan}" th:action="@{'/esemeny/delete/{id}'(id =${esemeny.id})}" method="post">
                         <input type="submit" class="btn btn-danger" value="Törlés">
                     </form>
                 </div>
@@ -51,8 +51,8 @@
     </tr>
     </tbody>
 </table>
-<h3 th:if="${formEsemenyPeldany.id == null}">Új termék hozzáadása</h3>
-<h3 th:if="${formEsemenyPeldany.id != null}">Termék szerkesztése</h3>
+<h3  th:if="${formEsemenyPeldany.id == null}">Új esemény hozzáadása</h3>
+<h3  th:if="${formEsemenyPeldany.id != null}">Esemény szerkesztése</h3>
 
 <form
         th:action="@{'/esemeny/{id}'(id=${formEsemenyPeldany.getId()})}"

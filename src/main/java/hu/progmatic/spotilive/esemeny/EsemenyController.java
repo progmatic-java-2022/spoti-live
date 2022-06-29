@@ -1,5 +1,7 @@
 package hu.progmatic.spotilive.esemeny;
 
+import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
+import hu.progmatic.spotilive.felhasznalo.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,8 @@ public class EsemenyController {
 
     @Autowired
     private EsemenyService esemenyService;
+    @Autowired
+    private FelhasznaloService felhasznaloService;
 
 
     @GetMapping("/esemeny")
@@ -73,6 +77,14 @@ public class EsemenyController {
     public EsemenyDto formEsemenyPeldany() {
         return EsemenyDto.builder().build();
     }
+
+    @ModelAttribute("esemenyModositasJogVan")
+    public boolean esemenyModositasJogVan(){
+        return felhasznaloService.hasRole(UserType.Roles.ESEMENY_KEZELES_ROLE);
+    }
+
+    @ModelAttribute("adminModositasJogVan")
+    public boolean adminModositasJogVan(){return felhasznaloService.hasRole(UserType.Roles.USER_WRITE_ROLE);}
 
 
 }
