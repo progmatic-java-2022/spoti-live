@@ -43,10 +43,12 @@ public class EsemenyService {
     }
 
 
-    public void udpate(EsemenyDto modositott,Integer id) {
+    public void udpate(EsemenyDto modositott, Integer id) {
         var modositando = esemenyRepository.getReferenceById(id);
         modositando.setNev(modositott.getNev());
         modositando.setIdopont(modositott.getIdoPont());
 
     }
+
+
 }

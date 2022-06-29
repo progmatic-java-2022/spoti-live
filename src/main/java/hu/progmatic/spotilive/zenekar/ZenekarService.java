@@ -1,8 +1,10 @@
 package hu.progmatic.spotilive.zenekar;
 
+import hu.progmatic.spotilive.felhasznalo.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
 import java.util.List;
 
