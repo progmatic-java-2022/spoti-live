@@ -27,4 +27,6 @@ public class Esemeny {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH-mm")
     @NotNull
     private LocalDateTime idopont;
+
+    //https://code-with-me.global.jetbrains.com/kmlrgWkpRYBQo8lo_VuXig#p=IU&fp=4516BCBA5B47F82A8A4F35BEF759225B2372E6077D28CC30A9EA61CC42D36205
 }
