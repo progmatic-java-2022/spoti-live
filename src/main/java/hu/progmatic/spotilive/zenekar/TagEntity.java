@@ -15,5 +15,5 @@ public class TagEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @ManyToOne(cascade = CascadeType.ALL)
-    private ZeneEntity zene;
+    private ZeneEntity zeneSzam;
 }
