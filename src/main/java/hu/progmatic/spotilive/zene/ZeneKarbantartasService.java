@@ -31,7 +31,7 @@ public class ZeneKarbantartasService {
     }
 
     public ZeneDto getBycim(String cim) {
-        return ZeneDto.factory(zeneRepository.getZeneByNevContainingIgnoreCase(cim));
+        return ZeneDto.factory(zeneRepository.getZeneByCimContainingIgnoreCase(cim));
     }
 
     public ZeneDto getById(Integer id) {
@@ -43,9 +43,20 @@ public class ZeneKarbantartasService {
         zene.setCim(dto.getCim());
         zene.setEloado(dto.getEloado());
         zene.setHosszMp(dto.getHosszMp());
-        //zene.setTagek(dto.g());
-
 
         return ZeneDto.factory(zene);
+    }
+
+    public int count() {
+        return (int) zeneRepository.count();
+    }
+
+    public void addTag(TagDto dto) {
+        var zene = zeneRepository.getReferenceById(dto.getZeneSzam().getId());
+        TagEntity tag = TagEntity.builder()
+                .tagNev(dto.getTagNev())
+                .zeneSzam(zene)
+                .build();
+        zene.getTagek().add(tag);
     }
 }
