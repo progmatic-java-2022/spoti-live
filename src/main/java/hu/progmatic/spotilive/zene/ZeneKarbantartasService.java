@@ -31,7 +31,7 @@ public class ZeneKarbantartasService {
     }
 
     public ZeneDto getBycim(String cim) {
-        return ZeneDto.factory(zeneRepository.getZeneByCimContainingIgnoreCase(cim));
+        return ZeneDto.factory(zeneRepository.getZeneByNevContainingIgnoreCase(cim));
     }
 
     public ZeneDto getById(Integer id) {

@@ -7,13 +7,13 @@ public enum UserType {
     ADMIN(
             Roles.USER_WRITE_ROLE,
             Roles.USER_READ_ROLE,
-            Roles.ESEMENY_KEZELES_ROLE
+            Roles.ESEMENY_KEZELES_ROLE,
+            Roles.ZENEKAR_KEZELES_ROLE
     ),
     USER(
             Roles.USER_READ_ROLE
-            ),
+    ),
     ZENEKAR(
-            Roles.USER_READ_ROLE,
             Roles.ESEMENY_KEZELES_ROLE,
             Roles.ZENEKAR_KEZELES_ROLE
     ),
@@ -36,7 +36,8 @@ public enum UserType {
     public static class Roles {
         public static final String USER_WRITE_ROLE = "USER_WRITE";
         public static final String USER_READ_ROLE = "USER_READ";
-        public static final String ESEMENY_KEZELES_ROLE = "ESEMENY_KEZELES_READ";
-        public static final String ZENEKAR_KEZELES_ROLE = "ZENEKAR_KEZELES_ROLE";
+        public static final String ESEMENY_KEZELES_ROLE = "ESEMENY_KEZELES";
+        public static final String ZENEKAR_KEZELES_ROLE = "ZENEKAR_KEZELES";
+
     }
 }
