@@ -2,10 +2,9 @@ package hu.progmatic.spotilive.zenekar;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,4 +19,7 @@ public class ZeneEntity {
     private String cim;
     private String eloado;
     private Integer hosszMp;
+    @Builder.Default
+    @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,mappedBy = "zene")
+    private List<TagEntity> tagek = new ArrayList<>();
 }
