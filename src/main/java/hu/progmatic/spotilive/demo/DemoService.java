@@ -5,6 +5,9 @@ import hu.progmatic.spotilive.esemeny.EsemenyDto;
 import hu.progmatic.spotilive.esemeny.EsemenyRepository;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.zene.ZeneEntity;
+import hu.progmatic.spotilive.zene.ZeneKarbantartasService;
+import hu.progmatic.spotilive.zene.ZeneRepository;
 import hu.progmatic.spotilive.zenekar.Zenekar;
 import hu.progmatic.spotilive.zenekar.ZenekarDto;
 import hu.progmatic.spotilive.zenekar.ZenekarRepository;
@@ -35,6 +38,12 @@ public class DemoService implements InitializingBean {
     private EsemenyRepository esemenyRepository;
     @Autowired
     private ZenekarRepository zenekarRepository;
+
+    @Autowired
+    private ZeneKarbantartasService zeneKarbantartasService;
+
+    @Autowired
+    private ZeneRepository zeneRepository;
 
 
 //    @EventListener(ContextRefreshedEvent.class)
@@ -71,5 +80,12 @@ public class DemoService implements InitializingBean {
                         .leiras("Demo leírás")
                         .build()
         );
+
+        zeneRepository.save(ZeneEntity.builder()
+                        .cim("Demo Zene Cím")
+                        .eloado("Demo Zene előadó")
+
+                .build());
+
     }
 }
