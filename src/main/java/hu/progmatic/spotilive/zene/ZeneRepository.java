@@ -1,6 +1,7 @@
-package hu.progmatic.spotilive.zenekar;
+package hu.progmatic.spotilive.zene;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ZeneRepository extends JpaRepository<ZeneEntity, Integer> {
+    ZeneEntity getZeneByNevContainingIgnoreCase(String cim);
 }

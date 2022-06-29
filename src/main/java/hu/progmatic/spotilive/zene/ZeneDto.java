@@ -1,17 +1,15 @@
-package hu.progmatic.spotilive.zenekar;
+package hu.progmatic.spotilive.zene;
 
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
-
 @Builder
 @Data
 public class ZeneDto {
-    Integer id;
-    String cim;
-    String eloado;
-    Integer hosszMp;
+    private Integer id;
+    private String cim;
+    private String eloado;
+    private Integer hosszMp;
 
     public static ZeneDto factory(ZeneEntity zene) {
         return ZeneDto.builder().cim(zene.getCim()).id(zene.getId()).build();

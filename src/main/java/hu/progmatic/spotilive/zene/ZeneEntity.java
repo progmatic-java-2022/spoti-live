@@ -1,4 +1,4 @@
-package hu.progmatic.spotilive.zenekar;
+package hu.progmatic.spotilive.zene;
 
 import lombok.*;
 

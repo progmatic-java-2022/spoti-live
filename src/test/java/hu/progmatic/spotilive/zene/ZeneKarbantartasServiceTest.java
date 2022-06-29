@@ -1,11 +1,13 @@
-package hu.progmatic.spotilive.zenekar;
+package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.zene.ZeneDto;
+import hu.progmatic.spotilive.zene.ZeneKarbantartasService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 class ZeneKarbantartasServiceTest {
 
@@ -19,4 +21,6 @@ class ZeneKarbantartasServiceTest {
 
     assertThat(mentettZene).extracting(ZeneDto::getId).isNotNull();
     }
+
+
 }
