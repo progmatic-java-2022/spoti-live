@@ -2,6 +2,8 @@ package hu.progmatic.spotilive.demo;
 
 import hu.progmatic.spotilive.esemeny.EsemenyDto;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
+import hu.progmatic.spotilive.zene.ZeneDto;
+import hu.progmatic.spotilive.zene.ZeneKarbantartasService;
 import hu.progmatic.spotilive.zenekar.ZenekarDto;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,13 @@ import java.time.LocalDateTime;
 public class DemoService {
     public static final String DEMO_ZENEKAR = "Demo zenekar";
     public static final String DEMO_ESEMENY = "Demo esemény";
+    public static final String DEMO_ZENE = "Demo zene";
     @Autowired
     ZenekarService zenekarService;
     @Autowired
     private EsemenyService esemenyService;
+    @Autowired
+    private ZeneKarbantartasService zeneKarbantartasService;
 
 
     @EventListener(ContextRefreshedEvent.class)
@@ -33,10 +38,17 @@ public class DemoService {
                     .leiras("Demo leírás")
                     .build());
         }
-        if (esemenyService.countAllEsemeny()==0){
+        if (esemenyService.countAllEsemeny() == 0) {
             esemenyService.createEsemeny(EsemenyDto.builder()
-                            .nev(DEMO_ESEMENY)
-                            .idoPont(LocalDateTime.parse("2000-02-02T10:10"))
+                    .nev(DEMO_ESEMENY)
+                    .idoPont(LocalDateTime.parse("2000-02-02T10:10"))
+                    .build());
+        }
+
+        if (zeneKarbantartasService.count() == 0) {
+            zeneKarbantartasService.createZene(ZeneDto.builder()
+                    .cim("Demo Zene cím")
+                    .eloado("Demo Zene előadó")
                     .build());
         }
 
