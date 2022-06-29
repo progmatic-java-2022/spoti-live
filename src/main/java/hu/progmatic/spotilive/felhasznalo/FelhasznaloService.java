@@ -58,6 +58,7 @@ public class FelhasznaloService {
   public void init() {
     if (felhasznaloRepository.count() == 0) {
       add(new UjFelhasznaloCommand("admin", "adminpass", UserType.ADMIN));
+      add(new UjFelhasznaloCommand("zenekar", "zenekar", UserType.ZENEKAR));
       add(new UjFelhasznaloCommand("user", "user", UserType.USER));
       add(new UjFelhasznaloCommand("guest", "guest", UserType.GUEST));
     }
