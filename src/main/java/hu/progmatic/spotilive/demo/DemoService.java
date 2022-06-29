@@ -6,7 +6,6 @@ import hu.progmatic.spotilive.esemeny.EsemenyRepository;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zene.ZeneEntity;
-import hu.progmatic.spotilive.zene.ZeneKarbantartasService;
 import hu.progmatic.spotilive.zene.ZeneRepository;
 import hu.progmatic.spotilive.zenekar.Zenekar;
 import hu.progmatic.spotilive.zenekar.ZenekarDto;
@@ -40,9 +39,6 @@ public class DemoService implements InitializingBean {
     private ZenekarRepository zenekarRepository;
 
     @Autowired
-    private ZeneKarbantartasService zeneKarbantartasService;
-
-    @Autowired
     private ZeneRepository zeneRepository;
 
 
@@ -63,6 +59,7 @@ public class DemoService implements InitializingBean {
 //                    .build());
 //        }
 //    }
+    //https://code-with-me.global.jetbrains.com/kmlrgWkpRYBQo8lo_VuXig#p=IU&fp=4516BCBA5B47F82A8A4F35BEF759225B2372E6077D28CC30A9EA61CC42D36205
 
     @Override
     public void afterPropertiesSet() throws Exception {
