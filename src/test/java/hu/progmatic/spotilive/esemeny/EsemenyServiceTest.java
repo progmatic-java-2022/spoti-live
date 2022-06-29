@@ -1,20 +1,23 @@
 package hu.progmatic.spotilive.esemeny;
 
+import hu.progmatic.spotilive.felhasznalo.UserType;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@WithMockUser(roles = UserType.Roles.ESEMENY_KEZELES_ROLE)
 class EsemenyServiceTest {
-
     @Autowired
     private EsemenyService esemenyService;
+
 
     @Test
     void esemenyLetrehozasaTest() {
@@ -96,7 +99,6 @@ class EsemenyServiceTest {
                 .nev("Tódor Születésnapja")
                 .idoPont(LocalDateTime.parse("2022-05-27T15:30"))
                 .build());
-
 
 
         assertEquals("Tódor Születésnapja", esemeny1.getNev());
