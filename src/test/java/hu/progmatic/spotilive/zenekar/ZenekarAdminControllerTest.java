@@ -70,4 +70,5 @@ class ZenekarAdminControllerTest {
                 .expectContentNotContainsString(szoveg);
     }
 
+
 }
