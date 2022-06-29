@@ -12,13 +12,13 @@ public class TagDto {
 
     private Integer id;
     private String tagNev;
-    private ZeneDto zeneSzam;
+//    private ZeneDto zeneSzam;
+    private Integer zeneId;
 
     public static TagDto factory(TagEntity tag) {
         return TagDto.builder()
                 .id(tag.getId())
                 .tagNev(tag.getTagNev())
-                .zeneSzam(ZeneDto.factory(tag.getZeneSzam()))
                 .build();
     }
 }
