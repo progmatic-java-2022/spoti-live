@@ -67,8 +67,6 @@ public class ZenekarAdminController {
                               BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             zenekarService.editZenekar(dto);
-
-
             return "redirect:/zenekarKarbantartas";
         }
         return "zenekar_admin";
