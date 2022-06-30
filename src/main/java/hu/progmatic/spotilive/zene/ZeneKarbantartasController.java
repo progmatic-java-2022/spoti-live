@@ -1,6 +1,5 @@
 package hu.progmatic.spotilive.zene;
 
-import hu.progmatic.spotilive.zenekar.ZenekarDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,7 +62,7 @@ public class ZeneKarbantartasController {
             Model model,
             @PathVariable Integer id
     ) {
-        model.addAttribute("zenePeldany", zeneKarbantartasService.getById(id));
+        model.addAttribute("zenePeldany", zeneKarbantartasService.getZeneDtoById(id));
         return "/zenekarbantartas";
     }
 

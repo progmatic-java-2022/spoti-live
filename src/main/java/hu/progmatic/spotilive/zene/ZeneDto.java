@@ -12,25 +12,25 @@ public class ZeneDto {
     private String cim;
     private String eloado;
     private Integer hosszMp;
-    private List<TagDto> tagDtoList;
+    private List<String> tagStringList;
 
-    //hangnem enum (mol, dur)
-    // tempo term enum (adagio, andante, lento stb.)
-    //eraenum
-    //mufajenum
-    //taglist
 
     public static ZeneDto factory(ZeneEntity zene) {
         return ZeneDto.builder()
                 .cim(zene.getCim())
                 .id(zene.getId())
                 .eloado(zene.getEloado())
-                .tagDtoList(getTagList(zene.getTagek()))
+                .tagStringList(getTagStringList(zene.getTagToZeneEntityList()))
                 .build();
     }
 
-    private static List<TagDto> getTagList(List<TagEntity> tagek) {
-        return tagek.stream().map(TagDto::factory).toList();
+    private static List<String> getTagStringList(List<TagToZeneEntity> tagToZeneEntityList) {
+        return tagToZeneEntityList
+                .stream()
+                .map(TagToZeneEntity::getTag)
+                .map(TagEntity::getTagNev)
+                .toList();
     }
+
 
 }

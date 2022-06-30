@@ -20,6 +20,7 @@ public class ZeneEntity {
     private String eloado;
     private Integer hosszMp;
     @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "zeneSzam")
-    private List<TagEntity> tagek = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "zene")
+    private List<TagToZeneEntity> tagToZeneEntityList = new ArrayList<>();
+
 }

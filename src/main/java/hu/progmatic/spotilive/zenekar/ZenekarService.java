@@ -14,18 +14,16 @@ public class ZenekarService {
 
     public static final String TEST_ZENEKAR = "Teszt zenekar 1";
     @Autowired
-   private ZenekarRepository zenekarRepository;
-
-
+    private ZenekarRepository zenekarRepository;
 
     public ZenekarDto createZenekar(ZenekarDto zenekarDto) {
-        if(zenekarRepository.findByNev(zenekarDto.getNev()).isPresent()){
+        if (zenekarRepository.findByNev(zenekarDto.getNev()).isPresent()) {
             throw new AddZenekarExeption("Zenekar már létezik ilyen névvel!");
         }
-        if(zenekarRepository.findByEmail(zenekarDto.getEmail()).isPresent()){
+        if (zenekarRepository.findByEmail(zenekarDto.getEmail()).isPresent()) {
             throw new AddZenekarExeption("Zenekar már létezik ilyen email címmel!");
         }
-        if(zenekarDto.getTelefonszam() != null && zenekarRepository.findByTelefonszam(zenekarDto.getTelefonszam()).isPresent()){
+        if (zenekarDto.getTelefonszam() != null && zenekarRepository.findByTelefonszam(zenekarDto.getTelefonszam()).isPresent()) {
             throw new AddZenekarExeption("Zenekar már létezik ilyen telefonszámmal'");
         }
         Zenekar zenekar = Zenekar.builder()

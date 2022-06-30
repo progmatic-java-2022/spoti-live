@@ -1,7 +1,5 @@
 package hu.progmatic.spotilive.zene;
 
-import hu.progmatic.spotilive.zenekar.Zenekar;
-import hu.progmatic.spotilive.zenekar.ZenekarDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +38,7 @@ public class ZeneKarbantartasService {
         return ZeneDto.factory(zeneRepository.getZeneByCimContainingIgnoreCase(cim));
     }
 
-    public ZeneDto getById(Integer id) {
+    public ZeneDto getZeneDtoById(Integer id) {
         return ZeneDto.factory(zeneRepository.getReferenceById(id));
     }
 
@@ -57,31 +55,49 @@ public class ZeneKarbantartasService {
         return (int) zeneRepository.count();
     }
 
-    public void addTag(TagDto dto) {
-        ZeneEntity zene = zeneRepository.getReferenceById(dto.getZeneId());
-        var tag = tagRepository.save(
-                TagEntity.builder()
-                .tagNev(dto.getTagNev())
-                .zeneSzam(zene)
-                .build());
-        zene.getTagek().add(tag);
+    public TagDto createTag(TagDto dto) {
+       TagEntity tagEntity = TagEntity.builder().tagNev(dto.getTagNev()).build();
+       return TagDto.factory(tagRepository.save(tagEntity));
+    }
+    public TagDto getTagById(Integer id){
+        return TagDto.factory(tagRepository.getReferenceById(id));
     }
 
-    public void deleteTagById(Integer tagId) {
-        TagEntity tagEntity = tagRepository.getReferenceById(tagId);
-        ZeneEntity zeneEntity = tagEntity.getZeneSzam();
-        zeneEntity.getTagek().remove(tagEntity);
-        tagEntity.setZeneSzam(null);
+    public void addTag(Integer zeneId, Integer tagId) {
+    ZeneEntity zene = zeneRepository.getReferenceById(zeneId);
+    TagEntity tag = tagRepository.getReferenceById(tagId);
+    TagToZeneEntity tagToZeneEntity = TagToZeneEntity
+            .builder()
+            .tag(tag)
+            .zene(zene)
+            .build();
+    zene.getTagToZeneEntityList().add(tagToZeneEntity);
+    tag.getTagToZeneEntityList().add(tagToZeneEntity);
     }
 
-    public void editTagById(TagEditCommand command) {
-        TagEntity tagEntity = tagRepository.getReferenceById(command.getTagId());
-        tagEntity.setTagNev(command.getTagNev());
-    }
-
-    public List<TagDto> listAllTagByZeneId(Integer id) {
+//    public void deleteTagById(Integer tagId) {
+//        TagEntity tagEntity = tagRepository.getReferenceById(tagId);
+//        ZeneEntity zeneEntity = tagEntity.getZeneSzam();
+//        zeneEntity.getTagek().remove(tagEntity);
+//        tagEntity.setZeneSzam(null);
+//    }
+//
+//    public void editTagById(TagEditCommand command) {
+//        TagEntity tagEntity = tagRepository.getReferenceById(command.getTagId());
+//        tagEntity.setTagNev(command.getTagNev());
+//    }
+//
+    public List<String> listAllTagStringByZeneId(Integer id) {
         ZeneEntity zene = zeneRepository.getReferenceById(id);
+        return ZeneDto.factory(zene).getTagStringList();
+    }
 
-        return zene.getTagek().stream().map(TagDto::factory).toList();
+    public List<TagDto> listAllTagDtoByZeneId(Integer id) {
+        ZeneEntity zene = zeneRepository.getReferenceById(id);
+        List<TagEntity> tagek = zene.getTagToZeneEntityList()
+                .stream()
+                .map(TagToZeneEntity::getTag)
+                .toList();
+        return tagek.stream().map(TagDto::factory).toList();
     }
 }
