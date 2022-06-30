@@ -37,7 +37,7 @@
         <td>
             <div class="row">
                 <div class="col">
-                    <form th:if="${esemenyModositasJogVan || adminModositasJogVan}" th:action="@{'/esemeny/{id}'(id =${esemeny.id})}" method="get">
+                    <form th:if="${esemenyModositasJogVan}" th:action="@{'/esemeny/{id}'(id =${esemeny.id})}" method="get">
                         <input type="submit" class="btn btn-warning" value="Módosít">
                     </form>
                 </div>
@@ -51,10 +51,11 @@
     </tr>
     </tbody>
 </table>
-<h3  th:if="${formEsemenyPeldany.id == null}">Új esemény hozzáadása</h3>
+<h3  th:if="(${formEsemenyPeldany.id == null}) and (${esemenyModositasJogVan || adminModositasJogVan}) "
+     >Új esemény hozzáadása</h3>
 <h3  th:if="${formEsemenyPeldany.id != null}">Esemény szerkesztése</h3>
 
-<form
+<form th:if="${esemenyModositasJogVan or adminModositasJogVan}"
         th:action="@{'/esemeny/{id}'(id=${formEsemenyPeldany.getId()})}"
         method="post" th:object="${formEsemenyPeldany}" class="row">
     <div class="col">
