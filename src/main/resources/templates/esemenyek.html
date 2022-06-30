@@ -37,7 +37,7 @@
         <td>
             <div class="row">
                 <div class="col">
-                    <form th:if="${esemenyModositasJogVan}" th:action="@{'/esemeny/{id}'(id =${esemeny.id})}" method="get">
+                    <form th:if="${esemenyModositasJogVan || adminModositasJogVan}" th:action="@{'/esemeny/{id}'(id =${esemeny.id})}" method="get">
                         <input type="submit" class="btn btn-warning" value="Módosít">
                     </form>
                 </div>

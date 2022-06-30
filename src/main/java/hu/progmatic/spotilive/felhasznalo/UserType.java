@@ -18,6 +18,7 @@ public enum UserType {
             Roles.ZENEKAR_KEZELES_ROLE
     ),
     GUEST();
+
     private final String[] roles;
 
 
@@ -40,4 +41,6 @@ public enum UserType {
         public static final String ZENEKAR_KEZELES_ROLE = "ZENEKAR_KEZELES";
 
     }
+
+
 }

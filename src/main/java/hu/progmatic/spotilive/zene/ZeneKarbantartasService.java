@@ -14,6 +14,9 @@ public class ZeneKarbantartasService {
     @Autowired
     ZeneRepository zeneRepository;
 
+    @Autowired
+    TagRepository tagRepository;
+
     public ZeneDto createZene(ZeneDto zeneDto) {
         ZeneEntity zene = ZeneEntity.builder().cim(zeneDto.getCim()).build();
         return ZeneDto.factory( zeneRepository.save(zene));
@@ -52,11 +55,30 @@ public class ZeneKarbantartasService {
     }
 
     public void addTag(TagDto dto) {
-        var zene = zeneRepository.getReferenceById(dto.getZeneSzam().getId());
-        TagEntity tag = TagEntity.builder()
+        ZeneEntity zene = zeneRepository.getReferenceById(dto.getZeneId());
+        var tag = tagRepository.save(
+                TagEntity.builder()
                 .tagNev(dto.getTagNev())
                 .zeneSzam(zene)
-                .build();
+                .build());
         zene.getTagek().add(tag);
+    }
+
+    public void deleteTagById(Integer tagId) {
+        TagEntity tagEntity = tagRepository.getReferenceById(tagId);
+        ZeneEntity zeneEntity = tagEntity.getZeneSzam();
+        zeneEntity.getTagek().remove(tagEntity);
+        tagEntity.setZeneSzam(null);
+    }
+
+    public void editTagById(TagEditCommand command) {
+        TagEntity tagEntity = tagRepository.getReferenceById(command.getTagId());
+        tagEntity.setTagNev(command.getTagNev());
+    }
+
+    public List<TagDto> listAllTagByZeneId(Integer id) {
+        ZeneEntity zene = zeneRepository.getReferenceById(id);
+
+        return zene.getTagek().stream().map(TagDto::factory).toList();
     }
 }
