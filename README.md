@@ -14,19 +14,18 @@ Igen tudnak
 @Service annotácio
 
 CONTROLLER RÉTEG:
-Ez köti össze a szervizt a html-el, getMappinges végpontokat tudunk létrehozni
+Ez köti össze a szervizt a html-el, get/postMappinges végpontokat tudunk létrehozni
 Controller csak egy felületet irányit, nem tudnak még egy controllert hivni.
 
 REPOSITORY:
 Adatbázis kezelésére van, a szervizben a repository függvényeit tudjuk meghivni,
-uj müveleteket tudunk végezni. Repository entitásokkkal tud visszatérni.
+uj müveleteket tudunk végezni. Repository entitásokkkal/boolean/primitív/string tud visszatérni.
 
 MI AZ A @TRANSACTIONAL
-Az adatbázis nem tudjuk hogy menti el adolgokat, csak abban lehetünk biztosak hogy minden
-modositas mentődik.
+Ezzel annotált osztályok/függvények tranzakcióban futnak.
 
 OSZTÁLYRA RÁTESZÜK A TRANSACTIONAL MIKOR FUT TRANZAKCIOBA?
-Ha meghivjuk egy függvényét.
+Ha meghivjuk egy függvényét egy külső osztályból.
 @Transactionalt lehet függvényre is tenni.
 
 TRANZAKCIO KÖZBEN MIKRO MENT A JPA?
@@ -41,19 +40,19 @@ Tranzakcion kivül használjuk.
 
 MI AZ A COMMAND:
 Command az egy Dto!
-UTasitást hajtunk végre vele
+Valamilyen művelet elvégzéséhez szűkséges értékekt tárolunk benne
 
 ROLLESALLOWED ANNOTÁCIO?:
 Jogosultság kezelés.
 
 GET ÉS POSTMAPPING ANNOTÁCIO:
 
-Postmappingel tudunk modositani.
-GetMappingel cask lekérni tudunk adatot. @Getmmaping (/"Elérési utvonal")
+Postmappingel szabad modositani.
+GetMappingel csak lekérdezni szabad. @Getmmaping (/"Elérési utvonal")
 lehet modositani benne, de TILOS !!
 
 
-MI AZ "INITIALIZINGBEAN{}"
+MI AZ "INITIALIZINGBEAN" interface
 Kezdőérték adásához használjuk.
 
 
