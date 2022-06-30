@@ -72,7 +72,7 @@
             <label>
                 <input type="text"
                        class="form-control"
-                       placeholder="Zenekar név"
+                       placeholder="Cím"
                        th:field="*{cim}"
                        th:classappend="${#fields.hasErrors('cim')} ? 'is-invalid' : 'is-valid'"/>
                 <div class="invalid-feedback"
@@ -86,7 +86,7 @@
             <label>
                 <input type="text"
                        class="form-control"
-                       placeholder="Email"
+                       placeholder="Előadó"
                        th:field="*{eloado}"
                        th:classappend="${#fields.hasErrors('eloado')} ? 'is-invalid' : 'is-valid'"/>
                 <div class="invalid-feedback"
@@ -98,9 +98,9 @@
         </div>
         <div class="col">
             <label>
-                <input type="text"
+                <input type="number"
                        class="form-control"
-                       placeholder="Telefonszám"
+                       placeholder="Hossz"
                        th:field="*{hosszMp}"
                        th:classappend="${#fields.hasErrors('hosszMp')} ? 'is-invalid' : 'is-valid'"/>
                 <div class="invalid-feedback"
