@@ -23,7 +23,7 @@ public class ZeneKarbantartasService {
         return ZeneDto.factory( zeneRepository.save(zene));
     }
 
-    public void deleteById(Integer id) {
+    public void deleteZeneById(Integer id) {
         zeneRepository.deleteById(id);
     }
 
@@ -75,29 +75,46 @@ public class ZeneKarbantartasService {
     tag.getTagToZeneEntityList().add(tagToZeneEntity);
     }
 
-//    public void deleteTagById(Integer tagId) {
-//        TagEntity tagEntity = tagRepository.getReferenceById(tagId);
-//        ZeneEntity zeneEntity = tagEntity.getZeneSzam();
-//        zeneEntity.getTagek().remove(tagEntity);
-//        tagEntity.setZeneSzam(null);
-//    }
-//
-//    public void editTagById(TagEditCommand command) {
-//        TagEntity tagEntity = tagRepository.getReferenceById(command.getTagId());
-//        tagEntity.setTagNev(command.getTagNev());
-//    }
-//
+
+    public void editTagById(TagEditCommand command) {
+        TagEntity tagEntity = tagRepository.getReferenceById(command.getTagId());
+        tagEntity.setTagNev(command.getTagNev());
+    }
+
     public List<String> listAllTagStringByZeneId(Integer id) {
         ZeneEntity zene = zeneRepository.getReferenceById(id);
         return ZeneDto.factory(zene).getTagStringList();
     }
 
-    public List<TagDto> listAllTagDtoByZeneId(Integer id) {
-        ZeneEntity zene = zeneRepository.getReferenceById(id);
+    public List<TagDto> listAllTagDtoByZeneId(Integer zeneId) {
+        ZeneEntity zene = zeneRepository.getReferenceById(zeneId);
         List<TagEntity> tagek = zene.getTagToZeneEntityList()
                 .stream()
                 .map(TagToZeneEntity::getTag)
                 .toList();
         return tagek.stream().map(TagDto::factory).toList();
+    }
+
+    public void deleteTagFromZene(Integer tagId, Integer zeneId) {
+        ZeneEntity zene = zeneRepository.getReferenceById(zeneId);
+        TagEntity tag = tagRepository.getReferenceById(tagId);
+        TagToZeneEntity tagToZene = zene.getTagToZeneEntityList()
+                .stream()
+                .filter(tagToZeneEntity -> tagToZeneEntity.getTag().getId().equals(tagId))
+                .findFirst()
+                .orElseThrow();
+    zene.getTagToZeneEntityList().remove(tagToZene);
+    tag.getTagToZeneEntityList().remove(tagToZene);
+
+    }
+
+
+    public List<TagDto> getAllTag() {
+        return tagRepository.findAll().stream().map(TagDto::factory).toList();
+    }
+
+    public void deleteTagById(Integer id) {
+        tagRepository.deleteById(id);
+        //meg nem jo mert a kapcsolat nem torlodik a zenebol
     }
 }

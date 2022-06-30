@@ -52,7 +52,7 @@ public class ZeneKarbantartasController {
 
     @PostMapping("/zenekarbantartas/zene/delete/{id}")
     public String deleteZenekar(@PathVariable("id") Integer id) {
-        zeneKarbantartasService.deleteById(id);
+        zeneKarbantartasService.deleteZeneById(id);
         return "redirect:/zene";
     }
 

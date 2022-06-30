@@ -18,10 +18,10 @@ class ZeneKarbantartasServiceTest {
 
     @Test
     void createZeneTest() {
-    ZeneDto zeneDto = ZeneDto.builder().cim("Create zene cim").build();
-    ZeneDto mentettZene = zeneKarbantartasService.createZene(zeneDto);
+        ZeneDto zeneDto = ZeneDto.builder().cim("Create zene cim").build();
+        ZeneDto mentettZene = zeneKarbantartasService.createZene(zeneDto);
 
-    assertThat(mentettZene).extracting(ZeneDto::getId).isNotNull();
+        assertThat(mentettZene).extracting(ZeneDto::getId).isNotNull();
     }
 
     @Nested
@@ -30,7 +30,7 @@ class ZeneKarbantartasServiceTest {
 
         @AfterEach
         void tearDown() {
-            zeneKarbantartasService.deleteById(testZene.getId());
+            zeneKarbantartasService.deleteZeneById(testZene.getId());
         }
 
         @BeforeEach
@@ -46,7 +46,7 @@ class ZeneKarbantartasServiceTest {
             assertThat(lekertZenek)
                     .extracting(ZeneDto::getCim)
                     .contains("Delete zenecim");
-            zeneKarbantartasService.deleteById(deletezene.getId());
+            zeneKarbantartasService.deleteZeneById(deletezene.getId());
             lekertZenek = zeneKarbantartasService.findAllDto();
             assertThat(lekertZenek)
                     .extracting(ZeneDto::getCim)
@@ -81,8 +81,8 @@ class ZeneKarbantartasServiceTest {
                     .tagNev("Teszt tag")
                     .build();
 
-           TagDto mentettTag = zeneKarbantartasService.createTag(dto);
-           assertThat(zeneKarbantartasService.getTagById(mentettTag.getId())).isNotNull();
+            TagDto mentettTag = zeneKarbantartasService.createTag(dto);
+            assertThat(zeneKarbantartasService.getTagById(mentettTag.getId())).isNotNull();
 
         }
 
@@ -98,49 +98,33 @@ class ZeneKarbantartasServiceTest {
             ZeneDto modositottZene = zeneKarbantartasService.getZeneDtoById(testZene.getId());
             assertThat(modositottZene.getTagStringList()).hasSize(1).contains("Teszt tag");
         }
-        //        @Test
-//        void deleteTagTest() {
-//            TagDto dto = TagDto.builder()
-//                    .tagNev("Teszt tag")
-//                    .zeneId(testZene.getId())
-//                    .build();
-//
-//            zeneKarbantartasService.addTag(dto);
-//
-//            var hozzaadott = zeneKarbantartasService.getById(testZene.getId());
-//            Integer tagId = hozzaadott.getTagDtoList().get(0).getId();
-//            assertNotNull(hozzaadott.getTagDtoList().get(0).getId());
-//            assertEquals("Teszt tag",hozzaadott.getTagDtoList().get(0).getTagNev());
-//
-//            zeneKarbantartasService.deleteTagById(tagId);
-//            var toroltTagesZene = zeneKarbantartasService.getById(testZene.getId());
-//            assertThat(toroltTagesZene.getTagDtoList()).hasSize(0);
-//        }
-//
-//        @Test
-//        void editTagTest() {
-//            TagDto dto = TagDto.builder()
-//                    .tagNev("Teszt tag")
-//                    .zeneId(testZene.getId())
-//                    .build();
-//
-//            zeneKarbantartasService.addTag(dto);
-//
-//            var hozzaadott = zeneKarbantartasService.getById(testZene.getId());
-//            Integer tagId = hozzaadott.getTagDtoList().get(0).getId();
-//            assertNotNull(hozzaadott.getTagDtoList().get(0).getId());
-//            assertEquals("Teszt tag",hozzaadott.getTagDtoList().get(0).getTagNev());
-//
-//            TagEditCommand command = TagEditCommand.builder()
-//                    .tagId(tagId)
-//                    .tagNev("Teszt Edited Tag")
-//                    .build();
-//
-//            zeneKarbantartasService.editTagById(command);
-//            var editTagesZene = zeneKarbantartasService.getById(testZene.getId());
-//            assertEquals("Teszt Edited Tag",editTagesZene.getTagDtoList().get(0).getTagNev());
-//        }
-//
+
+        @Test
+        void editTagTest() {
+            TagDto dto = TagDto.builder()
+                    .tagNev("Teszt tag")
+                    .build();
+
+            TagDto mentettTag = zeneKarbantartasService.createTag(dto);
+
+            zeneKarbantartasService.addTag(testZene.getId(), mentettTag.getId());
+
+            var hozzaadott = zeneKarbantartasService.getZeneDtoById(testZene.getId());
+            String tagnev = hozzaadott.getTagStringList().get(0);
+            assertNotNull(tagnev);
+            assertEquals("Teszt tag", tagnev);
+
+
+            TagEditCommand command = TagEditCommand.builder()
+                    .tagId(mentettTag.getId())
+                    .tagNev("Teszt Edited Tag")
+                    .build();
+
+            zeneKarbantartasService.editTagById(command);
+            var editTagesZene = zeneKarbantartasService.getZeneDtoById(testZene.getId());
+            assertEquals("Teszt Edited Tag", editTagesZene.getTagStringList().get(0));
+        }
+
         @Test
         void listAllTagTest() {
             TagDto dto = TagDto.builder()
@@ -159,13 +143,27 @@ class ZeneKarbantartasServiceTest {
 
             var kettovelRendelkezo = zeneKarbantartasService.getZeneDtoById(testZene.getId());
 
-            List<String> listAllTagByZeneId = zeneKarbantartasService.listAllTagStringByZeneId(testZene.getId());
-            List<TagDto> listAllTagDtoByZeneId = zeneKarbantartasService.listAllTagDtoByZeneId(testZene.getId());
+            List<String> listAllTagByZeneId = zeneKarbantartasService.listAllTagStringByZeneId(kettovelRendelkezo.getId());
+            List<TagDto> listAllTagDtoByZeneId = zeneKarbantartasService.listAllTagDtoByZeneId(kettovelRendelkezo.getId());
 
             assertThat(listAllTagByZeneId).hasSize(2).containsExactly("Teszt tag", "Teszt tag 2");
             assertThat(listAllTagDtoByZeneId).hasSize(2).extracting(TagDto::getTagNev).containsExactly("Teszt tag", "Teszt tag 2");
 
+            assertThat(zeneKarbantartasService.getAllTag()).hasSize(5);
 
+            zeneKarbantartasService.deleteTagFromZene(mentettTag2.getId(), kettovelRendelkezo.getId());
+
+            listAllTagByZeneId = zeneKarbantartasService.listAllTagStringByZeneId(kettovelRendelkezo.getId());
+
+            assertThat(listAllTagByZeneId).hasSize(1).containsExactly("Teszt tag");
+
+            assertThat(zeneKarbantartasService.getAllTag()).hasSize(5);
+
+            assertThat(kettovelRendelkezo.getTagStringList()).hasSize(2);
+
+            zeneKarbantartasService.deleteTagById(mentettTag2.getId());
+
+            assertThat(zeneKarbantartasService.getAllTag()).hasSize(4);
         }
     }
 
