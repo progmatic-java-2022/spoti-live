@@ -18,7 +18,10 @@ public class ZeneKarbantartasService {
     TagRepository tagRepository;
 
     public ZeneDto createZene(ZeneDto zeneDto) {
-        ZeneEntity zene = ZeneEntity.builder().cim(zeneDto.getCim()).build();
+        ZeneEntity zene = ZeneEntity.builder()
+                .eloado(zeneDto.getEloado())
+                .hosszMp(zeneDto.getHosszMp())
+                .cim(zeneDto.getCim()).build();
         return ZeneDto.factory( zeneRepository.save(zene));
     }
 
