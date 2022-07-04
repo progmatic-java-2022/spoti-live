@@ -2,6 +2,7 @@ package hu.progmatic.spotilive.zenekar;
 
 import hu.progmatic.spotilive.MockMvcTestHelper;
 import hu.progmatic.spotilive.esemeny.EsemenyDto;
+import hu.progmatic.spotilive.felhasznalo.UserType;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ class ZenekarAdminControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = UserType.Roles.ZENEKAR_KEZELES_ROLE)
     void zenekarTorleseTest() throws Exception {
         var zenekar = zenekarService.createZenekar(ZenekarDto.builder()
                 .nev("Teszt Zenekar törlésre")

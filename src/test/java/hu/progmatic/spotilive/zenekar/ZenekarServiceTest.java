@@ -1,11 +1,13 @@
 package hu.progmatic.spotilive.zenekar;
 
+import hu.progmatic.spotilive.felhasznalo.UserType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ class ZenekarServiceTest {
 
 
     @Test
+    @WithMockUser(roles = UserType.Roles.ZENEKAR_KEZELES_ROLE)
     void createZenekar() {
         ZenekarDto zenekarDto = ZenekarDto.builder().nev("Teszt Zenekar").email("teszt2@gmail.com").build();
         ZenekarDto mentettDto = zenekarService.createZenekar(zenekarDto);
@@ -32,6 +35,7 @@ class ZenekarServiceTest {
     }
 
     @Nested
+    @WithMockUser(roles = UserType.Roles.ZENEKAR_KEZELES_ROLE)
     public class LetezoZenekarralTest {
         ZenekarDto testZenekar;
 
