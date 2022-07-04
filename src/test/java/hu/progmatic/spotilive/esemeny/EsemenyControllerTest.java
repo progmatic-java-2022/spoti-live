@@ -1,6 +1,7 @@
 package hu.progmatic.spotilive.esemeny;
 
 import hu.progmatic.spotilive.MockMvcTestHelper;
+import hu.progmatic.spotilive.felhasznalo.UserType;
 import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ class EsemenyControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = UserType.Roles.ESEMENY_KEZELES_ROLE)
     void esemenyTorleseTest() throws Exception {
         var esemeny = esemenyService.createEsemeny(EsemenyDto.builder()
                 .nev("Esküvő")

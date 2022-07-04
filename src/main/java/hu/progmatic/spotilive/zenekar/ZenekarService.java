@@ -16,6 +16,7 @@ public class ZenekarService {
     @Autowired
     private ZenekarRepository zenekarRepository;
 
+    @RolesAllowed(UserType.Roles.ZENEKAR_KEZELES_ROLE)
     public ZenekarDto createZenekar(ZenekarDto zenekarDto) {
         if (zenekarRepository.findByNev(zenekarDto.getNev()).isPresent()) {
             throw new AddZenekarExeption("Zenekar már létezik ilyen névvel!");
