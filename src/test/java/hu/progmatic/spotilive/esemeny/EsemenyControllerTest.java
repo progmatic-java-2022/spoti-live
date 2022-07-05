@@ -182,4 +182,31 @@ class EsemenyControllerTest {
 
 
     }
+
+    @Test
+    @WithUserDetails("guest")
+    @DisplayName("Esemény modositás látszik-e guestként")
+    void esemenyModositasGuest() throws Exception {
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .getRequest("/esemeny")
+                .expectStatusIsOk()
+                .printRequest()
+                .expectContentContainsString("Esemenyek")
+                .expectContentNotContainsString("módosít");
+    }
+
+    @Test
+    @WithUserDetails("guest")
+    @DisplayName("Esemény törlés látszik-e guest-ként")
+    void esemenyTorleseGust() throws Exception {
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .postRequest("/esemeny")
+                .expectStatusIsOk()
+                .printRequest()
+                .expectContentContainsString("Esemenyek")
+                .expectContentNotContainsString("törlés");
+
+    }
 }
