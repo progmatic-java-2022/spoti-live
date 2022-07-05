@@ -36,8 +36,8 @@ jobs:
     - name: Commit the badge (if it changed)
       run: |
         if [[ `git status --porcelain` ]]; then
-          git config --global user.name `git log -1 --pretty='%cn'`
-          git config --global user.email `git log -1 --pretty='%ce'`
+          git config --global user.name "`git log -1 --pretty='%cn'`"
+          git config --global user.email "`git log -1 --pretty='%ce'`"
           git add -A
           lastCommit=`git log -1 --pretty='%cn - %B'`
           git commit -m "Badge generation for: $lastCommit"
