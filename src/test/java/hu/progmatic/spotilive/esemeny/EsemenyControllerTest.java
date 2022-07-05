@@ -21,73 +21,73 @@ import java.time.LocalDateTime;
 class EsemenyControllerTest {
 
 
-  @Autowired
-  private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-  @Autowired
-  private EsemenyService esemenyService;
+    @Autowired
+    private EsemenyService esemenyService;
 
-  @Autowired
-  private ZenekarService zenekarService;
+    @Autowired
+    private ZenekarService zenekarService;
 
-  private Integer demoZenekarId;
+    private Integer demoZenekarId;
 
-  @BeforeEach
-  void setUp() {
-    demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
-  }
+    @BeforeEach
+    void setUp() {
+        demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+    }
 
     @Test
     @WithMockUser
-    void oldalbetolteseTest() throws Exception{
+    void oldalbetolteseTest() throws Exception {
         oldalBetolteseSzovegLatszik("Demo esemény");
     }
 
-  private void oldalBetolteseSzovegLatszik(String szoveg) throws Exception {
-    MockMvcTestHelper
-        .testRequest(mockMvc)
-        .getRequest("/esemeny")
-        .expectStatusIsOk()
-        .expectContentContainsString(szoveg);
-  }
+    private void oldalBetolteseSzovegLatszik(String szoveg) throws Exception {
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .getRequest("/esemeny")
+                .expectStatusIsOk()
+                .expectContentContainsString(szoveg);
+    }
 
-  @Test
-  @WithMockUser(roles = UserType.Roles.ESEMENY_KEZELES_ROLE)
-  void esemenyTorleseTest() throws Exception {
-    var esemeny = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
-        .nev("Esküvő")
-        .idoPont(LocalDateTime.parse("2000-12-12T14:21"))
-        .zenekarId(demoZenekarId)
-        .build()
-    );
-    oldalBetolteseSzovegLatszik("Esküvő");
-    String deleteResource = "/esemeny/delete/" + esemeny.getId();
-    MockMvcTestHelper
-        .testRequest(mockMvc)
-        .postRequest(deleteResource)
-        .expectRedirectedToUrlPattern("/esemeny?**")
-        .printRequest();
-    oldalBetolteseSzovegNemLatszik("Esküvő");
-  }
+    @Test
+    @WithMockUser(roles = UserType.Roles.ESEMENY_KEZELES_ROLE)
+    void esemenyTorleseTest() throws Exception {
+        var esemeny = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
+                .nev("Esküvő")
+                .idoPont(LocalDateTime.parse("2000-12-12T14:21"))
+                .zenekarId(demoZenekarId)
+                .build()
+        );
+        oldalBetolteseSzovegLatszik("Esküvő");
+        String deleteResource = "/esemeny/delete/" + esemeny.getId();
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .postRequest(deleteResource)
+                .expectRedirectedToUrlPattern("/esemeny?**")
+                .printRequest();
+        oldalBetolteseSzovegNemLatszik("Esküvő");
+    }
 
-  private void oldalBetolteseSzovegNemLatszik(String szoveg) throws Exception {
-    MockMvcTestHelper
-        .testRequest(mockMvc)
-        .getRequest("/esemeny")
-        .expectStatusIsOk()
-        .expectContentNotContainsString(szoveg);
-  }
+    private void oldalBetolteseSzovegNemLatszik(String szoveg) throws Exception {
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .getRequest("/esemeny")
+                .expectStatusIsOk()
+                .expectContentNotContainsString(szoveg);
+    }
 
     @Test
     @WithUserDetails("zenekar")
     @DisplayName("Zenekarral belépve megjelenik a zenekar hozzáadása szöveg")
     void zenekarHozzaadasaMegjelenik() throws Exception {
         MockMvcTestHelper
-            .testRequest(mockMvc)
-            .getRequest("/esemeny")
-            .expectStatusIsOk()
-            .expectContentContainsString("Esemenyek")
-            .expectContentContainsString("Új esemény hozzáadása");
+                .testRequest(mockMvc)
+                .getRequest("/esemeny")
+                .expectStatusIsOk()
+                .expectContentContainsString("Esemenyek")
+                .expectContentContainsString("Új esemény hozzáadása");
     }
 
     @Test
@@ -95,11 +95,11 @@ class EsemenyControllerTest {
     @DisplayName("Guest-el belépve nem jelenik meg a zenekar hozzáadása szöveg")
     void zenekarHozzaadasaNemJelenikMeg() throws Exception {
         MockMvcTestHelper
-            .testRequest(mockMvc)
-            .getRequest("/esemeny")
-            .expectStatusIsOk()
-            .expectContentContainsString("Esemenyek")
-            .expectContentNotContainsString("Új esemény hozzáadása");
+                .testRequest(mockMvc)
+                .getRequest("/esemeny")
+                .expectStatusIsOk()
+                .expectContentContainsString("Esemenyek")
+                .expectContentNotContainsString("Új esemény hozzáadása");
     }
 
     @Test
@@ -107,15 +107,15 @@ class EsemenyControllerTest {
     @DisplayName("Esemény létrehozásakor megjelennek a hibaüzenetek, ha nincs rendesen kitöltve")
     void esemenyLetrehozasHibauzenetek() throws Exception {
         MockMvcTestHelper
-            .testRequest(mockMvc)
-            .postRequestBuilder("/esemeny")
-            .addFormParameter("zenekarId", "" + demoZenekarId)
-            .addFormParameter("nev", "")
-            .addFormParameter("idoPont", "")
-            .buildRequest()
-            .expectStatusIsOk()
-            .expectContentContainsString("Nem lehet üres")
-            .expectContentContainsString("Meg kell adni időpontot!");
+                .testRequest(mockMvc)
+                .postRequestBuilder("/esemeny")
+                .addFormParameter("zenekarId", "" + demoZenekarId)
+                .addFormParameter("nev", "")
+                .addFormParameter("idoPont", "")
+                .buildRequest()
+                .expectStatusIsOk()
+                .expectContentContainsString("Nem lehet üres")
+                .expectContentContainsString("Meg kell adni időpontot!");
     }
 
     @Test
@@ -123,21 +123,48 @@ class EsemenyControllerTest {
     @DisplayName("Esemény létrehozásakor létrejön az esemény")
     void esemenyLetrehozas() throws Exception {
         MockMvcTestHelper
-            .testRequest(mockMvc)
-            .postRequestBuilder("/esemeny")
-            .addFormParameter("zenekarId", "" + demoZenekarId)
-            .addFormParameter("nev", "Esemény létrehozása teszt esemény")
-            .addFormParameter("idoPont", "2222-07-05T13:45")
-            .buildRequest()
-            .expectRedirectedToUrlPattern("/esemeny?**")
-            .expectContentNotContainsString("Nem lehet üres")
-            .expectContentNotContainsString("Meg kell adni időpontot!");
+                .testRequest(mockMvc)
+                .postRequestBuilder("/esemeny")
+                .addFormParameter("zenekarId", "" + demoZenekarId)
+                .addFormParameter("nev", "Esemény létrehozása teszt esemény")
+                .addFormParameter("idoPont", "2222-07-05T13:45")
+                .buildRequest()
+                .expectRedirectedToUrlPattern("/esemeny?**")
+                .expectContentNotContainsString("Nem lehet üres")
+                .expectContentNotContainsString("Meg kell adni időpontot!");
         Integer esemenyId = esemenyService.findAllEsemeny()
-            .stream()
-            .filter(esemeny -> esemeny.getNev().equals("Esemény létrehozása teszt esemény"))
-            .map(EsemenyDto::getId)
-            .findFirst()
-            .orElseThrow();
+                .stream()
+                .filter(esemeny -> esemeny.getNev().equals("Esemény létrehozása teszt esemény"))
+                .map(EsemenyDto::getId)
+                .findFirst()
+                .orElseThrow();
         esemenyService.deleteEsemeny(esemenyId);
+    }
+
+    @Test
+    @WithUserDetails("guest")
+    @DisplayName("Esemény modositás látszik-e guestként")
+    void esemenyModositasGuest() throws Exception {
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .getRequest("/esemeny")
+                .expectStatusIsOk()
+                .printRequest()
+                .expectContentContainsString("Esemenyek")
+                .expectContentNotContainsString("módosít");
+    }
+
+    @Test
+    @WithUserDetails("guest")
+    @DisplayName("Esemény törlés látszik-e guest-ként")
+    void esemenyTorleseGust() throws Exception {
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .postRequest("/esemeny")
+                .expectStatusIsOk()
+                .printRequest()
+                .expectContentContainsString("Esemenyek")
+                .expectContentNotContainsString("törlés");
+
     }
 }
