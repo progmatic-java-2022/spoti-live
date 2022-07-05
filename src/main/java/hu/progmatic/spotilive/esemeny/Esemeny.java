@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -23,6 +24,7 @@ public class Esemeny {
     @NotEmpty
     private String nev;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH-mm")
+    //@FutureOrPresent
     @NotNull
     private LocalDateTime idopont;
     @ManyToOne

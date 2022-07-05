@@ -25,7 +25,7 @@
     <tr>
         <th scope="col">Id</th>
         <th scope="col">Zenekar neve</th>
-        <th scope="col">Név</th>
+        <th scope="col">Esemeny neve</th>
         <th scope="col">Időpont</th>
         <th scope="col"></th>
     </tr>
@@ -53,12 +53,14 @@
     </tr>
     </tbody>
 </table>
-<h3  th:if="(${esemenyModositasJogVan || adminModositasJogVan}) "
+<h3  th:if="${esemenyModositas.id == null} and (${esemenyModositasJogVan || adminModositasJogVan}) "
      >Új esemény hozzáadása</h3>
+<h3  th:if="${esemenyModositas.id != null} and (${esemenyModositasJogVan || adminModositasJogVan}) "
+>Esemény módosítása</h3>
 
-<form th:if="${esemenyModositasJogVan or adminModositasJogVan}"
+<form th:if="${esemenyModositas.id == null} and ${esemenyModositasJogVan or adminModositasJogVan}"
         th:action="@{'/esemeny'}"
-        method="post" th:object="${formEsemenyPeldany}" class="row">
+        method="post" th:object="${createEsemenyCommand}" class="row">
     <div class="col">
         <label>
             <select th:field="*{zenekarId}" class="form-select">
@@ -98,6 +100,47 @@
 
     <div class="col-md-12" style="padding-top: 20px; text-align: center">
         <input class="btn btn-success" type="submit" value="Hozzáad" style="width: 30%"/>
+    </div>
+</form>
+
+<form th:if="${esemenyModositas.id != null} and ${esemenyModositasJogVan or adminModositasJogVan}"
+      th:action="@{'/esemeny/{esemenyId}' (esemenyId=${esemenyModositas.id})}"
+      method="post" th:object="${esemenyModositas}" class="row">
+    <div class="col">
+        <label th:text="${esemenyModositas.zenekarNev}"></label>
+    </div>
+
+    <div class="col">
+        <label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Név"
+                   th:field="*{nev}"
+                   th:classappend="${#fields.hasErrors('nev')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('nev')}"
+                 th:errors="*{nev}">
+                Hibaüzenet
+            </div>
+        </label>
+    </div>
+    <div class="col">
+        <label>
+            <input type="datetime-local"
+                   class="form-control"
+                   placeholder="Időpont"
+                   th:field="*{idoPont}"
+                   th:classappend="${#fields.hasErrors('idoPont')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('idoPont')}"
+                 th:errors="*{idoPont}">
+                Hibaüzenet
+            </div>
+        </label>
+    </div>
+
+    <div class="col-md-12" style="padding-top: 20px; text-align: center">
+        <input class="btn btn-success" type="submit" value="Módosít" style="width: 30%"/>
     </div>
 </form>
 <script>

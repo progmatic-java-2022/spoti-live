@@ -2,7 +2,6 @@ package hu.progmatic.spotilive.esemeny;
 
 import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
-import hu.progmatic.spotilive.zenekar.Zenekar;
 import hu.progmatic.spotilive.zenekar.ZenekarDto;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,7 @@ public class EsemenyController {
 
     @GetMapping("/esemeny/{id}")
     public String esemenySzerkesztes(Model model, @PathVariable("id") Integer id) {
-        model.addAttribute("formEsemenyPeldany",
+        model.addAttribute("esemenyModositas",
                 esemenyService.getById(id));
         return "/esemenyek";
     }
@@ -50,7 +49,7 @@ public class EsemenyController {
     @PostMapping("/esemeny/{id}")
     public String esemenyMentese(
             @PathVariable Integer id,
-            @ModelAttribute("formEsemenyPeldany") @Valid EsemenyDto ujEsemeny,
+            @ModelAttribute("esemenyModositas") @Valid EsemenyDto ujEsemeny,
             BindingResult bindingResult,
             Model model
     ) {
@@ -63,7 +62,7 @@ public class EsemenyController {
 
     @PostMapping("/esemeny")
     public String esemenyHozzaadasa(
-            @ModelAttribute("formEsemenyPeldany") @Valid CreateEsemenyCommand ujEsemeny,
+            @ModelAttribute("createEsemenyCommand") @Valid CreateEsemenyCommand ujEsemeny,
             BindingResult bindingResult,
             Model model
     ) {
@@ -79,9 +78,14 @@ public class EsemenyController {
         return esemenyService.findAllEsemeny();
     }
 
-    @ModelAttribute("formEsemenyPeldany")
-    public CreateEsemenyCommand formEsemenyPeldany() {
+    @ModelAttribute("createEsemenyCommand")
+    public CreateEsemenyCommand createEsemenyCommand() {
         return CreateEsemenyCommand.builder().build();
+    }
+
+    @ModelAttribute("esemenyModositas")
+    public EsemenyDto esemenyModositas() {
+        return EsemenyDto.builder().build();
     }
 
     @ModelAttribute("esemenyModositasJogVan")
