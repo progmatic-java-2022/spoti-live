@@ -31,10 +31,12 @@ class EsemenyControllerTest {
   private ZenekarService zenekarService;
 
   private Integer demoZenekarId;
+  private Integer demoEsemenyId;
 
   @BeforeEach
   void setUp() {
     demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+    demoZenekarId = esemenyService.getByName(DemoService.DEMO_ESEMENY).getId();
   }
 
     @Test
@@ -215,4 +217,15 @@ class EsemenyControllerTest {
                 .expectContentNotContainsString("törlés");
 
     }
+    @Test
+    @DisplayName("Esemény szerkesztésekor megjelnnek-e az adatok")
+    @WithUserDetails("zenekar")
+    void esemenySzerkesztes() throws Exception {
+      MockMvcTestHelper
+              .testRequest(mockMvc)
+              .getRequest("/esemeny/" + demoEsemenyId)
+              .expectStatusIsOk()
+              .printRequest()
+              .expectContentContainsString("Demo zenekar")
+              .expectContentContainsString("Demo esemény");
 }
