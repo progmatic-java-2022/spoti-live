@@ -5,7 +5,6 @@ import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +31,10 @@ class EsemenyControllerTest {
   private ZenekarService zenekarService;
 
   private Integer demoZenekarId;
-  private Integer demoEsemenyId;
 
   @BeforeEach
   void setUp() {
     demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
-    demoZenekarId = esemenyService.getByName(DemoService.DEMO_ESEMENY).getId();
   }
 
     @Test
@@ -145,15 +142,71 @@ class EsemenyControllerTest {
     }
 
     @Test
-    @DisplayName("Esemény szerkesztésekor megjelnnek-e az adatok")
     @WithUserDetails("zenekar")
-    void esemenySzerkesztes() throws Exception {
-      MockMvcTestHelper
-              .testRequest(mockMvc)
-              .getRequest("/esemeny/" + demoEsemenyId)
-              .expectStatusIsOk()
-              .printRequest()
-              .expectContentContainsString("Demo zenekar")
-              .expectContentContainsString("Demo esemény");
+    @DisplayName("Esemény módosítás után elmentődik")
+    void esemenyMenteseTest() throws Exception {
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .postRequestBuilder("/esemeny")
+                .addFormParameter("zenekarId", "" + demoZenekarId)
+                .addFormParameter("nev", "Esemény mentése teszt esemény")
+                .addFormParameter("idoPont", "2222-07-05T13:45")
+                .buildRequest()
+                .expectRedirectedToUrlPattern("/esemeny?**")
+                .expectContentNotContainsString("Nem lehet üres")
+                .expectContentNotContainsString("Meg kell adni időpontot!");
+
+        Integer esemenyId = esemenyService.findAllEsemeny()
+                .stream()
+                .filter(esemeny -> esemeny.getNev().equals("Esemény mentése teszt esemény"))
+                .map(EsemenyDto::getId)
+                .findFirst()
+                .orElseThrow();
+
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .getRequest("/esemeny/" + esemenyId)
+                .expectStatusIsOk()
+                .expectContentContainsString("Esemény mentése teszt esemény")
+                .expectContentContainsString("2222-07-05T13:45");
+
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .postRequestBuilder("/esemeny/" + esemenyId)
+                .addFormParameter("zenekarId", "" + demoZenekarId)
+                .addFormParameter("nev","Esemény mentése teszt esemény módosított")
+                .addFormParameter("idoPont","2222-07-05T13:45")
+                .buildRequest()
+                .expectRedirectedToUrlPattern("esemeny?**")
+                .expectContentContainsString("Esemény mentése teszt esemény módosított");
+
+
+    }
+
+    @Test
+    @WithUserDetails("guest")
+    @DisplayName("Esemény modositás látszik-e guestként")
+    void esemenyModositasGuest() throws Exception {
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .getRequest("/esemeny")
+                .expectStatusIsOk()
+                .printRequest()
+                .expectContentContainsString("Esemenyek")
+                .expectContentNotContainsString("módosít");
+    }
+
+    @Test
+    @WithUserDetails("guest")
+    @DisplayName("Esemény törlés látszik-e guest-ként")
+    void esemenyTorleseGust() throws Exception {
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .postRequest("/esemeny")
+                .expectStatusIsOk()
+                .printRequest()
+                .expectContentContainsString("Esemenyek")
+                .expectContentNotContainsString("törlés");
+
     }
 }
