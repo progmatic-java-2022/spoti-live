@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.demo;
 
+import hu.progmatic.spotilive.esemeny.CreateEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.EsemenyDto;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
@@ -27,53 +28,54 @@ import static hu.progmatic.spotilive.felhasznalo.MyUserDetails.ROLE_PREFIX;
 @Service
 public class DemoService {
 
-  public static final String DEMO_ZENEKAR = "Demo zenekar";
-  public static final String DEMO_ESEMENY = "Demo esemény";
-  @Autowired
-  ZenekarService zenekarService;
-  @Autowired
-  private EsemenyService esemenyService;
-  @Autowired
-  private ZeneKarbantartasService zeneKarbantartasService;
+    public static final String DEMO_ZENEKAR = "Demo zenekar";
+    public static final String DEMO_ESEMENY = "Demo esemény";
+    @Autowired
+    ZenekarService zenekarService;
+    @Autowired
+    private EsemenyService esemenyService;
+    @Autowired
+    private ZeneKarbantartasService zeneKarbantartasService;
 
-  private void clearAuthentication() {
-    SecurityContextHolder.getContext().setAuthentication(null);
-  }
-
-  private void configureAuthentication(String... roles) {
-    List<SimpleGrantedAuthority> authorities = Arrays.stream(roles)
-        .map(role -> new SimpleGrantedAuthority(ROLE_PREFIX + role))
-        .toList();
-    Authentication authentication = new UsernamePasswordAuthenticationToken(
-        "user",
-        "credentials",
-        authorities
-    );
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-  }
-
-  @EventListener(ContextRefreshedEvent.class)
-  public void init() {
-    if (zenekarService.count() == 0) {
-      configureAuthentication(
-          UserType.Roles.ZENEKAR_KEZELES_ROLE,
-          UserType.Roles.ESEMENY_KEZELES_ROLE
-      );
-      var demoZenekar = zenekarService.createZenekar(ZenekarDto.builder()
-          .nev(DEMO_ZENEKAR)
-          .email("teszt@gmail.com")
-          .telefonszam("0630-111-2222")
-          .leiras("Demo leírás")
-          .build());
-      esemenyService.createEsemeny(EsemenyDto.builder()
-          .nev(DEMO_ESEMENY)
-          .idoPont(LocalDateTime.parse("2000-02-02T10:10"))
-          .build());
-      zeneKarbantartasService.createZene(ZeneDto.builder()
-          .cim("Demo Zene Cím")
-          .eloado("Demo Zene előadó")
-          .build());
-      clearAuthentication();
+    private void clearAuthentication() {
+        SecurityContextHolder.getContext().setAuthentication(null);
     }
-  }
+
+    private void configureAuthentication(String... roles) {
+        List<SimpleGrantedAuthority> authorities = Arrays.stream(roles)
+                .map(role -> new SimpleGrantedAuthority(ROLE_PREFIX + role))
+                .toList();
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                "user",
+                "credentials",
+                authorities
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    @EventListener(ContextRefreshedEvent.class)
+    public void init() {
+        if (zenekarService.count() == 0) {
+            configureAuthentication(
+                    UserType.Roles.ZENEKAR_KEZELES_ROLE,
+                    UserType.Roles.ESEMENY_KEZELES_ROLE
+            );
+            var demoZenekar = zenekarService.createZenekar(ZenekarDto.builder()
+                    .nev(DEMO_ZENEKAR)
+                    .email("teszt@gmail.com")
+                    .telefonszam("0630-111-2222")
+                    .leiras("Demo leírás")
+                    .build());
+            esemenyService.createEsemeny(CreateEsemenyCommand.builder()
+                    .nev(DEMO_ESEMENY)
+                    .idoPont(LocalDateTime.parse("2000-02-02T10:10"))
+                    .zenekarId(demoZenekar.getId())
+                    .build());
+            zeneKarbantartasService.createZene(ZeneDto.builder()
+                    .cim("Demo Zene Cím")
+                    .eloado("Demo Zene előadó")
+                    .build());
+            clearAuthentication();
+        }
+    }
 }

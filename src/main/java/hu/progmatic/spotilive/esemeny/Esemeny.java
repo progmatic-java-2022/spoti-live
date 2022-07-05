@@ -1,12 +1,10 @@
 package hu.progmatic.spotilive.esemeny;
 
+import hu.progmatic.spotilive.zenekar.Zenekar;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -27,5 +25,7 @@ public class Esemeny {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH-mm")
     @NotNull
     private LocalDateTime idopont;
-
+    @ManyToOne
+    @NotNull
+    private Zenekar zenekar;
 }

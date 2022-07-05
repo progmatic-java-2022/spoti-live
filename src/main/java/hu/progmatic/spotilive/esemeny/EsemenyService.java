@@ -1,12 +1,15 @@
 package hu.progmatic.spotilive.esemeny;
 
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.zenekar.Zenekar;
+import hu.progmatic.spotilive.zenekar.ZenekarService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -17,15 +20,20 @@ public class EsemenyService {
     @Autowired
     private EsemenyRepository esemenyRepository;
 
+    @Autowired
+    private ZenekarService zenekarService;
+
     @RolesAllowed(UserType.Roles.ESEMENY_KEZELES_ROLE)
-    public EsemenyDto createEsemeny(EsemenyDto esemeny) {
+    public EsemenyDto createEsemeny(CreateEsemenyCommand esemeny) {
+        Zenekar zenekar = zenekarService.getZenekarEntityById(esemeny.getZenekarId());
         Esemeny ujEsemeny = Esemeny
                 .builder()
                 .nev(esemeny.getNev())
                 .idopont(esemeny.getIdoPont())
+                .zenekar(zenekar)
                 .build();
+        zenekar.getEsemenyek().add(ujEsemeny);
         return EsemenyDto.factory(esemenyRepository.save(ujEsemeny));
-
     }
 
     public EsemenyDto getById(Integer id) {

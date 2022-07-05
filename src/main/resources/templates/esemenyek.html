@@ -24,6 +24,7 @@
     <thead>
     <tr>
         <th scope="col">Id</th>
+        <th scope="col">Zenekar neve</th>
         <th scope="col">Név</th>
         <th scope="col">Időpont</th>
         <th scope="col"></th>
@@ -32,6 +33,7 @@
     <tbody>
     <tr th:each="esemeny : ${esemenyekLista}">
         <td th:text="${esemeny.id}">Id</td>
+        <td th:text="${esemeny.zenekarNev}">Zenekar neve</td>
         <td th:text="${esemeny.nev}">Név</td>
         <td th:text="${esemeny.idoPont}">Időpont</td>
         <td>
@@ -51,13 +53,20 @@
     </tr>
     </tbody>
 </table>
-<h3  th:if="(${formEsemenyPeldany.id == null}) and (${esemenyModositasJogVan || adminModositasJogVan}) "
+<h3  th:if="(${esemenyModositasJogVan || adminModositasJogVan}) "
      >Új esemény hozzáadása</h3>
-<h3  th:if="${formEsemenyPeldany.id != null}">Esemény szerkesztése</h3>
 
 <form th:if="${esemenyModositasJogVan or adminModositasJogVan}"
-        th:action="@{'/esemeny/{id}'(id=${formEsemenyPeldany.getId()})}"
+        th:action="@{'/esemeny'}"
         method="post" th:object="${formEsemenyPeldany}" class="row">
+    <div class="col">
+        <label>
+            <select th:field="*{zenekarId}" class="form-select">
+                <option th:each="zenekar : ${allZenekar}" th:value="${zenekar.getId()}" th:text="${zenekar.getNev()}"></option>
+            </select>
+        </label>
+    </div>
+
     <div class="col">
         <label>
             <input type="text"
@@ -88,9 +97,7 @@
     </div>
 
     <div class="col-md-12" style="padding-top: 20px; text-align: center">
-        <input th:if="${formEsemenyPeldany.id == null}" class="btn btn-success" type="submit" value="Hozzáad" style="width: 30%"/>
-        <input th:if="${formEsemenyPeldany.id != null}" class="btn btn-primary" type="submit" value="Módosít" style="width: 30%"/>
-
+        <input class="btn btn-success" type="submit" value="Hozzáad" style="width: 30%"/>
     </div>
 </form>
 <script>

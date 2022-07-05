@@ -20,12 +20,14 @@ public class EsemenyDto {
     @NotNull(message = "Meg kell adni időpontot!")
     private LocalDateTime idoPont;
 
+    private String zenekarNev;
     public static EsemenyDto factory(Esemeny esemeny) {
         return EsemenyDto
                 .builder()
                 .id(esemeny.getId())
                 .nev(esemeny.getNev())
                 .idoPont(esemeny.getIdopont())
+                .zenekarNev(esemeny.getZenekar().getNev())
                 .build();
     }
 }

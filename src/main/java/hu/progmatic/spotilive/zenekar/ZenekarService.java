@@ -66,4 +66,8 @@ public class ZenekarService {
     public int count() {
         return (int) zenekarRepository.count();
     }
+
+    public Zenekar getZenekarEntityById(Integer zenekarId) {
+        return zenekarRepository.getReferenceById(zenekarId);
+    }
 }

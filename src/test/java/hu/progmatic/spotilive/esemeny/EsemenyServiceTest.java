@@ -1,6 +1,8 @@
 package hu.progmatic.spotilive.esemeny;
 
+import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,17 +21,28 @@ class EsemenyServiceTest {
     @Autowired
     private EsemenyService esemenyService;
 
+    @Autowired
+    private ZenekarService zenekarService;
+
+    private Integer demoZenekarId;
+
+    @BeforeEach
+    void setUp() {
+        demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+    }
 
     @Test
     void esemenyLetrehozasaTest() {
-        EsemenyDto esemeny = EsemenyDto.builder()
+        CreateEsemenyCommand esemeny = CreateEsemenyCommand.builder()
                 .nev("Tódor Születésnapja")
                 .idoPont(LocalDateTime.parse("2022-06-27T15:30"))
+                .zenekarId(demoZenekarId)
                 .build();
         EsemenyDto letrehozott = esemenyService.createEsemeny(esemeny);
 
         assertNotNull(letrehozott.getId());
         assertEquals("Tódor Születésnapja", letrehozott.getNev());
+        assertEquals(DemoService.DEMO_ZENEKAR,letrehozott.getZenekarNev());
 
         esemenyService.deleteEsemeny(letrehozott.getId());
         assertEquals(1, esemenyService.countAllEsemeny());
@@ -42,9 +55,10 @@ class EsemenyServiceTest {
 
     @Test
     void esemenyTorleseTest() {
-        EsemenyDto esemeny = EsemenyDto.builder()
+        CreateEsemenyCommand esemeny = CreateEsemenyCommand.builder()
                 .nev("Törlendő esemény")
                 .idoPont(LocalDateTime.parse("2022-06-27T15:30"))
+                .zenekarId(demoZenekarId)
                 .build();
         EsemenyDto letrehozott = esemenyService.createEsemeny(esemeny);
         assertEquals("Törlendő esemény", letrehozott.getNev());
@@ -66,13 +80,15 @@ class EsemenyServiceTest {
 
         @BeforeEach
         void setUp() {
-            esemeny1 = esemenyService.createEsemeny(EsemenyDto.builder()
+            esemeny1 = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
                     .nev("Tódor Születésnapja")
                     .idoPont(LocalDateTime.parse("2022-05-27T15:30"))
+                    .zenekarId(demoZenekarId)
                     .build());
-            esemeny2 = esemenyService.createEsemeny(EsemenyDto.builder()
+            esemeny2 = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
                     .nev("Tivadar Névnapja")
                     .idoPont(LocalDateTime.parse("2002-10-19T10:45"))
+                    .zenekarId(demoZenekarId)
                     .build());
 
         }
@@ -96,9 +112,10 @@ class EsemenyServiceTest {
         void esemenySzerkeszteseTest() {
             EsemenyDto modositando;
 
-            modositando = esemenyService.createEsemeny(EsemenyDto.builder()
+            modositando = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
                     .nev(esemeny1.getNev())
                     .idoPont(esemeny1.getIdoPont())
+                    .zenekarId(demoZenekarId)
                     .build());
 
 
@@ -115,5 +132,6 @@ class EsemenyServiceTest {
                     .hasSize(3);
         }
     }
+
 
 }

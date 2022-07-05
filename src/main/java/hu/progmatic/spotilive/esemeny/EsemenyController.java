@@ -2,6 +2,9 @@ package hu.progmatic.spotilive.esemeny;
 
 import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.zenekar.Zenekar;
+import hu.progmatic.spotilive.zenekar.ZenekarDto;
+import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +24,9 @@ public class EsemenyController {
     private EsemenyService esemenyService;
     @Autowired
     private FelhasznaloService felhasznaloService;
+
+    @Autowired
+    private ZenekarService zenekarService;
 
 
     @GetMapping("/esemeny")
@@ -56,8 +62,8 @@ public class EsemenyController {
     }
 
     @PostMapping("/esemeny")
-    public String termekHozzaadas(
-            @ModelAttribute("formEsemenyPeldany") @Valid EsemenyDto ujEsemeny,
+    public String esemenyHozzaadasa(
+            @ModelAttribute("formEsemenyPeldany") @Valid CreateEsemenyCommand ujEsemeny,
             BindingResult bindingResult,
             Model model
     ) {
@@ -74,8 +80,8 @@ public class EsemenyController {
     }
 
     @ModelAttribute("formEsemenyPeldany")
-    public EsemenyDto formEsemenyPeldany() {
-        return EsemenyDto.builder().build();
+    public CreateEsemenyCommand formEsemenyPeldany() {
+        return CreateEsemenyCommand.builder().build();
     }
 
     @ModelAttribute("esemenyModositasJogVan")
@@ -87,4 +93,8 @@ public class EsemenyController {
     public boolean adminModositasJogVan(){return felhasznaloService.hasRole(UserType.Roles.USER_WRITE_ROLE);}
 
 
+    @ModelAttribute("allZenekar")
+    public List<ZenekarDto> allZenekar(){
+        return zenekarService.findAllDto();
+    }
 }
