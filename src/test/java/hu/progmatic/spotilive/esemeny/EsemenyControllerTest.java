@@ -5,6 +5,7 @@ import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,12 @@ class EsemenyControllerTest {
   private ZenekarService zenekarService;
 
   private Integer demoZenekarId;
+  private Integer demoEsemenyId;
 
   @BeforeEach
   void setUp() {
     demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+    demoZenekarId = esemenyService.getByName(DemoService.DEMO_ESEMENY).getId();
   }
 
     @Test
@@ -139,5 +142,18 @@ class EsemenyControllerTest {
             .findFirst()
             .orElseThrow();
         esemenyService.deleteEsemeny(esemenyId);
+    }
+
+    @Test
+    @DisplayName("Esemény szerkesztésekor megjelnnek-e az adatok")
+    @WithUserDetails("zenekar")
+    void esemenySzerkesztes() throws Exception {
+      MockMvcTestHelper
+              .testRequest(mockMvc)
+              .getRequest("/esemeny/" + demoEsemenyId)
+              .expectStatusIsOk()
+              .printRequest()
+              .expectContentContainsString("Demo zenekar")
+              .expectContentContainsString("Demo esemény");
     }
 }
