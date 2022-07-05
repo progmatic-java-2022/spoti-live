@@ -177,10 +177,16 @@ class EsemenyControllerTest {
                 .addFormParameter("nev","Esemény mentése teszt esemény módosított")
                 .addFormParameter("idoPont","2222-07-05T13:45")
                 .buildRequest()
-                .expectRedirectedToUrlPattern("esemeny?**")
+                .expectRedirectedToUrlPattern("/esemeny?**");
+
+
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .getRequest("/esemeny")
+                .expectStatusIsOk()
                 .expectContentContainsString("Esemény mentése teszt esemény módosított");
 
-
+        esemenyService.deleteEsemeny(esemenyId);
     }
 
     @Test
