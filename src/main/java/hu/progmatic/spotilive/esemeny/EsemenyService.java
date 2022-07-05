@@ -62,4 +62,7 @@ public class EsemenyService {
     }
 
 
+    public EsemenyDto getByName(String esemenyNev) {
+        return EsemenyDto.factory(esemenyRepository.findEsemenyByNevContainingIgnoreCase(esemenyNev));
+    }
 }
