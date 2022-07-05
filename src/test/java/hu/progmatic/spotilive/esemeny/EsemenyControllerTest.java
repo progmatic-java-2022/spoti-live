@@ -140,4 +140,46 @@ class EsemenyControllerTest {
             .orElseThrow();
         esemenyService.deleteEsemeny(esemenyId);
     }
+
+    @Test
+    @WithUserDetails("zenekar")
+    @DisplayName("Esemény módosítás után elmentődik")
+    void esemenyMenteseTest() throws Exception {
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .postRequestBuilder("/esemeny")
+                .addFormParameter("zenekarId", "" + demoZenekarId)
+                .addFormParameter("nev", "Esemény mentése teszt esemény")
+                .addFormParameter("idoPont", "2222-07-05T13:45")
+                .buildRequest()
+                .expectRedirectedToUrlPattern("/esemeny?**")
+                .expectContentNotContainsString("Nem lehet üres")
+                .expectContentNotContainsString("Meg kell adni időpontot!");
+
+        Integer esemenyId = esemenyService.findAllEsemeny()
+                .stream()
+                .filter(esemeny -> esemeny.getNev().equals("Esemény mentése teszt esemény"))
+                .map(EsemenyDto::getId)
+                .findFirst()
+                .orElseThrow();
+
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .getRequest("/esemeny/" + esemenyId)
+                .expectStatusIsOk()
+                .expectContentContainsString("Esemény mentése teszt esemény")
+                .expectContentContainsString("2222-07-05T13:45");
+
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .postRequestBuilder("/esemeny/" + esemenyId)
+                .addFormParameter("zenekarId", "" + demoZenekarId)
+                .addFormParameter("nev","Esemény mentése teszt esemény módosított")
+                .addFormParameter("idoPont","2222-07-05T13:45")
+                .buildRequest()
+                .expectRedirectedToUrlPattern("esemeny?**")
+                .expectContentContainsString("Esemény mentése teszt esemény módosított");
+
+
+    }
 }
