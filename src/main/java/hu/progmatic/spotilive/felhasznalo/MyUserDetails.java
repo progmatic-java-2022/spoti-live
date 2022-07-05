@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public class MyUserDetails implements UserDetails {
-  private static final String ROLE_PREFIX = "ROLE_";
+  public static final String ROLE_PREFIX = "ROLE_";
 
   private final Long felhasznaloId;
   private final String jelszo;
