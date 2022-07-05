@@ -44,7 +44,7 @@
                     </form>
                 </div>
                 <div class="col">
-                    <form th:if="${adminModositasJogVan}" th:action="@{'/esemeny/delete/{id}'(id =${esemeny.id})}" method="post">
+                    <form th:if="${esemenyModositasJogVan}" th:action="@{'/esemeny/delete/{id}'(id =${esemeny.id})}" method="post">
                         <input type="submit" class="btn btn-danger" value="Törlés">
                     </form>
                 </div>
@@ -53,12 +53,12 @@
     </tr>
     </tbody>
 </table>
-<h3  th:if="${esemenyModositas.id == null} and (${esemenyModositasJogVan || adminModositasJogVan}) "
+<h3  th:if="${esemenyModositas.id == null} and (${esemenyModositasJogVan}) "
      >Új esemény hozzáadása</h3>
-<h3  th:if="${esemenyModositas.id != null} and (${esemenyModositasJogVan || adminModositasJogVan}) "
+<h3  th:if="${esemenyModositas.id != null} and (${esemenyModositasJogVan}) "
 >Esemény módosítása</h3>
 
-<form th:if="${esemenyModositas.id == null} and ${esemenyModositasJogVan or adminModositasJogVan}"
+<form th:if="${esemenyModositas.id == null} and ${esemenyModositasJogVan}"
         th:action="@{'/esemeny'}"
         method="post" th:object="${createEsemenyCommand}" class="row">
     <div class="col">
@@ -103,7 +103,7 @@
     </div>
 </form>
 
-<form th:if="${esemenyModositas.id != null} and ${esemenyModositasJogVan or adminModositasJogVan}"
+<form th:if="${esemenyModositas.id != null} and ${esemenyModositasJogVan}"
       th:action="@{'/esemeny/{esemenyId}' (esemenyId=${esemenyModositas.id})}"
       method="post" th:object="${esemenyModositas}" class="row">
     <div class="col">

@@ -93,10 +93,6 @@ public class EsemenyController {
         return felhasznaloService.hasRole(UserType.Roles.ESEMENY_KEZELES_ROLE);
     }
 
-    @ModelAttribute("adminModositasJogVan")
-    public boolean adminModositasJogVan(){return felhasznaloService.hasRole(UserType.Roles.USER_WRITE_ROLE);}
-
-
     @ModelAttribute("allZenekar")
     public List<ZenekarDto> allZenekar(){
         return zenekarService.findAllDto();
