@@ -67,29 +67,18 @@ public class DemoService {
                     .telefonszam("0630-111-2222")
                     .leiras("Demo leírás")
                     .build());
+
             esemenyService.createEsemeny(CreateEsemenyCommand.builder()
                     .nev(DEMO_ESEMENY)
                     .idoPont(LocalDateTime.parse("2000-02-02T10:10"))
                     .zenekarId(demoZenekar.getId())
                     .build());
+
             zeneService.createZene(ZeneDto.builder()
                     .cim("Demo Zene Cím")
                     .eloado("Demo Zene előadó")
                     .hosszMp(123)
-                    .tagStringList(new ArrayList<>())
                     .build());
-            zeneService.createTag(
-                    TagDto.builder()
-                            .tagNev("Pop")
-                            .build());
-            zeneService.createTag(
-                    TagDto.builder()
-                            .tagNev("Diundisu")
-                            .build());
-            zeneService.createTag(
-                    TagDto.builder()
-                            .tagNev("Rock")
-                            .build());
             clearAuthentication();
         }
     }

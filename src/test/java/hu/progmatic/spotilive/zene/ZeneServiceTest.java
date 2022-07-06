@@ -18,7 +18,11 @@ class ZeneServiceTest {
 
     @Test
     void createZeneTest() {
-        ZeneDto zeneDto = ZeneDto.builder().cim("Create zene cim").build();
+        ZeneDto zeneDto = ZeneDto.builder()
+                .cim("Create zene cim")
+                .hosszMp(123)
+                .eloado("Valami előadó")
+                .build();
         ZeneDto mentettZene = zeneKarbantartasService.createZene(zeneDto);
 
         assertThat(mentettZene).extracting(ZeneDto::getId).isNotNull();
@@ -35,13 +39,21 @@ class ZeneServiceTest {
 
         @BeforeEach
         void setUp() {
-            testZene = ZeneDto.builder().cim("Teszt Zene").eloado("teszt előadó").build();
+            testZene = ZeneDto.builder()
+                    .cim("Teszt Zene")
+                    .eloado("teszt előadó")
+                    .hosszMp(123)
+                    .build();
             testZene = zeneKarbantartasService.createZene(testZene);
         }
 
         @Test
         void deleteTest() {
-            ZeneDto deletezene = zeneKarbantartasService.createZene(ZeneDto.builder().cim("Delete zenecim").eloado("delete előadó").build());
+            ZeneDto deletezene = zeneKarbantartasService.createZene(ZeneDto.builder()
+                    .cim("Delete zenecim")
+                    .eloado("delete előadó")
+                    .hosszMp(123)
+                    .build());
             List<ZeneDto> lekertZenek = zeneKarbantartasService.findAllDto();
             assertThat(lekertZenek)
                     .extracting(ZeneDto::getCim)
@@ -64,6 +76,7 @@ class ZeneServiceTest {
                     .id(testZene.getId())
                     .cim("Edited cim")
                     .eloado("teszt előadó")
+                    .hosszMp(123)
                     .build();
             var modositott = zeneKarbantartasService.editZene(dto);
             assertEquals("Edited cim", modositott.getCim());
