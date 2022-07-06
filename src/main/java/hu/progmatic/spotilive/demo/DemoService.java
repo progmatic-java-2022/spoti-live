@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -74,6 +75,7 @@ public class DemoService {
                     .cim("Demo Zene Cím")
                     .eloado("Demo Zene előadó")
                     .hosszMp(123)
+                    .tagStringList(new ArrayList<>(List.of("Pop", "Diundisu", "Rock")))
                     .build());
             clearAuthentication();
         }
