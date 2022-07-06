@@ -3,6 +3,7 @@ package hu.progmatic.spotilive.zene;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -11,11 +12,11 @@ import java.util.List;
 @Data
 public class ZeneDto {
     private Integer id;
-    @NotEmpty
+    @NotBlank(message = "Nem lehet üres")
     private String cim;
-    @NotEmpty
+    @NotBlank(message = "Nem lehet üres")
     private String eloado;
-    @NotNull
+    @NotNull(message = "Nem lehet üres")
     private Integer hosszMp;
     private List<String> tagStringList;
 

@@ -25,9 +25,9 @@ public class ZeneController {
 
     @PostMapping("/zenekarbantartas/zene")
     public String addZene(
-            Model model,
-            @ModelAttribute("zenePeldany") ZeneDto dto,
-            BindingResult bindingresult
+            @ModelAttribute("zenePeldany") @Valid ZeneDto dto,
+            BindingResult bindingresult,
+            Model model
     ) {
         if (!bindingresult.hasErrors()) {
             zeneKarbantartasService.createZene(dto);

@@ -19,11 +19,11 @@ public class Zene {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @NotEmpty
+    @NotBlank(message = "Nem lehet üres")
     private String cim;
-    @NotEmpty
+    @NotBlank(message = "Nem lehet üres")
     private String eloado;
-    @NotNull
+    @NotNull(message = "Nem lehet üres")
     private Integer hosszMp;
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "zene")
