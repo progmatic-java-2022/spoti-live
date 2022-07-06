@@ -13,10 +13,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-public class ZeneKarbantartasController {
+public class ZeneController {
 
     @Autowired
-    ZeneKarbantartasService zeneKarbantartasService;
+    ZeneService zeneKarbantartasService;
 
     @GetMapping("/zene")
     public String oldaBetoltes() {

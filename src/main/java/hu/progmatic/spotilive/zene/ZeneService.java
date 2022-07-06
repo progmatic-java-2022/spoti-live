@@ -8,7 +8,7 @@ import java.util.List;
 
 @Transactional
 @Service
-public class ZeneKarbantartasService {
+public class ZeneService {
     @Autowired
     ZeneRepository zeneRepository;
 
@@ -16,7 +16,7 @@ public class ZeneKarbantartasService {
     TagRepository tagRepository;
 
     public ZeneDto createZene(ZeneDto zeneDto) {
-        ZeneEntity zene = ZeneEntity.builder()
+        Zene zene = Zene.builder()
                 .eloado(zeneDto.getEloado())
                 .hosszMp(zeneDto.getHosszMp())
                 .cim(zeneDto.getCim()).build();
@@ -43,7 +43,7 @@ public class ZeneKarbantartasService {
     }
 
     public ZeneDto editZene(ZeneDto dto) {
-        ZeneEntity zene = zeneRepository.getReferenceById(dto.getId());
+        Zene zene = zeneRepository.getReferenceById(dto.getId());
         zene.setCim(dto.getCim());
         zene.setEloado(dto.getEloado());
         zene.setHosszMp(dto.getHosszMp());
@@ -56,7 +56,7 @@ public class ZeneKarbantartasService {
     }
 
     public TagDto createTag(TagDto dto) {
-       TagEntity tagEntity = TagEntity.builder().tagNev(dto.getTagNev()).build();
+       Tag tagEntity = Tag.builder().tagNev(dto.getTagNev()).build();
        return TagDto.factory(tagRepository.save(tagEntity));
     }
     public TagDto getTagById(Integer id){
@@ -64,9 +64,9 @@ public class ZeneKarbantartasService {
     }
 
     public void addTag(Integer zeneId, Integer tagId) {
-    ZeneEntity zene = zeneRepository.getReferenceById(zeneId);
-    TagEntity tag = tagRepository.getReferenceById(tagId);
-    TagToZeneEntity tagToZeneEntity = TagToZeneEntity
+    Zene zene = zeneRepository.getReferenceById(zeneId);
+    Tag tag = tagRepository.getReferenceById(tagId);
+    TagToZene tagToZeneEntity = TagToZene
             .builder()
             .tag(tag)
             .zene(zene)
@@ -77,28 +77,28 @@ public class ZeneKarbantartasService {
 
 
     public void editTagById(TagEditCommand command) {
-        TagEntity tagEntity = tagRepository.getReferenceById(command.getTagId());
+        Tag tagEntity = tagRepository.getReferenceById(command.getTagId());
         tagEntity.setTagNev(command.getTagNev());
     }
 
     public List<String> listAllTagStringByZeneId(Integer id) {
-        ZeneEntity zene = zeneRepository.getReferenceById(id);
+        Zene zene = zeneRepository.getReferenceById(id);
         return ZeneDto.factory(zene).getTagStringList();
     }
 
     public List<TagDto> listAllTagDtoByZeneId(Integer zeneId) {
-        ZeneEntity zene = zeneRepository.getReferenceById(zeneId);
-        List<TagEntity> tagek = zene.getTagToZeneEntityList()
+        Zene zene = zeneRepository.getReferenceById(zeneId);
+        List<Tag> tagek = zene.getTagToZeneEntityList()
                 .stream()
-                .map(TagToZeneEntity::getTag)
+                .map(TagToZene::getTag)
                 .toList();
         return tagek.stream().map(TagDto::factory).toList();
     }
 
     public void deleteTagFromZene(Integer tagId, Integer zeneId) {
-        ZeneEntity zene = zeneRepository.getReferenceById(zeneId);
-        TagEntity tag = tagRepository.getReferenceById(tagId);
-        TagToZeneEntity tagToZene = zene.getTagToZeneEntityList()
+        Zene zene = zeneRepository.getReferenceById(zeneId);
+        Tag tag = tagRepository.getReferenceById(tagId);
+        TagToZene tagToZene = zene.getTagToZeneEntityList()
                 .stream()
                 .filter(tagToZeneEntity -> tagToZeneEntity.getTag().getId().equals(tagId))
                 .findFirst()

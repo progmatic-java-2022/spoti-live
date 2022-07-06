@@ -11,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-class ZeneKarbantartasServiceTest {
+class ZeneServiceTest {
 
     @Autowired
-    ZeneKarbantartasService zeneKarbantartasService;
+    ZeneService zeneKarbantartasService;
 
     @Test
     void createZeneTest() {

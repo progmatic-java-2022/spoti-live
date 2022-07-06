@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ZeneEntity {
+public class Zene {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -21,6 +21,6 @@ public class ZeneEntity {
     private Integer hosszMp;
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "zene")
-    private List<TagToZeneEntity> tagToZeneEntityList = new ArrayList<>();
+    private List<TagToZene> tagToZeneEntityList = new ArrayList<>();
 
 }

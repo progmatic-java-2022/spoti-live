@@ -1,11 +1,10 @@
 package hu.progmatic.spotilive.demo;
 
 import hu.progmatic.spotilive.esemeny.CreateEsemenyCommand;
-import hu.progmatic.spotilive.esemeny.EsemenyDto;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zene.ZeneDto;
-import hu.progmatic.spotilive.zene.ZeneKarbantartasService;
+import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.ZenekarDto;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class DemoService {
     @Autowired
     private EsemenyService esemenyService;
     @Autowired
-    private ZeneKarbantartasService zeneKarbantartasService;
+    private ZeneService zeneKarbantartasService;
 
     private void clearAuthentication() {
         SecurityContextHolder.getContext().setAuthentication(null);

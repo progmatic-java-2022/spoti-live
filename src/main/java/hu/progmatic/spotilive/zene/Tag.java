@@ -12,14 +12,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TagEntity {
+public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String tagNev;
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "tag")
-    private List<TagToZeneEntity> tagToZeneEntityList = new ArrayList<>();
+    private List<TagToZene> tagToZeneEntityList = new ArrayList<>();
 
 
 }

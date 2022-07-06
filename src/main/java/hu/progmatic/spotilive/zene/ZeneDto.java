@@ -15,7 +15,7 @@ public class ZeneDto {
     private List<String> tagStringList;
 
 
-    public static ZeneDto factory(ZeneEntity zene) {
+    public static ZeneDto factory(Zene zene) {
         return ZeneDto.builder()
                 .cim(zene.getCim())
                 .id(zene.getId())
@@ -24,11 +24,11 @@ public class ZeneDto {
                 .build();
     }
 
-    private static List<String> getTagStringList(List<TagToZeneEntity> tagToZeneEntityList) {
+    private static List<String> getTagStringList(List<TagToZene> tagToZeneEntityList) {
         return tagToZeneEntityList
                 .stream()
-                .map(TagToZeneEntity::getTag)
-                .map(TagEntity::getTagNev)
+                .map(TagToZene::getTag)
+                .map(Tag::getTagNev)
                 .toList();
     }
 

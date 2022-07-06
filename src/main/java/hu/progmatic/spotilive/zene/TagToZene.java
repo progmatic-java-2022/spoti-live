@@ -10,13 +10,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TagToZeneEntity {
+public class TagToZene {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @ManyToOne
-    private ZeneEntity zene;
+    private Zene zene;
     @ManyToOne
-    private TagEntity tag;
+    private Tag tag;
 
 }

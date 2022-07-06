@@ -3,8 +3,6 @@ package hu.progmatic.spotilive.zene;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.ManyToOne;
 import java.util.List;
 
 @Data
@@ -15,7 +13,7 @@ public class TagDto {
     private String tagNev;
     private List<ZeneDto> zeneDtoList;
 
-    public static TagDto factory(TagEntity tag) {
+    public static TagDto factory(Tag tag) {
         return TagDto.builder()
                 .id(tag.getId())
                 .tagNev(tag.getTagNev())
@@ -23,8 +21,8 @@ public class TagDto {
                 .build();
     }
 
-    private static List<ZeneDto> getZeneDtoList(TagEntity tag) {
-       List<ZeneEntity> zenek = tag.getTagToZeneEntityList().stream().map(TagToZeneEntity::getZene).toList();
+    private static List<ZeneDto> getZeneDtoList(Tag tag) {
+       List<Zene> zenek = tag.getTagToZeneEntityList().stream().map(TagToZene::getZene).toList();
        return zenek.stream().map(ZeneDto::factory).toList();
 
     }
