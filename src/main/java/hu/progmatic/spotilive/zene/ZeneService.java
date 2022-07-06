@@ -75,7 +75,6 @@ public class ZeneService {
     tag.getTagToZeneEntityList().add(tagToZeneEntity);
     }
 
-
     public void editTagById(TagEditCommand command) {
         Tag tagEntity = tagRepository.getReferenceById(command.getTagId());
         tagEntity.setTagNev(command.getTagNev());
@@ -108,7 +107,6 @@ public class ZeneService {
 
     }
 
-
     public List<TagDto> getAllTag() {
         return tagRepository.findAll().stream().map(TagDto::factory).toList();
     }
@@ -117,4 +115,5 @@ public class ZeneService {
         tagRepository.deleteById(id);
         //meg nem jo mert a kapcsolat nem torlodik a zenebol
     }
+
 }
