@@ -116,6 +116,11 @@ public class ZeneService {
         //meg nem jo mert a kapcsolat nem torlodik a zenebol
     }
 
+    public List<TagDto> findAllTagDto() {
+        return tagRepository.findAll().stream().map(TagDto::factory).toList();
+    }
+
+
     public Zene getZeneById(Integer zeneId) {
         return zeneRepository.getReferenceById(zeneId);
     }
