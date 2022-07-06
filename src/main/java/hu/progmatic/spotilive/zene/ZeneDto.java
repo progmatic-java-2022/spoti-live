@@ -20,6 +20,7 @@ public class ZeneDto {
                 .cim(zene.getCim())
                 .id(zene.getId())
                 .eloado(zene.getEloado())
+                .hosszMp(zene.getHosszMp())
                 .tagStringList(getTagStringList(zene.getTagToZeneEntityList()))
                 .build();
     }

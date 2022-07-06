@@ -73,6 +73,7 @@ public class DemoService {
             zeneKarbantartasService.createZene(ZeneDto.builder()
                     .cim("Demo Zene Cím")
                     .eloado("Demo Zene előadó")
+                    .hosszMp(123)
                     .build());
             clearAuthentication();
         }
