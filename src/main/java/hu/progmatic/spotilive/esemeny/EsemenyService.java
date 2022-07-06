@@ -1,6 +1,8 @@
 package hu.progmatic.spotilive.esemeny;
 
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.zene.ZeneDto;
+import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.Zenekar;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,9 @@ public class EsemenyService {
 
     @Autowired
     private ZenekarService zenekarService;
+    @Autowired
+    private ZeneService zeneService;
+
 
     @RolesAllowed(UserType.Roles.ESEMENY_KEZELES_ROLE)
     public EsemenyDto createEsemeny(CreateEsemenyCommand esemeny) {
@@ -65,4 +70,16 @@ public class EsemenyService {
     public EsemenyDto getByName(String esemenyNev) {
         return EsemenyDto.factory(esemenyRepository.findEsemenyByNevContainingIgnoreCase(esemenyNev));
     }
+
+    public void addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand command) {
+        var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
+        var zene = zeneService.getZeneById(command.getZeneId());
+        ZeneToEsemeny zeneEsemeny = ZeneToEsemeny.builder()
+                .zene(zene)
+                .esemeny(esemeny)
+                .build();
+        esemeny.getZenek().add(zeneEsemeny);
+        zene.getEsemenyek().add(zeneEsemeny);
+
+}
 }

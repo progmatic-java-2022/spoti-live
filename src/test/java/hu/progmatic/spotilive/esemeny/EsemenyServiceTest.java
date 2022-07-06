@@ -2,6 +2,8 @@ package hu.progmatic.spotilive.esemeny;
 
 import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.zene.ZeneDto;
+import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,10 @@ class EsemenyServiceTest {
     @Autowired
     private ZenekarService zenekarService;
 
+
     private Integer demoZenekarId;
+    @Autowired
+    private ZeneService zeneService;
 
     @BeforeEach
     void setUp() {
@@ -42,7 +47,7 @@ class EsemenyServiceTest {
 
         assertNotNull(letrehozott.getId());
         assertEquals("Tódor Születésnapja", letrehozott.getNev());
-        assertEquals(DemoService.DEMO_ZENEKAR,letrehozott.getZenekarNev());
+        assertEquals(DemoService.DEMO_ZENEKAR, letrehozott.getZenekarNev());
 
         esemenyService.deleteEsemeny(letrehozott.getId());
         assertEquals(1, esemenyService.countAllEsemeny());
@@ -131,6 +136,30 @@ class EsemenyServiceTest {
             assertThat(esemenyService.findAllEsemeny())
                     .hasSize(3);
         }
+
+        @Test
+        void addZeneToEsemenyTest() {
+            var zene = zeneService.createZene(ZeneDto.builder()
+                    .cim("Valami cím")
+                    .eloado("Valami előadó")
+                    .hosszMp(123)
+                    .build());
+
+            esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand.builder()
+                    .esemenyId(esemeny1.getId())
+                    .zeneId(zene.getId())
+                    .build());
+
+            var esemenyZenevel = esemenyService.getById(esemeny1.getId());
+            assertEquals("Tódor Születésnapja",esemenyZenevel.getNev());
+
+            assertThat(esemenyZenevel.getZenek())
+                    .hasSize(1)
+                    .extracting(zenek -> zenek.getZene().getEloado())
+                    .contains("Valami előadó");
+
+        }
+
     }
 
 

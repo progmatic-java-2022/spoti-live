@@ -1,5 +1,8 @@
 package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.esemeny.EsemenyDto;
+import hu.progmatic.spotilive.esemeny.ZeneToEsemeny;
+import hu.progmatic.spotilive.esemeny.ZeneToEsemenyDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,5 +31,16 @@ public class Zene {
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "zene")
     private List<TagToZene> tagToZeneEntityList = new ArrayList<>();
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zene")
+    private List<ZeneToEsemeny> esemenyek = new ArrayList<>();
 
+    public List<ZeneToEsemenyDto> getEsemenyekDto() {
+        return esemenyek.stream()
+                .map(zeneToEsemeny -> ZeneToEsemenyDto.builder()
+                        .zene(zeneToEsemeny.getZene())
+                        .esemeny(zeneToEsemeny.getEsemeny())
+                        .build())
+                .toList();
+    }
 }

@@ -10,6 +10,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,4 +32,16 @@ public class Esemeny {
     @ManyToOne
     @NotNull
     private Zenekar zenekar;
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "esemeny", orphanRemoval = true)
+    private List<ZeneToEsemeny> zenek = new ArrayList<>();
+
+
+    public List<ZeneToEsemenyDto> getZenekDto() {
+        return zenek.stream().map(zeneToEsemeny -> ZeneToEsemenyDto.builder()
+                        .esemeny(zeneToEsemeny.getEsemeny())
+                        .zene(zeneToEsemeny.getZene())
+                        .build())
+                .toList();
+    }
 }

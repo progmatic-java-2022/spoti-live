@@ -1,11 +1,14 @@
 package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.esemeny.ZeneToEsemeny;
+import hu.progmatic.spotilive.esemeny.ZeneToEsemenyDto;
 import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -19,6 +22,8 @@ public class ZeneDto {
     @NotNull(message = "Nem lehet üres")
     private Integer hosszMp;
     private List<String> tagStringList;
+    @Builder.Default
+    private List<ZeneToEsemenyDto> esemenyek=new ArrayList<>();
 
 
     public static ZeneDto factory(Zene zene) {
@@ -28,6 +33,7 @@ public class ZeneDto {
                 .eloado(zene.getEloado())
                 .hosszMp(zene.getHosszMp())
                 .tagStringList(getTagStringList(zene.getTagToZeneEntityList()))
+                .esemenyek(zene.getEsemenyekDto())
                 .build();
     }
 

@@ -116,4 +116,7 @@ public class ZeneService {
         //meg nem jo mert a kapcsolat nem torlodik a zenebol
     }
 
+    public Zene getZeneById(Integer zeneId) {
+        return zeneRepository.getReferenceById(zeneId);
+    }
 }
