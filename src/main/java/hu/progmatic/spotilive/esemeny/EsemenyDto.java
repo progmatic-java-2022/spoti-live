@@ -33,7 +33,9 @@ public class EsemenyDto {
                 .nev(esemeny.getNev())
                 .idoPont(esemeny.getIdopont())
                 .zenekarNev(esemeny.getZenekar().getNev())
-                .zenek(esemeny.getZenekDto())
+                .zenek(esemeny.getZenek().stream()
+                        .map(ZeneToEsemenyDto::factory)
+                        .toList())
                 .build();
     }
 

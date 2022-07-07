@@ -37,11 +37,4 @@ public class Esemeny {
     private List<ZeneToEsemeny> zenek = new ArrayList<>();
 
 
-    public List<ZeneToEsemenyDto> getZenekDto() {
-        return zenek.stream().map(zeneToEsemeny -> ZeneToEsemenyDto.builder()
-                        .esemeny(zeneToEsemeny.getEsemeny())
-                        .zene(zeneToEsemeny.getZene())
-                        .build())
-                .toList();
-    }
 }

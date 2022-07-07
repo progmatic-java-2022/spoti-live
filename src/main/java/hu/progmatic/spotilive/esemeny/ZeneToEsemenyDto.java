@@ -14,4 +14,11 @@ public class ZeneToEsemenyDto {
     private Zene zene;
     @Builder.Default
     private Integer szavazat = 0;
+
+    public static ZeneToEsemenyDto factory(ZeneToEsemeny entity){
+        return ZeneToEsemenyDto.builder()
+                .esemeny(entity.getEsemeny())
+                .zene(entity.getZene())
+                .build();
+    }
 }

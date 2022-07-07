@@ -33,7 +33,6 @@ public class ZeneDto {
                 .eloado(zene.getEloado())
                 .hosszMp(zene.getHosszMp())
                 .tagStringList(getTagStringList(zene.getTagToZeneEntityList()))
-                .esemenyek(zene.getEsemenyekDto())
                 .build();
     }
 

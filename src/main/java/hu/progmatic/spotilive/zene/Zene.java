@@ -35,12 +35,4 @@ public class Zene {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zene")
     private List<ZeneToEsemeny> esemenyek = new ArrayList<>();
 
-    public List<ZeneToEsemenyDto> getEsemenyekDto() {
-        return esemenyek.stream()
-                .map(zeneToEsemeny -> ZeneToEsemenyDto.builder()
-                        .zene(zeneToEsemeny.getZene())
-                        .esemeny(zeneToEsemeny.getEsemeny())
-                        .build())
-                .toList();
-    }
 }

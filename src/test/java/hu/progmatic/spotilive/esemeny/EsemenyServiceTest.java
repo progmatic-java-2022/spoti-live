@@ -151,7 +151,7 @@ class EsemenyServiceTest {
                     .build());
 
             var esemenyZenevel = esemenyService.getById(esemeny1.getId());
-            assertEquals("Tódor Születésnapja",esemenyZenevel.getNev());
+            assertEquals("Tódor Születésnapja", esemenyZenevel.getNev());
 
             assertThat(esemenyZenevel.getZenek())
                     .hasSize(1)
@@ -159,8 +159,5 @@ class EsemenyServiceTest {
                     .contains("Valami előadó");
 
         }
-
     }
-
-
 }
