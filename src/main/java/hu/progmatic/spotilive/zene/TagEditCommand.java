@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.tag.TagKategoria;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,4 +11,5 @@ public class TagEditCommand {
     private String tagNev;
     private Integer tagId;
     private Integer zeneId;
+    private TagKategoria tagKategoria;
 }

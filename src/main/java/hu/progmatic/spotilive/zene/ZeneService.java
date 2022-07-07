@@ -1,5 +1,8 @@
 package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.tag.Tag;
+import hu.progmatic.spotilive.tag.TagDto;
+import hu.progmatic.spotilive.tag.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

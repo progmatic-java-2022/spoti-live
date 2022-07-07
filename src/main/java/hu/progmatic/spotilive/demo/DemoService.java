@@ -3,7 +3,9 @@ package hu.progmatic.spotilive.demo;
 import hu.progmatic.spotilive.esemeny.CreateEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
-import hu.progmatic.spotilive.zene.TagDto;
+import hu.progmatic.spotilive.tag.TagKategoria;
+import hu.progmatic.spotilive.tag.TagService;
+import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.ZenekarDto;
@@ -19,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,12 +32,17 @@ public class DemoService {
 
     public static final String DEMO_ZENEKAR = "Demo zenekar";
     public static final String DEMO_ESEMENY = "Demo esemény";
+
+    public static final String DEMO_TAG = "Demo tag";
     @Autowired
     ZenekarService zenekarService;
     @Autowired
     private EsemenyService esemenyService;
     @Autowired
     private ZeneService zeneService;
+
+    @Autowired
+    private TagService tagService;
 
     private void clearAuthentication() {
         SecurityContextHolder.getContext().setAuthentication(null);
