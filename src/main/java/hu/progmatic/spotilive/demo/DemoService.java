@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.demo;
 
+import hu.progmatic.spotilive.esemeny.AddZeneToEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.CreateEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
@@ -31,6 +32,7 @@ public class DemoService {
 
     public static final String DEMO_ZENEKAR = "Demo zenekar";
     public static final String DEMO_ESEMENY = "Demo esemény";
+    public static final String DEMO_ZENE = "Demo zene cím";
     @Autowired
     ZenekarService zenekarService;
     @Autowired
@@ -68,17 +70,24 @@ public class DemoService {
                     .leiras("Demo leírás")
                     .build());
 
-            esemenyService.createEsemeny(CreateEsemenyCommand.builder()
+            var demoEsemeny = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
                     .nev(DEMO_ESEMENY)
                     .idoPont(LocalDateTime.parse("2000-02-02T10:10"))
                     .zenekarId(demoZenekar.getId())
                     .build());
 
-            zeneService.createZene(ZeneDto.builder()
-                    .cim("Demo Zene Cím")
+            var demoZene = zeneService.createZene(ZeneDto.builder()
+                    .cim(DEMO_ZENE)
                     .eloado("Demo Zene előadó")
                     .hosszMp(123)
                     .build());
+
+            esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand
+                    .builder()
+                    .esemenyId(demoEsemeny.getId())
+                    .zeneId(demoZene.getId())
+                    .build());
+
             clearAuthentication();
         }
     }
