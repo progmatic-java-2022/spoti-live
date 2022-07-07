@@ -27,9 +27,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="tag : ${eredetiTagLista}">
-        <td th:text="${tag.id}">Id</td>
-        <td th:text="${tag.tagNev}">Zenekar neve</td>
+    <tr>
+        <td>Id</td>
+        <td>Zenekar neve</td>
         <td>
             <div class="row">
                 <div class="col">
@@ -43,9 +43,73 @@
                     </form>
                 </div>
                 <div class="col">
-                    <form th:action="@{'/tagek'}" method="get">
-                        <input type="submit" class="btn btn-primary" value="Hozzáad"/>
-                    </form>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Launch demo modal
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade modal-dialog-centered modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Zene Tag Listája</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <table class="table table-dark table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Tag neve</th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr >
+                                            <td >Id</td>
+                                            <td >Zenekar neve</td>
+                                            <td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <form th:action="@{'/tagek'}" method="get">
+                                                            <input type="submit" class="btn btn-primary" value="Módosít"/>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col">
+                                                        <form th:action="@{'/tagek'}" method="post">
+                                                            <input type="submit" class="btn btn-danger" value="Törlés"/>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col">
+                                                        <form th:action="@{'/tagek'}" method="post">
+                                                            <input type="submit" class="btn btn-danger" value="Törlés"/>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col">
+                                                        <form th:action="@{'/tagek'}" method="post">
+                                                            <input type="submit" class="btn btn-danger" value="Törlés"/>
+                                                        </form>
+                                                    </div>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </td>
