@@ -16,7 +16,7 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <h1>Tag Lista</h1>
-<table class="table table-dark table-striped">
+<table class="table table-grey table-striped">
     <thead>
     <tr>
         <th scope="col">Id</th>
@@ -27,9 +27,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="tag : ${eredetiTagLista}">
-        <td th:text="${tag.id}">Id</td>
-        <td th:text="${tag.tagNev}">Zenekar neve</td>
+    <tr>
+        <td>Id</td>
+        <td>Zenekar neve</td>
         <td>
             <div class="row">
                 <div class="col">
@@ -43,9 +43,160 @@
                     </form>
                 </div>
                 <div class="col">
-                    <form th:action="@{'/tagek'}" method="get">
-                        <input type="submit" class="btn btn-primary" value="Hozzáad"/>
-                    </form>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Launch demo modal
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <h3>Műfaj tagek</h3>
+                                        <table class="table table-success table-striped">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <div>
+                                                <tr>
+                                                    <th>Teszt mufaj</th>
+                                                    <td>
+                                                        <div class="col">
+                                                            <form>
+                                                                <input type="submit" class="btn btn-danger"
+                                                                       value="Remove"/>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                            </tbody>
+                                        </table>
+
+                                        <table class="table table-danger table-striped">
+                                            <tbody>
+                                            <div>
+                                                <tr>
+                                                    <th>Teszt Mufaj</th>
+                                                    <td>
+                                                        <div class="col">
+                                                            <form>
+                                                                <input type="submit" class="btn btn-success"
+                                                                       value="Add"/>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                            </tbody>
+                                        </table>
+
+                                        <h3>Tempo tagek</h3>
+                                        <table class="table table-success table-striped">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <div>
+                                                <tr>
+                                                    <th>Teszt Tempo</th>
+                                                    <td>
+                                                        <div class="col">
+                                                            <form>
+                                                                <input type="submit" class="btn btn-danger"
+                                                                       value="Remove"/>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                            </tbody>
+                                        </table>
+
+                                        <table class="table table-danger table-striped">
+                                            <tbody>
+                                            <div>
+                                                <tr>
+                                                    <th>Teszt Tempo</th>
+                                                    <td>
+                                                        <div class="col">
+                                                            <form>
+                                                                <input type="submit" class="btn btn-success"
+                                                                       value="Add"/>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                            </tbody>
+                                        </table>
+
+                                        <h3>Hangulat tagek</h3>
+                                        <table class="table table-success table-striped">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <div>
+                                                <tr>
+                                                    <th>Teszt Hangulat</th>
+                                                    <td>
+                                                        <div class="col">
+                                                            <form>
+                                                                <input type="submit" class="btn btn-danger"
+                                                                       value="Remove"/>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                            </tbody>
+                                        </table>
+
+                                        <table class="table table-danger table-striped">
+                                            <tbody>
+                                            <div>
+                                                <tr>
+                                                    <th>Teszt Hangulat</th>
+                                                    <td>
+                                                        <div class="col">
+                                                            <form>
+                                                                <input type="submit" class="btn btn-success"
+                                                                       value="Add"/>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                            </tbody>
+                                        </table>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </td>
