@@ -85,7 +85,7 @@ public class EsemenyService {
 
     }
 
-    public void AddSzavazat(AddSzavazatCommand command) {
+    public void addSzavazat(AddSzavazatCommand command) {
     var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
     var modositando = esemeny.getZenek()
             .stream()

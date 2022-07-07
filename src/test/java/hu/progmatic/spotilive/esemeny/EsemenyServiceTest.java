@@ -198,7 +198,7 @@ class EsemenyServiceTest {
                 assertEquals(2, esemenyZenevel.getZenek().size());
                 assertEquals("Teszt zene1", zeneService.getBycim("Teszt zene1").getCim());
 
-                esemenyService.AddSzavazat(AddSzavazatCommand.builder()
+                esemenyService.addSzavazat(AddSzavazatCommand.builder()
                         .esemenyId(esemenyZenevel.getId())
                         .zeneId(zeneService.getBycim("Teszt zene1").getId())
                         .build());
