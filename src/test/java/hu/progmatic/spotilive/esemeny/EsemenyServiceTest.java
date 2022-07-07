@@ -12,7 +12,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -158,6 +157,60 @@ class EsemenyServiceTest {
                     .extracting(zenek -> zenek.getZene().getEloado())
                     .contains("Valami előadó");
 
+        }
+
+        @Nested
+        class EsemenyZenekkelTest {
+            ZeneDto zene1;
+            ZeneDto zene2;
+
+            @BeforeEach
+            void setUp() {
+                zene1 = zeneService.createZene(ZeneDto
+                        .builder()
+                        .cim("Teszt zene1")
+                        .hosszMp(123)
+                        .eloado("Teszt eloado1")
+                        .build());
+                zene2 = zeneService.createZene(ZeneDto
+                        .builder()
+                        .eloado("Teszt eloado2")
+                        .hosszMp(123)
+                        .cim("Teszt zene2")
+                        .build());
+
+                esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand
+                        .builder()
+                        .zeneId(zene1.getId())
+                        .esemenyId(esemeny1.getId())
+                        .build());
+
+                esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand
+                        .builder()
+                        .esemenyId(esemeny1.getId())
+                        .zeneId(zene2.getId())
+                        .build());
+            }
+
+            @Test
+            void addSzavazatToZene() {
+                var esemenyZenevel = esemenyService.getById(esemeny1.getId());
+                assertEquals(2, esemenyZenevel.getZenek().size());
+                assertEquals("Teszt zene1", zeneService.getBycim("Teszt zene1").getCim());
+
+                esemenyService.AddSzavazat(AddSzavazatCommand.builder()
+                        .esemenyId(esemenyZenevel.getId())
+                        .zeneId(zeneService.getBycim("Teszt zene1").getId())
+                        .build());
+                var modositottEsemeny = esemenyService.getById(esemeny1.getId());
+                var zeneSzavazattal = modositottEsemeny.getZenek().stream()
+                        .filter(zene -> zene.getZene().getId().equals(
+                                zeneService.getBycim("Teszt zene1").getId()))
+                        .findFirst()
+                        .orElseThrow();
+                assertEquals(1,zeneSzavazattal.getSzavazat());
+
+            }
         }
     }
 }

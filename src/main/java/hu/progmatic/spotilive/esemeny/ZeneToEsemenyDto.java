@@ -19,6 +19,7 @@ public class ZeneToEsemenyDto {
         return ZeneToEsemenyDto.builder()
                 .esemeny(entity.getEsemeny())
                 .zene(entity.getZene())
+                .szavazat(entity.getSzavazat())
                 .build();
     }
 }

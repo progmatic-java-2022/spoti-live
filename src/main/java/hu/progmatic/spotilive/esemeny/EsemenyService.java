@@ -1,7 +1,6 @@
 package hu.progmatic.spotilive.esemeny;
 
 import hu.progmatic.spotilive.felhasznalo.UserType;
-import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.Zenekar;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -71,6 +69,10 @@ public class EsemenyService {
         return EsemenyDto.factory(esemenyRepository.findEsemenyByNevContainingIgnoreCase(esemenyNev));
     }
 
+    public Esemeny getEsemenyById(Integer id) {
+        return esemenyRepository.getReferenceById(id);
+    }
+
     public void addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand command) {
         var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
         var zene = zeneService.getZeneById(command.getZeneId());
@@ -81,5 +83,15 @@ public class EsemenyService {
         esemeny.getZenek().add(zeneEsemeny);
         zene.getEsemenyek().add(zeneEsemeny);
 
-}
+    }
+
+    public void AddSzavazat(AddSzavazatCommand command) {
+    var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
+    var modositando = esemeny.getZenek()
+            .stream()
+            .filter(zene -> zene.getZene().getId().equals(command.getZeneId()))
+            .findFirst()
+            .orElseThrow();
+    modositando.setSzavazat(modositando.getSzavazat() + 1);
+    }
 }
