@@ -32,6 +32,7 @@ public class ZenekarService {
                 .email(zenekarDto.getEmail())
                 .telefonszam(zenekarDto.getTelefonszam())
                 .leiras(zenekarDto.getLeiras())
+                .varos(zenekarDto.getVaros())
                 .build();
         return ZenekarDto.factory(zenekarRepository.save(zenekar));
     }
@@ -60,6 +61,7 @@ public class ZenekarService {
         zenekar.setNev(dto.getNev());
         zenekar.setEmail(dto.getEmail());
         zenekar.setLeiras(dto.getLeiras());
+        zenekar.setVaros(dto.getVaros());
         return ZenekarDto.factory(zenekar);
     }
 
@@ -70,4 +72,5 @@ public class ZenekarService {
     public Zenekar getZenekarEntityById(Integer zenekarId) {
         return zenekarRepository.getReferenceById(zenekarId);
     }
+
 }
