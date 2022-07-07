@@ -26,11 +26,12 @@ class ZenekarServiceTest {
     @Test
     @WithMockUser(roles = UserType.Roles.ZENEKAR_KEZELES_ROLE)
     void createZenekar() {
-        ZenekarDto zenekarDto = ZenekarDto.builder().nev("Teszt Zenekar").email("teszt2@gmail.com").build();
+        ZenekarDto zenekarDto = ZenekarDto.builder().nev("Teszt Zenekar").email("teszt2@gmail.com").varos("Győr").build();
         ZenekarDto mentettDto = zenekarService.createZenekar(zenekarDto);
 
         assertNotNull(mentettDto.getId());
         assertEquals("Teszt Zenekar", mentettDto.getNev());
+        assertEquals("Győr", mentettDto.getVaros());
         zenekarService.deleteById(mentettDto.getId());
     }
 
@@ -52,7 +53,7 @@ class ZenekarServiceTest {
 
         @Test
         void deleteTest() {
-            ZenekarDto deletezenekar = zenekarService.createZenekar(ZenekarDto.builder().nev("Delete zenekar").email("teszt4@gmail.com").build());
+            ZenekarDto deletezenekar = zenekarService.createZenekar(ZenekarDto.builder().nev("Delete zenekar").email("teszt4@gmail.com").varos("Budapest").build());
             List<ZenekarDto> lekertZenekarok = zenekarService.findAllDto();
             assertThat(lekertZenekarok)
                     .extracting(ZenekarDto::getNev)
@@ -75,9 +76,11 @@ class ZenekarServiceTest {
                     .id(testZenekar.getId())
                     .nev("Edited name")
                     .email("teszt5@gmail.com")
+                    .varos("Budapest volt")
                     .build();
             var modositott = zenekarService.editZenekar(dto);
             assertEquals("Edited name", modositott.getNev());
+            assertEquals("Budapest volt", modositott.getVaros());
 
         }
 

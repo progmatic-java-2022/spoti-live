@@ -67,6 +67,7 @@ public class DemoService {
                     .nev(DEMO_ZENEKAR)
                     .email("teszt@gmail.com")
                     .telefonszam("0630-111-2222")
+                    .varos("Budapest")
                     .leiras("Demo leírás")
                     .build());
 

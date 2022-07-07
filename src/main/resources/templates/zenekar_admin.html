@@ -24,6 +24,7 @@
             <th scope="col">Nev</th>
             <th scope="col">Email</th>
             <th scope="col">Telefon</th>
+            <th scope="col">Város</th>
             <th scope="col">Leírás</th>
             <th scope="col"></th>
             <th scope="col"></th>
@@ -34,6 +35,7 @@
             <td th:text = "${zenekar.nev}">Nev</td>
             <td th:text = "${zenekar.email}">Email</td>
             <td th:text = "${zenekar.telefonszam}">Telefon</td>
+            <td th:text = "${zenekar.varos}">Város</td>
             <td th:text = "${zenekar.leiras}">Leírás</td>
             <td>
                 <div class="row">
@@ -91,6 +93,20 @@
                 <div class="invalid-feedback"
                      th:if="${#fields.hasErrors('email')}"
                      th:errors="*{email}">
+                    Hibaüzenet
+                </div>
+            </label>
+        </div>
+        <div class="col">
+            <label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Város"
+                       th:field="*{varos}"
+                       th:classappend="${#fields.hasErrors('varos')} ? 'is-invalid' : 'is-valid'"/>
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('varos')}"
+                     th:errors="*{varos}">
                     Hibaüzenet
                 </div>
             </label>
