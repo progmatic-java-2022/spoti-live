@@ -14,6 +14,7 @@ public class TagDto {
 
     private Integer id;
     private String tagNev;
+    private TagKategoria tagKategoria;
     private List<ZeneDto> zeneDtoList;
 
     public static TagDto factory(Tag tag) {
@@ -21,6 +22,7 @@ public class TagDto {
                 .id(tag.getId())
                 .tagNev(tag.getTagNev())
                 .zeneDtoList(getZeneDtoList(tag))
+                .tagKategoria(tag.getTagKategoria())
                 .build();
     }
 

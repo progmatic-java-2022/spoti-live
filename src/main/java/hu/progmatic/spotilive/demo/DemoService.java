@@ -82,6 +82,11 @@ public class DemoService {
                     .zenekarId(demoZenekar.getId())
                     .build());
 
+            tagService.createTag(TagDto.builder()
+                            .tagNev(DEMO_TAG)
+                            .tagKategoria(TagKategoria.MUFAJ)
+                    .build());
+
             var demoZene = zeneService.createZene(ZeneDto.builder()
                     .cim(DEMO_ZENE)
                     .eloado("Demo Zene előadó")

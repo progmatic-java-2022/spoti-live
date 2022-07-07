@@ -18,6 +18,9 @@ class ZeneServiceTest {
     @Autowired
     ZeneService zeneKarbantartasService;
 
+    @Autowired
+    TagService tagService;
+
     @Test
     void createZeneTest() {
         ZeneDto zeneDto = ZeneDto.builder()
@@ -94,6 +97,7 @@ class ZeneServiceTest {
         void addTagTest() {
             TagDto dto = TagDto.builder()
                     .tagNev("Teszt tag")
+                    .tagKategoria(TagKategoria.MUFAJ)
                     .build();
 
             TagDto mentettTag = tagService.createTag(dto);
@@ -107,6 +111,7 @@ class ZeneServiceTest {
         void deleteTestfromZeneById() {
             TagDto dto = TagDto.builder()
                     .tagNev("Teszt tag")
+                    .tagKategoria(TagKategoria.HANGULAT)
                     .build();
             TagDto mentettTag = tagService.createTag(dto);
 
