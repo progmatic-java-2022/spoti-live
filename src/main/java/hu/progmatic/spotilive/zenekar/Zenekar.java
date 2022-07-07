@@ -29,5 +29,5 @@ public class Zenekar {
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "zenekar")
     private List<Esemeny> esemenyek = new ArrayList<>();
-
+    private String varos;
 }

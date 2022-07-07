@@ -1,5 +1,8 @@
 package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.tag.Tag;
+import hu.progmatic.spotilive.tag.TagDto;
+import hu.progmatic.spotilive.tag.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,14 +58,6 @@ public class ZeneService {
         return (int) zeneRepository.count();
     }
 
-    public TagDto createTag(TagDto dto) {
-       Tag tagEntity = Tag.builder().tagNev(dto.getTagNev()).build();
-       return TagDto.factory(tagRepository.save(tagEntity));
-    }
-    public TagDto getTagById(Integer id){
-        return TagDto.factory(tagRepository.getReferenceById(id));
-    }
-
     public void addTag(Integer zeneId, Integer tagId) {
     Zene zene = zeneRepository.getReferenceById(zeneId);
     Tag tag = tagRepository.getReferenceById(tagId);
@@ -73,11 +68,6 @@ public class ZeneService {
             .build();
     zene.getTagToZeneEntityList().add(tagToZeneEntity);
     tag.getTagToZeneEntityList().add(tagToZeneEntity);
-    }
-
-    public void editTagById(TagEditCommand command) {
-        Tag tagEntity = tagRepository.getReferenceById(command.getTagId());
-        tagEntity.setTagNev(command.getTagNev());
     }
 
     public List<String> listAllTagStringByZeneId(Integer id) {
@@ -106,20 +96,6 @@ public class ZeneService {
     tag.getTagToZeneEntityList().remove(tagToZene);
 
     }
-
-    public List<TagDto> getAllTag() {
-        return tagRepository.findAll().stream().map(TagDto::factory).toList();
-    }
-
-    public void deleteTagById(Integer id) {
-        tagRepository.deleteById(id);
-        //meg nem jo mert a kapcsolat nem torlodik a zenebol
-    }
-
-    public List<TagDto> findAllTagDto() {
-        return tagRepository.findAll().stream().map(TagDto::factory).toList();
-    }
-
 
     public Zene getZeneById(Integer zeneId) {
         return zeneRepository.getReferenceById(zeneId);

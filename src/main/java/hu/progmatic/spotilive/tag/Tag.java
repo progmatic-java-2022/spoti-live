@@ -1,8 +1,11 @@
-package hu.progmatic.spotilive.zene;
+package hu.progmatic.spotilive.tag;
 
+import hu.progmatic.spotilive.zene.TagToZene;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +20,13 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String tagNev;
+    @Enumerated(value = EnumType.STRING)
+    @NotNull
+    private TagKategoria tagKategoria;
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "tag")
     private List<TagToZene> tagToZeneEntityList = new ArrayList<>();
+
 
 
 }

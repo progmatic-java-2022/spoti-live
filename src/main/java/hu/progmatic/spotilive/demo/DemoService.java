@@ -4,7 +4,9 @@ import hu.progmatic.spotilive.esemeny.AddZeneToEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.CreateEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
-import hu.progmatic.spotilive.zene.TagDto;
+import hu.progmatic.spotilive.tag.TagKategoria;
+import hu.progmatic.spotilive.tag.TagService;
+import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.ZenekarDto;
@@ -20,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,6 +33,8 @@ public class DemoService {
 
     public static final String DEMO_ZENEKAR = "Demo zenekar";
     public static final String DEMO_ESEMENY = "Demo esemény";
+
+    public static final String DEMO_TAG = "Demo tag";
     public static final String DEMO_ZENE = "Demo zene cím";
     @Autowired
     ZenekarService zenekarService;
@@ -39,6 +42,9 @@ public class DemoService {
     private EsemenyService esemenyService;
     @Autowired
     private ZeneService zeneService;
+
+    @Autowired
+    private TagService tagService;
 
     private void clearAuthentication() {
         SecurityContextHolder.getContext().setAuthentication(null);
@@ -67,6 +73,7 @@ public class DemoService {
                     .nev(DEMO_ZENEKAR)
                     .email("teszt@gmail.com")
                     .telefonszam("0630-111-2222")
+                    .varos("Budapest")
                     .leiras("Demo leírás")
                     .build());
 
@@ -74,6 +81,11 @@ public class DemoService {
                     .nev(DEMO_ESEMENY)
                     .idoPont(LocalDateTime.parse("2000-02-02T10:10"))
                     .zenekarId(demoZenekar.getId())
+                    .build());
+
+            tagService.createTag(TagDto.builder()
+                            .tagNev(DEMO_TAG)
+                            .tagKategoria(TagKategoria.MUFAJ)
                     .build());
 
             var demoZene = zeneService.createZene(ZeneDto.builder()

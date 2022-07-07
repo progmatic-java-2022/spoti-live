@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.tag.Tag;
 import lombok.*;
 
 import javax.persistence.*;

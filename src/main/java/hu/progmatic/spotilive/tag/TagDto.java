@@ -1,5 +1,8 @@
-package hu.progmatic.spotilive.zene;
+package hu.progmatic.spotilive.tag;
 
+import hu.progmatic.spotilive.zene.TagToZene;
+import hu.progmatic.spotilive.zene.Zene;
+import hu.progmatic.spotilive.zene.ZeneDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,6 +14,7 @@ public class TagDto {
 
     private Integer id;
     private String tagNev;
+    private TagKategoria tagKategoria;
     private List<ZeneDto> zeneDtoList;
 
     public static TagDto factory(Tag tag) {
@@ -18,6 +22,7 @@ public class TagDto {
                 .id(tag.getId())
                 .tagNev(tag.getTagNev())
                 .zeneDtoList(getZeneDtoList(tag))
+                .tagKategoria(tag.getTagKategoria())
                 .build();
     }
 

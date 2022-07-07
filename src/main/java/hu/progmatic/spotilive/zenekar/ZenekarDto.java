@@ -19,6 +19,8 @@ public class ZenekarDto {
     private String email;
     private String telefonszam;
     private String leiras;
+    @NotBlank(message = "Mező kitöltése kötelező!")
+    private String varos;
 
     public static ZenekarDto factory(Zenekar zenekar){
         return ZenekarDto.builder()
@@ -27,6 +29,7 @@ public class ZenekarDto {
                 .leiras(zenekar.getLeiras())
                 .email(zenekar.getEmail())
                 .id(zenekar.getId())
+                .varos(zenekar.getVaros())
                 .build();
     }
 }
