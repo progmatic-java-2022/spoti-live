@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/kozos
+    url: jdbc:mysql://localhost:3307/spoty-live
     username: progmatic
     password: progmatic
   jpa:
@@ -52,7 +52,7 @@ spring:
     activate:
       on-profile: eles
   datasource:
-    url: jdbc:mysql://adatbazis_eles:3306/kozos
+    url: jdbc:mysql://adatbazis_eles:3306/spoty-live
     username: progmatic
     password: progmatic
     hikari:
