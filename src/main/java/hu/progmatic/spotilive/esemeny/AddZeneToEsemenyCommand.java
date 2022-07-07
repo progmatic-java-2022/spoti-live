@@ -9,5 +9,4 @@ import lombok.Data;
 public class AddZeneToEsemenyCommand {
     Integer esemenyId;
     Integer zeneId;
-    ZeneDto zene;
 }
