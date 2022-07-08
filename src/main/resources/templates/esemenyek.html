@@ -39,6 +39,11 @@
         <td>
             <div class="row">
                 <div class="col">
+                    <form  method="get">
+                        <input type="submit" class="btn btn-success" value="Tracklist">
+                    </form>
+                </div>
+                <div class="col">
                     <form th:if="${esemenyModositasJogVan}" th:action="@{'/esemeny/{id}'(id =${esemeny.id})}" method="get">
                         <input type="submit" class="btn btn-warning" value="Módosít">
                     </form>
@@ -48,6 +53,7 @@
                         <input type="submit" class="btn btn-danger" value="Törlés">
                     </form>
                 </div>
+
             </div>
         </td>
     </tr>
