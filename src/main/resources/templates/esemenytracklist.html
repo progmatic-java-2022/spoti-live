@@ -24,38 +24,19 @@
     <thead>
     <tr>
         <th scope="col">Id</th>
-        <th scope="col">Zenekar neve</th>
-        <th scope="col">Esemeny neve</th>
-        <th scope="col">Időpont</th>
+        <th scope="col">Cim</th>
+        <th scope="col">Szavazatok</th>
+        <th scope="col"></th>
         <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="esemeny : ${esemenyekLista}">
-        <td th:text="${esemeny.id}">Id</td>
-        <td th:text="${esemeny.zenekarNev}">Zenekar neve</td>
-        <td th:text="${esemeny.nev}">Név</td>
-        <td th:text="${esemeny.idoPont}">Időpont</td>
-        <td>
-            <div class="row">
-                <div class="col">
-                    <form  th:action="@{'/zenelista/esemeny/{esemenyid}' (esemenyid=${esemeny.id})}" method="get">
-                        <input type="submit" class="btn btn-success" value="Tracklist">
-                    </form>
-                </div>
-                <div class="col">
-                    <form th:if="${esemenyModositasJogVan}" th:action="@{'/esemeny/{id}'(id =${esemeny.id})}" method="get">
-                        <input type="submit" class="btn btn-warning" value="Módosít">
-                    </form>
-                </div>
-                <div class="col">
-                    <form th:if="${esemenyModositasJogVan}" th:action="@{'/esemeny/delete/{id}'(id =${esemeny.id})}" method="post">
-                        <input type="submit" class="btn btn-danger" value="Törlés">
-                    </form>
-                </div>
-
-            </div>
-        </td>
+    <tr th:each="zene : ${esemenytracklist}">
+        <td th:text="${zene.id}">Id</td>
+        <td th:text="${zene.zene.cim}">Név</td>
+        <td th:text="${zene.szavazat}">Zenekar neve</td>
+        <td></td>>
+        <td></td>>
     </tr>
     </tbody>
 </table>
