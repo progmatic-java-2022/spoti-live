@@ -45,6 +45,13 @@
     <h3 th:if="${tagPeldany.getId() == null}">Új Tag létrehozása</h3>
     <form th:action="@{'/tag/add'}"
             method="post" th:object="${tagPeldany}" class="row">
+        <div class="form-row">
+            <div th:if="${createTagError != null}"
+                 class="alert alert-danger"
+                 th:text="${createTagError}">
+                Hibaüzenet
+            </div>
+        </div>
         <div class="col">
             <label>
                 <input

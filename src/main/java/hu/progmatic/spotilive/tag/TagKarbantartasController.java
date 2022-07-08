@@ -29,10 +29,15 @@ public class TagKarbantartasController {
             Model model,
             @ModelAttribute("tagPeldany") @Valid TagDto tagDto,
             BindingResult bindingResult
-    ){
-        if (!bindingResult.hasErrors()){
-            TagDto ujTag = tagService.createTag(tagDto);
-            model.addAttribute("tagPeldany", ujTag);
+    ) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                TagDto ujTag = tagService.createTag(tagDto);
+                model.addAttribute("tagPeldany", ujTag);
+            } catch (createTagkarExeption e){
+                model.addAttribute("createTagError", e.getMessage());
+                return "/tagkarbantartas";
+            }
             return "redirect:/tag";
         }
         return "/tagkarbantartas";
@@ -42,7 +47,7 @@ public class TagKarbantartasController {
     public String deleteTag(
             Model model,
             @PathVariable Integer id
-    ){
+    ) {
         tagService.deleteTagById(id);
         return "redirect:/tag";
     }
@@ -58,8 +63,13 @@ public class TagKarbantartasController {
     }
 
     @ModelAttribute("tagkategoriak")
-    public List<TagKategoria> getKategoriak(){
+    public List<TagKategoria> getKategoriak() {
         return List.of(TagKategoria.values());
+    }
+
+    @ModelAttribute("createTagError")
+    public String ujTagHiba() {
+        return null;
     }
 
 }

@@ -1,6 +1,7 @@
 package hu.progmatic.spotilive.tag;
 
 import hu.progmatic.spotilive.zene.*;
+import hu.progmatic.spotilive.zenekar.AddZenekarExeption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class TagService {
     ZeneRepository zeneRepository;
 
     public TagDto createTag(TagDto dto) {
+        if (tagRepository.getTagByTagNev(dto.getTagNev()).isPresent()) {
+            throw new createTagkarExeption("Tag már létezik ilyen névvel!");
+        }
         Tag tagEntity = Tag.builder()
                 .tagNev(dto.getTagNev())
                 .tagKategoria(dto.getTagKategoria())
