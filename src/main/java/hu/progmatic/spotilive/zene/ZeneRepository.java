@@ -3,5 +3,5 @@ package hu.progmatic.spotilive.zene;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ZeneRepository extends JpaRepository<Zene, Integer> {
-    Zene getZeneByCimContainingIgnoreCase(String cim);
+    Zene getZeneByCim(String cim);
 }
