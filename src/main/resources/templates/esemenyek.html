@@ -39,7 +39,7 @@
         <td>
             <div class="row">
                 <div class="col">
-                    <form  method="get">
+                    <form  th:action="@{'/zenelista/esemeny/{esemenyId}' (esemenyId=${esemeny.id})}" method="get">
                         <input type="submit" class="btn btn-success" value="Tracklist">
                     </form>
                 </div>
