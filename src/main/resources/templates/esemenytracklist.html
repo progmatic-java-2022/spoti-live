@@ -32,7 +32,7 @@
     </thead>
     <tbody>
     <tr th:each="zene : ${esemenytracklist}">
-        <td th:text="${zene.id}">Id</td>
+        <td th:text="${zene.zene.id}">Id</td>
         <td th:text="${zene.zene.cim}">Név</td>
         <td th:text="${zene.szavazat}">Zenekar neve</td>
         <td></td>>
@@ -40,9 +40,9 @@
         <div class="row">
             <div class="col">
                 <form  th:action="@{'/zenelista/{zeneId}/esemeny/{esemenyId}'
-                (zeneId=${zene.id}, esemenyId=${esemeny.id})}"
+                (zeneId=${zene.zene.id}, esemenyId=${zene.esemeny.id})}"
                        method="post">
-                    <input type="submit" class="btn btn-success" value="Tracklist">
+                    <input type="submit" class="btn btn-success" value="Like">
                 </form>
             </div>
         </div>
