@@ -30,4 +30,7 @@ public class Zenekar {
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "zenekar")
     private List<Esemeny> esemenyek = new ArrayList<>();
     private String varos;
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zenekar", orphanRemoval = true)
+    List <ZeneToZenekar> zenek = new ArrayList<>();
 }

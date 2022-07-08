@@ -9,6 +9,7 @@ import hu.progmatic.spotilive.tag.TagService;
 import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
+import hu.progmatic.spotilive.zenekar.AddZeneToZenekarCommand;
 import hu.progmatic.spotilive.zenekar.ZenekarDto;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,8 +85,8 @@ public class DemoService {
                     .build());
 
             tagService.createTag(TagDto.builder()
-                            .tagNev(DEMO_TAG)
-                            .tagKategoria(TagKategoria.MUFAJ)
+                    .tagNev(DEMO_TAG)
+                    .tagKategoria(TagKategoria.MUFAJ)
                     .build());
 
             var demoZene = zeneService.createZene(ZeneDto.builder()
@@ -98,6 +99,11 @@ public class DemoService {
                     .builder()
                     .esemenyId(demoEsemeny.getId())
                     .zeneId(demoZene.getId())
+                    .build());
+
+            zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
+                    .zeneId(demoZene.getId())
+                    .zenekarId(demoZenekar.getId())
                     .build());
 
             clearAuthentication();
