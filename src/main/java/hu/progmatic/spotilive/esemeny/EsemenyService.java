@@ -102,4 +102,9 @@ public class EsemenyService {
                 .map(ZeneToEsemenyDto::factory)
                 .toList();
     }
+
+    public List<ZeneToEsemenyDto> getEsemenyZenei(Integer esemenyid) {
+        var esemeny = esemenyRepository.getReferenceById(esemenyid);
+        return esemeny.getZenek().stream().map(ZeneToEsemenyDto::factory).toList();
+    }
 }
