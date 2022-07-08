@@ -6,6 +6,7 @@ import hu.progmatic.spotilive.zene.ZeneDto;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Data
@@ -13,6 +14,7 @@ import java.util.List;
 public class TagDto {
 
     private Integer id;
+    @NotBlank(message = "Nem lehet üres!")
     private String tagNev;
     private TagKategoria tagKategoria;
     private List<ZeneDto> zeneDtoList;
