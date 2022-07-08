@@ -1,6 +1,5 @@
 package hu.progmatic.spotilive.tag;
 
-import hu.progmatic.spotilive.zene.TagEditCommand;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +11,6 @@ class TagServiceTest {
 
     @Autowired
     TagService tagService;
-
 
     @Test
     void createTagTest() {
@@ -62,6 +60,8 @@ class TagServiceTest {
 
         TagDto mentettTag = tagService.createTag(dto);
         TagDto mentettTag2 = tagService.createTag(dto2);
+
+        assertThat(tagService.getAllTag()).hasSize(5);
 
     }
 }

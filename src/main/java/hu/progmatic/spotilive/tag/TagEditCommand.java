@@ -1,4 +1,4 @@
-package hu.progmatic.spotilive.zene;
+package hu.progmatic.spotilive.tag;
 
 import hu.progmatic.spotilive.tag.TagKategoria;
 import lombok.Builder;
