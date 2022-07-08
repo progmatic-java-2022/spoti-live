@@ -70,11 +70,6 @@ public class ZeneService {
     tag.getTagToZeneEntityList().add(tagToZeneEntity);
     }
 
-    public List<String> listAllTagStringByZeneId(Integer id) {
-        Zene zene = zeneRepository.getReferenceById(id);
-        return ZeneDto.factory(zene).getTagStringList();
-    }
-
     public List<TagDto> listAllTagDtoByZeneId(Integer zeneId) {
         Zene zene = zeneRepository.getReferenceById(zeneId);
         List<Tag> tagek = zene.getTagToZeneEntityList()

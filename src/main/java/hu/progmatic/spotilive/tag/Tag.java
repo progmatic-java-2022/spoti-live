@@ -19,6 +19,7 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @Column(unique = true)
     private String tagNev;
     @Enumerated(value = EnumType.STRING)
     @NotNull

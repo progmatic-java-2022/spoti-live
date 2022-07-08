@@ -96,7 +96,7 @@ class ZeneServiceTest {
         @Test
         void addTagTest() {
             TagDto dto = TagDto.builder()
-                    .tagNev("Teszt tag")
+                    .tagNev("Teszt tag 1")
                     .tagKategoria(TagKategoria.MUFAJ)
                     .build();
 
@@ -104,7 +104,7 @@ class ZeneServiceTest {
 
             zeneKarbantartasService.addTag(testZene.getId(), mentettTag.getId());
             ZeneDto modositottZene = zeneKarbantartasService.getZeneDtoById(testZene.getId());
-            assertThat(modositottZene.getTagStringList()).hasSize(1).contains("Teszt tag");
+            assertThat(modositottZene.getTagStringList()).hasSize(1).contains("Teszt tag 1");
         }
 
         @Test

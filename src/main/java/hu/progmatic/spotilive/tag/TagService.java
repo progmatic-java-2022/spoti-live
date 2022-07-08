@@ -39,6 +39,9 @@ public class TagService {
 
     public void deleteTagById(Integer id) {
         tagRepository.deleteById(id);
-        //meg nem jo mert a kapcsolat nem torlodik a zenebol
+    }
+
+    public void deleteAlltag() {
+        tagRepository.deleteAll();
     }
 }
