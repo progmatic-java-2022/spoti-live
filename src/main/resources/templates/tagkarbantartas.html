@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Zene Karbantarás</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+<h1 th:text="${getCim}">Hello</h1>
+<ul>
+    <table class="table table-success table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Tag nev</th>
+            <th scope="col">Tag kategória</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tag : ${tagek}">
+            <td th:text="${tag.tagNev}">Nev</td>
+            <td th:text="${tag.tagKategoria.getTagKategoriaString()}">Eloado</td>
+            <td>
+                <div class="row">
+                    <div class="col">
+                        <form th:action="@{'/tag/delete/{id}'(id=${tag.id})}" method="post">
+                            <input type="submit" class="btn btn-danger" value="Törlés"/>
+                        </form>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h3 th:if="${tagPeldany.getId() == null}">Új Tag létrehozása</h3>
+    <form th:action="@{'/tag/add'}"
+            method="post" th:object="${tagPeldany}" class="row">
+        <div class="col">
+            <label>
+                <input
+                       class="form-control"
+                       placeholder="Nev"
+                       th:field="*{tagNev}"
+                       th:classappend="${#fields.hasErrors('tagNev')} ? 'is-invalid' : 'is-valid'"/>
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('tagNev')}"
+                     th:errors="*{tagNev}">
+                    Hibaüzenet
+                </div>
+            </label>
+        </div>
+        <div class="col">
+            <select th:field="*{tagKategoria}" class="form-select" >
+                <option th:each="tagkategoria : ${tagkategoriak}" th:value="${tagkategoria}" th:text="${tagkategoria.getTagKategoriaString()}" value="1">One</option>
+            </select>
+        </div>
+        <div class="col">
+            <input class="btn btn-primary" type="submit" value="Hozzáad"/>
+        </div>
+    </form>
+</ul>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+</body>
+</html>
