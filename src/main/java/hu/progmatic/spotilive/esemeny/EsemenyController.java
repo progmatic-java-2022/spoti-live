@@ -42,7 +42,7 @@ public class EsemenyController {
     @GetMapping("/esemeny/{id}")
     public String esemenySzerkesztes(Model model, @PathVariable("id") Integer id) {
         model.addAttribute("esemenyModositas",
-                esemenyService.getById(id));
+                esemenyService.getEsemenyDtoById(id));
         return "/esemenyek";
     }
 

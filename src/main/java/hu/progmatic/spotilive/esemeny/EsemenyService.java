@@ -39,7 +39,7 @@ public class EsemenyService {
         return EsemenyDto.factory(esemenyRepository.save(ujEsemeny));
     }
 
-    public EsemenyDto getById(Integer id) {
+    public EsemenyDto getEsemenyDtoById(Integer id) {
         Esemeny referenceById = esemenyRepository.getReferenceById(id);
         return EsemenyDto.factory(referenceById);
     }
@@ -93,5 +93,13 @@ public class EsemenyService {
             .findFirst()
             .orElseThrow();
     modositando.setSzavazat(modositando.getSzavazat() + 1);
+    }
+
+    public List<ZeneToEsemenyDto> listaBySzavazat(Integer esemenyId) {
+        var esemeny = esemenyRepository.getReferenceById(esemenyId);
+        return esemeny.getZenek().stream()
+                .sorted((zene1, zene2) -> zene2.getSzavazat().compareTo(zene1.getSzavazat()))
+                .map(ZeneToEsemenyDto::factory)
+                .toList();
     }
 }

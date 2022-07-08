@@ -2,6 +2,7 @@ package hu.progmatic.spotilive.esemeny;
 
 import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.zene.Zene;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
@@ -12,6 +13,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -128,7 +130,7 @@ class EsemenyServiceTest {
                     .idoPont(LocalDateTime.parse("2022-06-27T15:30"))
                     .build();
             esemenyService.udpate(modosito, modositando.getId());
-            EsemenyDto updatelt = esemenyService.getById(modositando.getId());
+            EsemenyDto updatelt = esemenyService.getEsemenyDtoById(modositando.getId());
             assertEquals("modositott név", updatelt.getNev());
 
             esemenyService.deleteEsemeny(updatelt.getId());
@@ -149,7 +151,7 @@ class EsemenyServiceTest {
                     .zeneId(zene.getId())
                     .build());
 
-            var esemenyZenevel = esemenyService.getById(esemeny1.getId());
+            var esemenyZenevel = esemenyService.getEsemenyDtoById(esemeny1.getId());
             assertEquals("Tódor Születésnapja", esemenyZenevel.getNev());
 
             assertThat(esemenyZenevel.getZenek())
@@ -200,7 +202,7 @@ class EsemenyServiceTest {
 
             @Test
             void addSzavazatToZene() {
-                var esemenyZenevel = esemenyService.getById(esemeny1.getId());
+                var esemenyZenevel = esemenyService.getEsemenyDtoById(esemeny1.getId());
                 assertEquals(2, esemenyZenevel.getZenek().size());
                 assertEquals("Teszt zene1", zeneService.getBycim("Teszt zene1").getCim());
 
@@ -208,14 +210,65 @@ class EsemenyServiceTest {
                         .esemenyId(esemenyZenevel.getId())
                         .zeneId(zeneService.getBycim("Teszt zene1").getId())
                         .build());
-                var modositottEsemeny = esemenyService.getById(esemeny1.getId());
+                var modositottEsemeny = esemenyService.getEsemenyDtoById(esemeny1.getId());
                 var zeneSzavazattal = modositottEsemeny.getZenek().stream()
                         .filter(zene -> zene.getZene().getId().equals(
                                 zeneService.getBycim("Teszt zene1").getId()))
                         .findFirst()
                         .orElseThrow();
-                assertEquals(1,zeneSzavazattal.getSzavazat());
+                assertEquals(1, zeneSzavazattal.getSzavazat());
 
+            }
+
+            @Nested
+            class ZenekSzavazattalTest {
+                @BeforeEach
+                void setUp() {
+
+
+                    esemenyService.addSzavazat(AddSzavazatCommand.builder()
+                            .esemenyId(esemeny1.getId())
+                            .zeneId(zene1.getId())
+                            .build());
+
+                    esemenyService.addSzavazat(AddSzavazatCommand.builder()
+                            .esemenyId(esemeny1.getId())
+                            .zeneId(zene1.getId())
+                            .build());
+
+                    esemenyService.addSzavazat(AddSzavazatCommand.builder()
+                            .esemenyId(esemeny1.getId())
+                            .zeneId(zene1.getId())
+                            .build());
+
+                    esemenyService.addSzavazat(AddSzavazatCommand.builder()
+                            .esemenyId(esemeny1.getId())
+                            .zeneId(zene2.getId())
+                            .build());
+                }
+
+                @Test
+                void zeneListBySzavazat() {
+                    var esemenyZenevel = esemenyService.getEsemenyDtoById(esemeny1.getId());
+                    assertEquals(3, esemenyZenevel.getZenek().stream()
+                            .filter(zene -> zene.getZene().getId().equals(
+                                    zeneService.getBycim("Teszt zene1").getId()))
+                            .findFirst()
+                            .orElseThrow().getSzavazat());
+
+                    assertEquals(1, esemenyZenevel.getZenek().stream()
+                            .filter(zene -> zene.getZene().getId().equals(
+                                    zeneService.getBycim("Teszt zene2").getId()))
+                            .findFirst()
+                            .orElseThrow().getSzavazat());
+
+                    List<ZeneToEsemenyDto> rendezettLista = esemenyService.listaBySzavazat(esemenyZenevel.getId());
+                    assertThat(rendezettLista)
+                            .hasSize(2)
+                            .extracting(ZeneToEsemenyDto::getZene)
+                            .extracting(Zene::getCim)
+                            .containsExactly("Teszt zene1", "Teszt zene2");
+                }
             }
         }
     }
