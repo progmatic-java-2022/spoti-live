@@ -192,6 +192,12 @@ class EsemenyServiceTest {
                         .build());
             }
 
+            @AfterEach
+            void tearDown() {
+                zeneService.deleteZeneById(zene1.getId());
+                zeneService.deleteZeneById(zene2.getId());
+            }
+
             @Test
             void addSzavazatToZene() {
                 var esemenyZenevel = esemenyService.getById(esemeny1.getId());
