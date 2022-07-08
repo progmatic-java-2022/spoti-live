@@ -16,7 +16,6 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 
-<h1 th:text="${getCim}">Hello</h1>
 <ul>
     <table class="table table-success table-striped">
         <thead>
@@ -68,7 +67,9 @@
         </div>
         <div class="col">
             <select th:field="*{tagKategoria}" class="form-select" >
-                <option th:each="tagkategoria : ${tagkategoriak}" th:value="${tagkategoria}" th:text="${tagkategoria.getTagKategoriaString()}" value="1">One</option>
+                <option value="valassz">Válassz Kategóriát</option>
+                <option th:each="tagkategoria : ${tagkategoriak}" th:value="${tagkategoria}"
+                        th:text="${tagkategoria.getTagKategoriaString()}" value="1">Kategoria</option>
             </select>
         </div>
         <div class="col">

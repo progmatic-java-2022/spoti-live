@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -16,6 +17,7 @@ public class TagDto {
     private Integer id;
     @NotBlank(message = "Nem lehet üres!")
     private String tagNev;
+    @NotNull(message = "Műfaj megadása kötelező!")
     private TagKategoria tagKategoria;
     private List<ZeneDto> zeneDtoList;
 
