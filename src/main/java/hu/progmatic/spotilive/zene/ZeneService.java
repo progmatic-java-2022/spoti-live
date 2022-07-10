@@ -19,6 +19,9 @@ public class ZeneService {
     TagRepository tagRepository;
 
     public ZeneDto createZene(ZeneDto zeneDto) {
+        if(zeneRepository.getZeneByCim(zeneDto.getCim()).isPresent()){
+            throw new CreateZeneExeption("Zene már létezik ilyen címmel");
+        }
         Zene zene = Zene.builder()
                 .eloado(zeneDto.getEloado())
                 .hosszMp(zeneDto.getHosszMp())
@@ -38,7 +41,7 @@ public class ZeneService {
     }
 
     public ZeneDto getBycim(String cim) {
-        return ZeneDto.factory(zeneRepository.getZeneByCim(cim));
+        return ZeneDto.factory(zeneRepository.getZeneByCim(cim).orElseThrow());
     }
 
     public ZeneDto getZeneDtoById(Integer id) {

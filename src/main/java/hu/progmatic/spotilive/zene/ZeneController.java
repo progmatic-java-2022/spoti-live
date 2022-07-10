@@ -29,15 +29,21 @@ public class ZeneController {
             BindingResult bindingresult,
             Model model
     ) {
+        model.addAttribute("zeneError", null);
         if (!bindingresult.hasErrors()) {
-            zeneKarbantartasService.createZene(dto);
+            try {
+                zeneKarbantartasService.createZene(dto);
+            }catch (CreateZeneExeption e){
+                model.addAttribute("zeneError", e.getMessage());
+                return "/zenekarbantartas";
+            }
             return "redirect:/zene";
         }
         return "/zenekarbantartas";
     }
 
     @PostMapping("/zenekarbantartas/zene/{id}")
-    public String editZenekar(
+    public String editZene(
             Model model,
             @PathVariable("id") Integer id,
             @ModelAttribute("zenePeldany") @Valid ZeneDto dto,
@@ -51,7 +57,7 @@ public class ZeneController {
     }
 
     @PostMapping("/zenekarbantartas/zene/delete/{id}")
-    public String deleteZenekar(@PathVariable("id") Integer id) {
+    public String deleteZene(@PathVariable("id") Integer id) {
         zeneKarbantartasService.deleteZeneById(id);
         return "redirect:/zene";
     }
@@ -84,5 +90,10 @@ public class ZeneController {
     @ModelAttribute("getCim")
     public String getCim() {
         return "Számok";
+    }
+
+    @ModelAttribute("zeneError")
+    public String getZeneError(){
+        return null;
     }
 }
