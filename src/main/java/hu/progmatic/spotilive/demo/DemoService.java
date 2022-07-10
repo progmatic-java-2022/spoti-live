@@ -84,9 +84,19 @@ public class DemoService {
                     .zenekarId(demoZenekar.getId())
                     .build());
 
-            tagService.createTag(TagDto.builder()
+            var demotag = tagService.createTag(TagDto.builder()
                     .tagNev(DEMO_TAG)
                     .tagKategoria(TagKategoria.MUFAJ)
+                    .build());
+
+            var demotag2 = tagService.createTag(TagDto.builder()
+                    .tagNev("Demo tag 2")
+                    .tagKategoria(TagKategoria.MUFAJ)
+                    .build());
+
+            var hangulatTag = tagService.createTag(TagDto.builder()
+                    .tagNev("Hangulat tag")
+                    .tagKategoria(TagKategoria.HANGULAT)
                     .build());
 
             var demoZene = zeneService.createZene(ZeneDto.builder()
@@ -94,6 +104,9 @@ public class DemoService {
                     .eloado("Demo Zene előadó")
                     .hosszMp(123)
                     .build());
+
+            zeneService.addTag(demoZene.getId(), demotag.getId());
+            zeneService.addTag(demoZene.getId(), hangulatTag.getId());
 
             esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand
                     .builder()

@@ -51,4 +51,9 @@ public class TagService {
     }
 
 
+    public ZeneTagSzerkesztesListaDto getZeneTagSzerkesztesListaDto(Integer zeneId) {
+        Zene zene = zeneRepository.getReferenceById(zeneId);
+        List<Tag> tagek = tagRepository.findAll();
+        return ZeneTagSzerkesztesListaDto.factory(zene, tagek);
+    }
 }

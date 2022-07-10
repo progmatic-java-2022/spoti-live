@@ -100,7 +100,7 @@ class TagServiceTest {
         List<TagDto> osszesTag = tagService.getAllTag();
 
         assertThat(osszesTag)
-                .hasSize(2)
+                .hasSize(4)
                 .extracting(TagDto::getTagNev)
                 .contains("Teszt tag 2");
 

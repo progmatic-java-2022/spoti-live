@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.tag.TagKategoria;
 import hu.progmatic.spotilive.tag.TagService;
@@ -16,8 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ZeneServiceTest {
 
     @Autowired
-    ZeneService zeneKarbantartasService;
-
+    ZeneService zeneService;
     @Autowired
     TagService tagService;
 
@@ -28,7 +28,7 @@ class ZeneServiceTest {
                 .hosszMp(123)
                 .eloado("Valami előadó")
                 .build();
-        ZeneDto mentettZene = zeneKarbantartasService.createZene(zeneDto);
+        ZeneDto mentettZene = zeneService.createZene(zeneDto);
 
         assertThat(mentettZene).extracting(ZeneDto::getId).isNotNull();
     }
@@ -39,7 +39,7 @@ class ZeneServiceTest {
 
         @AfterEach
         void tearDown() {
-            zeneKarbantartasService.deleteZeneById(testZene.getId());
+            zeneService.deleteZeneById(testZene.getId());
         }
 
         @BeforeEach
@@ -49,22 +49,22 @@ class ZeneServiceTest {
                     .eloado("teszt előadó")
                     .hosszMp(123)
                     .build();
-            testZene = zeneKarbantartasService.createZene(testZene);
+            testZene = zeneService.createZene(testZene);
         }
 
         @Test
         void deleteTest() {
-            ZeneDto deletezene = zeneKarbantartasService.createZene(ZeneDto.builder()
+            ZeneDto deletezene = zeneService.createZene(ZeneDto.builder()
                     .cim("Delete zenecim")
                     .eloado("delete előadó")
                     .hosszMp(123)
                     .build());
-            List<ZeneDto> lekertZenek = zeneKarbantartasService.findAllDto();
+            List<ZeneDto> lekertZenek = zeneService.findAllDto();
             assertThat(lekertZenek)
                     .extracting(ZeneDto::getCim)
                     .contains("Delete zenecim");
-            zeneKarbantartasService.deleteZeneById(deletezene.getId());
-            lekertZenek = zeneKarbantartasService.findAllDto();
+            zeneService.deleteZeneById(deletezene.getId());
+            lekertZenek = zeneService.findAllDto();
             assertThat(lekertZenek)
                     .extracting(ZeneDto::getCim)
                     .doesNotContain("Delete zenecim");
@@ -72,7 +72,7 @@ class ZeneServiceTest {
 
         @Test
         void getByCimTest() {
-            assertEquals(testZene.getCim(), zeneKarbantartasService.getBycim("Teszt Zene").getCim());
+            assertEquals(testZene.getCim(), zeneService.getBycim("Teszt Zene").getCim());
         }
 
         @Test
@@ -83,14 +83,14 @@ class ZeneServiceTest {
                     .eloado("teszt előadó")
                     .hosszMp(123)
                     .build();
-            var modositott = zeneKarbantartasService.editZene(dto);
+            var modositott = zeneService.editZene(dto);
             assertEquals("Edited cim", modositott.getCim());
 
         }
 
         @Test
         void getByIdTest() {
-            assertEquals(testZene.getId(), zeneKarbantartasService.getZeneDtoById(testZene.getId()).getId());
+            assertEquals(testZene.getId(), zeneService.getZeneDtoById(testZene.getId()).getId());
         }
 
         @Test
@@ -102,8 +102,8 @@ class ZeneServiceTest {
 
             TagDto mentettTag = tagService.createTag(dto);
 
-            zeneKarbantartasService.addTag(testZene.getId(), mentettTag.getId());
-            ZeneDto modositottZene = zeneKarbantartasService.getZeneDtoById(testZene.getId());
+            zeneService.addTag(testZene.getId(), mentettTag.getId());
+            ZeneDto modositottZene = zeneService.getZeneDtoById(testZene.getId());
             assertThat(modositottZene.getTagStringList()).hasSize(1).contains("Teszt tag 1");
         }
 
@@ -115,13 +115,36 @@ class ZeneServiceTest {
                     .build();
             TagDto mentettTag = tagService.createTag(dto);
 
-            zeneKarbantartasService.addTag(testZene.getId(), mentettTag.getId());
-            testZene = zeneKarbantartasService.getZeneDtoById(testZene.getId());
+            zeneService.addTag(testZene.getId(), mentettTag.getId());
+            testZene = zeneService.getZeneDtoById(testZene.getId());
             assertThat(testZene.getTagStringList()).hasSize(1);
-            zeneKarbantartasService.deleteTagFromZene(mentettTag.getId(), testZene.getId());
-            testZene = zeneKarbantartasService.getZeneDtoById(testZene.getId());
+            zeneService.deleteTagFromZene(mentettTag.getId(), testZene.getId());
+            testZene = zeneService.getZeneDtoById(testZene.getId());
             assertThat(testZene.getTagStringList()).hasSize(0);
 
+        }
+
+        @Test
+        @Disabled
+        void zeneTagSzerkesztesListaDto() {
+            Integer testZeneId = zeneService.getBycim(DemoService.DEMO_ZENE).getId();
+            ZeneTagSzerkesztesListaDto dto = tagService.getZeneTagSzerkesztesListaDto(testZeneId);
+            assertEquals(testZeneId, dto.getZeneId());
+            assertThat(dto.getTagByKategoria())
+                    .containsKeys(TagKategoria.HANGULAT, TagKategoria.MUFAJ, TagKategoria.TEMPO);
+            assertThat(dto.getTagByKategoria().get(TagKategoria.MUFAJ).getHozzaadott())
+                    .hasSize(1)
+                    .extracting(TagDto::getTagNev)
+                    .contains(DemoService.DEMO_TAG);
+            assertThat(dto.getTagByKategoria().get(TagKategoria.MUFAJ).getNemHozzaadott())
+                    .hasSize(1)
+                    .extracting(TagDto::getTagNev)
+                    .contains("Demo tag 2")
+                    .doesNotContain(DemoService.DEMO_TAG);
+            assertThat(dto.getTagByKategoria().get(TagKategoria.HANGULAT).getHozzaadott())
+                    .hasSize(1)
+                    .extracting(TagDto::getTagNev)
+                    .contains("Hangulat tag");
         }
     }
 }
