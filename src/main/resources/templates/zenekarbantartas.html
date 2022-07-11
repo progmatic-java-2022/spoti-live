@@ -17,158 +17,222 @@
         crossorigin="anonymous"></script>
 
 <h1 th:text="${getCim}">Hello</h1>
-<ul>
-    <table class="table table-success table-striped">
-        <thead>
-        <tr>
-            <th scope="col">Cim</th>
-            <th scope="col">Eloado</th>
-            <th scope="col">HosszMp</th>
-            <th scope="col">Tagek</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        </div>
-        <tbody>
-        <tr th:each="zene : ${zeneLista}">
-            <td th:text="${zene.cim}">Nev</td>
-            <td th:text="${zene.eloado}">Eloado</td>
-            <td th:text="${zene.hosszMp}">Hossz</td>
-            <td th:text="${zene.tagStringList}">taglista valahogy</td>
-            <td>
-                <div class="row">
-                    <div class="col">
-                        <form th:action="@{'/zenekarbantartas/zene/edit/{id}'(id=${zene.id})}" method="get">
-                            <input type="submit" class="btn btn-primary" value="Módosít"/>
-                        </form>
-                    </div>
-                    <div class="col">
-                        <form th:action="@{'/zenekarbantartas/zene/delete/{id}'(id=${zene.id})}" method="post">
-                            <input type="submit" class="btn btn-danger" value="Törlés"/>
-                        </form>
-                    </div>
-                    <div class="col">
-                        <form th:action="@{'/tagek/zene/{zeneid}'(zeneid=${zene.id})}" method="get">
-                            <input type="submit" class="btn btn-primary" value="Tagek"/>
-                        </form>
-                        <!-- Modal -->
-                        <div th:classappend="${showModal ? 'show' : ''}" class="modal fade" id="tagListaModal" tabindex="-1" aria-labelledby="tagListaModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Tagek</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body" th:each="kategoria : ${zeneTagSzerkeztes.tagByKategoria}">
-                                        <table class="table table-success table-striped">
-                                            <thead class="table-dark">
-                                            <tr>
-                                                <th scope="col" th:text="${kategoria.getKey().getTagKategoriaString()}">Name</th>
-                                                <th scope="col"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <div>
-                                                <tr>
-                                                    <th>Teszt mufaj</th>
-                                                    <td>
-                                                        <div class="col">
-                                                            <form>
-                                                                <input type="submit" class="btn btn-danger"
-                                                                       value="Remove"/>
-                                                            </form>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </div>
-                                            </tbody>
-                                        </table>
-                                        <table class="table table-danger table-striped">
-                                            <tbody>
-                                            <div>
-                                                <tr>
-                                                    <th>Teszt Mufaj</th>
-                                                    <td>
-                                                        <div class="col">
-                                                            <form>
-                                                                <input type="submit" class="btn btn-success"
-                                                                       value="Add"/>
-                                                            </form>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </div>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                 </td>
-             </tr>
-        </tbody>
-    </table>
-    <hr>
-    <h3 th:if="${zenePeldany.getId() == null}">Új Zene létrehozása</h3>
-    <h3 th:if="${zenePeldany.getId() != null}">Zene szerkesztése</h3>
-    <form
-            th:action="@{'/zenekarbantartas/zene/{id}'(id=${zenePeldany.getId()})}"
-            method="post" th:object="${zenePeldany}" class="row">
-        <div th:if="${zeneError != null}"
-             class="alert alert-danger"
-             th:text="${zeneError}">
-            Hibaüzenet
-        </div>
-        <div class="col">
-            <label>
-                <input type="text"
-                       class="form-control"
-                       placeholder="Cím"
-                       th:field="*{cim}"
-                       th:classappend="${#fields.hasErrors('cim')} ? 'is-invalid' : 'is-valid'"/>
-                <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('cim')}"
-                     th:errors="*{cim}">
-                    Hibaüzenet
-                </div>
-            </label>
-        </div>
-        <div class="col">
-            <label>
-                <input type="text"
-                       class="form-control"
-                       placeholder="Előadó"
-                       th:field="*{eloado}"
-                       th:classappend="${#fields.hasErrors('eloado')} ? 'is-invalid' : 'is-valid'"/>
-                <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('eloado')}"
-                     th:errors="*{eloado}">
-                    Hibaüzenet
-                </div>
-            </label>
-        </div>
-        <div class="col">
-            <label>
-                <input type="number"
-                       class="form-control"
-                       placeholder="Hossz"
-                       th:field="*{hosszMp}"
-                       th:classappend="${#fields.hasErrors('hosszMp')} ? 'is-invalid' : 'is-valid'"/>
-                <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('hosszMp')}"
-                     th:errors="*{hosszMp}">
-                    Hibaüzenet
-                </div>
-            </label>
-        </div>
-        <div class="col">
-            <input th:if="${zenePeldany.getId() == null}" class="btn btn-primary" type="submit" value="Hozzáad"/>
-            <input th:if="${zenePeldany.getId() != null}" class="btn btn-primary" type="submit" value="Módosít"/>
-        </div>
-    </form>
+<table class="table table-success table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Zenekar</th>
+        <th scope="col">Cim</th>
+        <th scope="col">Eloado</th>
+        <th scope="col">HosszMp</th>
+        <th scope="col">Tagek</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
 
-</ul>
+    <tbody>
+    <tr th:each="zene : ${zeneLista}">
+        <td th:text="${zene.zenekarNev}">Zenekar</td>
+        <td th:text="${zene.cim}">Nev</td>
+        <td th:text="${zene.eloado}">Eloado</td>
+        <td th:text="${zene.hosszMp}">Hossz</td>
+        <td th:text="${zene.tagStringList}">taglista valahogy</td>
+        <td>
+            <div class="row">
+            <div class="col">
+                <form th:action="@{'/zenekarbantartas/zene/edit/{id}'(id=${zene.id})}" method="get">
+                    <input type="submit" class="btn btn-primary" value="Módosít"/>
+                </form>
+            </div>
+            <div class="col">
+                <form th:action="@{'/zenekarbantartas/zene/delete/{id}'(id=${zene.id})}" method="post">
+                    <input type="submit" class="btn btn-danger" value="Törlés"/>
+                </form>
+            </div>
+                <div class="col">
+                    <form th:action="@{'/tagek/zene/{zeneid}'(zeneid=${zene.id})}" method="get">
+                        <input type="submit" class="btn btn-primary" value="Tagek"/>
+                    </form>
+                    <!-- Modal -->
+                    <div th:classappend="${showModal ? 'show' : ''}" class="modal fade" id="tagListaModal" tabindex="-1" aria-labelledby="tagListaModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Tagek</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" th:each="kategoria : ${zeneTagSzerkeztes.tagByKategoria}">
+                                    <table class="table table-success table-striped">
+                                        <thead class="table-dark">
+                                        <tr>
+                                            <th scope="col" th:text="${kategoria.getKey().getTagKategoriaString()}">Name</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <div>
+                                            <tr>
+                                                <th>Teszt mufaj</th>
+                                                <td>
+                                                    <div class="col">
+                                                        <form>
+                                                            <input type="submit" class="btn btn-danger"
+                                                                   value="Remove"/>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </div>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-danger table-striped">
+                                        <tbody>
+                                        <div>
+                                            <tr>
+                                                <th>Teszt Mufaj</th>
+                                                <td>
+                                                    <div class="col">
+                                                        <form>
+                                                            <input type="submit" class="btn btn-success"
+                                                                   value="Add"/>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </div>
+                                        </tbody>
+                                    </table>
+                                </div>
+        </div>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+<hr>
+<h3 th:if="${zeneModositas.id == null}">Új Zene létrehozása</h3>
+<h3 th:if="${zeneModositas.id != null}">Zene szerkesztése</h3>
+
+<form th:if="${zeneModositas.id == null}"
+      th:action="@{'/zenekarbantartas/zene'}"
+      method="post" th:object="${createZeneCommand}" class="row">
+    <div class="col">
+        <label>
+            <select th:field="*{zenekarId}" class="form-select">
+                <option th:each="zenekar : ${allZenekar}" th:value="${zenekar.getId()}"
+                        th:text="${zenekar.getNev()}"></option>
+            </select>
+        </label>
+    </div>
+
+    <div class="col">
+        <label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Cím"
+                   th:field="*{cim}"
+                   th:classappend="${#fields.hasErrors('cim')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('cim')}"
+                 th:errors="*{cim}">
+                Hibaüzenet
+            </div>
+        </label>
+    </div>
+    <div class="col">
+        <label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Előadó"
+                   th:field="*{eloado}"
+                   th:classappend="${#fields.hasErrors('eloado')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('eloado')}"
+                 th:errors="*{eloado}">
+                Hibaüzenet
+            </div>
+        </label>
+    </div>
+    <div class="col">
+        <label>
+            <input type="number"
+                   class="form-control"
+                   placeholder="Hossz"
+                   th:field="*{hosszMp}"
+                   th:classappend="${#fields.hasErrors('hosszMp')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('hosszMp')}"
+                 th:errors="*{hosszMp}">
+                Hibaüzenet
+            </div>
+        </label>
+    </div>
+
+    <div class="col-md-12" style="padding-top: 20px; text-align: center">
+        <input class="btn btn-success" type="submit" value="Hozzáad" style="width: 30%"/>
+    </div>
+</form>
+
+<!-- Módisítás-->
+
+<form th:if="${zeneModositas.id != null}"
+      th:action="@{'/zenekarbantartas/zene/{id}'(id=${zeneModositas.id})}"
+      method="post" th:object="${zeneModositas}" class="row">
+    <div class="col">
+        <label th:text="${zeneModositas.zenekarNev}"></label>
+    </div>
+    <div th:if="${zeneError != null}"
+         class="alert alert-danger"
+         th:text="${zeneError}">
+        Hibaüzenet
+    </div>
+    <div class="col">
+        <label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Cím"
+                   th:field="*{cim}"
+                   th:classappend="${#fields.hasErrors('cim')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('cim')}"
+                 th:errors="*{cim}">
+                Hibaüzenet
+            </div>
+        </label>
+    </div>
+    <div class="col">
+        <label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Előadó"
+                   th:field="*{eloado}"
+                   th:classappend="${#fields.hasErrors('eloado')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('eloado')}"
+                 th:errors="*{eloado}">
+                Hibaüzenet
+            </div>
+        </label>
+    </div>
+    <div class="col">
+        <label>
+            <input type="number"
+                   class="form-control"
+                   placeholder="Hossz"
+                   th:field="*{hosszMp}"
+                   th:classappend="${#fields.hasErrors('hosszMp')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('hosszMp')}"
+                 th:errors="*{hosszMp}">
+                Hibaüzenet
+            </div>
+        </label>
+    </div>
+    <div class="col-md-12" style="padding-top: 20px; text-align: center">
+        <input class="btn btn-success" type="submit" value="Módosít" style="width: 30%"/>
+    </div>
+</form>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (() => {

@@ -96,16 +96,17 @@ EsemenyService {
     modositando.setSzavazat(modositando.getSzavazat() + 1);
     }
 
-    public List<ZeneToEsemenyDto> listaBySzavazat(Integer esemenyId) {
-        var esemeny = esemenyRepository.getReferenceById(esemenyId);
-        return esemeny.getZenek().stream()
-                .sorted((zene1, zene2) -> zene2.getSzavazat().compareTo(zene1.getSzavazat()))
-                .map(ZeneToEsemenyDto::factory)
-                .toList();
-    }
 
     public List<ZeneToEsemenyDto> getEsemenyZenei(Integer esemenyid) {
         var esemeny = esemenyRepository.getReferenceById(esemenyid);
         return esemeny.getZenek().stream().map(ZeneToEsemenyDto::factory).toList();
+    }
+
+    public List<ZeneToEsemenyDto> getEsemenyZeneiByLikesAndAbc(Integer esemenyid) {
+        var esemeny = esemenyRepository.getReferenceById(esemenyid);
+        return esemenyRepository.getZenekByLikesAndAbc(esemenyid)
+                .stream()
+                .map(ZeneToEsemenyDto::factory)
+                .toList();
     }
 }

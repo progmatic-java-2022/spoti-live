@@ -1,6 +1,5 @@
 package hu.progmatic.spotilive.zene;
 
-import hu.progmatic.spotilive.tag.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +17,8 @@ public class ZeneController {
 
     @Autowired
     ZeneService zeneKarbantartasService;
+    @Autowired
+    ZenekarService zenekarService;
 
     @Autowired
     TagService tagService;
@@ -36,7 +37,7 @@ public class ZeneController {
 
     @PostMapping("/zenekarbantartas/zene")
     public String addZene(
-            @ModelAttribute("zenePeldany") @Valid CreateZeneCommand command,
+            @ModelAttribute("createZeneCommand") @Valid CreateZeneCommand command,
             BindingResult bindingresult,
             Model model
     ) {
@@ -57,7 +58,7 @@ public class ZeneController {
     public String editZene(
             Model model,
             @PathVariable("id") Integer id,
-            @ModelAttribute("zenePeldany") @Valid ZeneDto dto,
+            @ModelAttribute("zeneModositas") @Valid ZeneDto dto,
             BindingResult bindingResult) {
         if(!bindingResult.hasErrors()){
             zeneKarbantartasService.editZene(dto);
@@ -79,14 +80,18 @@ public class ZeneController {
             Model model,
             @PathVariable Integer id
     ) {
-        model.addAttribute("zenePeldany", zeneKarbantartasService.getZeneDtoById(id));
+        model.addAttribute("zeneModositas", zeneKarbantartasService.getZeneDtoById(id));
         return "/zenekarbantartas";
     }
-
 
     @ModelAttribute("zenePeldany")
     public ZeneDto getZenePeldany() {
         return ZeneDto.builder().build();
+    }
+
+    @ModelAttribute("createZeneCommand")
+    public CreateZeneCommand createZeneCommand() {
+        return CreateZeneCommand.builder().build();
     }
 
     @ModelAttribute("zeneLista")
@@ -108,7 +113,10 @@ public class ZeneController {
         return null;
     }
 
-
+    @ModelAttribute("allZenekar")
+    public List<ZenekarDto> allZenekar(){
+        return zenekarService.findAllDto();
+    }
     @ModelAttribute("zeneTagSzerkeztes")
     public ZeneTagSzerkesztesListaDto getZeneTagSzerkeztes(){
         return ZeneTagSzerkesztesListaDto.builder().build();
@@ -117,6 +125,4 @@ public class ZeneController {
     public boolean showModal(){
         return false;
     }
-
-
 }

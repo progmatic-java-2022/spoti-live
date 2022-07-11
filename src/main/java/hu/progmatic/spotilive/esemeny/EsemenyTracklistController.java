@@ -21,7 +21,8 @@ public class EsemenyTracklistController {
     @GetMapping("/esemeny/zenelista/{esemenyId}")
     public String esemenyTracklistBeltoltese(
             Model model, @PathVariable("esemenyId") Integer esemenyId) {
-        model.addAttribute("esemenytracklist", esemenyService.getEsemenyZenei(esemenyId));
+        model.addAttribute("esemenytracklist", esemenyService.getEsemenyZeneiByLikesAndAbc(esemenyId));
+        model.addAttribute("esemenyDto", esemenyService.getEsemenyDtoById(esemenyId));
         return "/esemenytracklist";
     }
 
@@ -34,16 +35,19 @@ public class EsemenyTracklistController {
                 .esemenyId(esemenyId)
                 .zeneId(zeneId)
                 .build());
-        var frisstitettTracklist = esemenyService.getEsemenyZenei(esemenyId);
-        model.addAttribute("esemenytracklist",frisstitettTracklist);
 
-        return "esemenytracklist";
+        return "redirect:/esemeny/zenelista/" + esemenyId;
     }
 
 
     @ModelAttribute("esemenytracklist")
     public List<ZeneToEsemenyDto> esemenyZenei() {
         return new ArrayList<>();
+    }
+
+    @ModelAttribute("esemenyDto")
+    public EsemenyDto aktualisEsemeny() {
+        return EsemenyDto.builder().build();
     }
 
 

@@ -266,13 +266,15 @@ class EsemenyServiceTest {
                             .findFirst()
                             .orElseThrow().getSzavazat());
 
-                    List<ZeneToEsemenyDto> rendezettLista = esemenyService.listaBySzavazat(esemenyZenevel.getId());
+                    List<ZeneToEsemenyDto> rendezettLista = esemenyService.getEsemenyZeneiByLikesAndAbc(esemenyZenevel.getId());
                     assertThat(rendezettLista)
                             .hasSize(2)
                             .extracting(ZeneToEsemenyDto::getZene)
                             .extracting(Zene::getCim)
                             .containsExactly("Teszt zene1", "Teszt zene2");
                 }
+
+
             }
         }
     }
