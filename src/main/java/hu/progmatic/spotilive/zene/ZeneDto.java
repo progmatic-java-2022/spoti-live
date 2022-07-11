@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,10 @@ public class ZeneDto {
     private String cim;
     @NotBlank(message = "Nem lehet üres")
     private String eloado;
+
     @NotNull(message = "Nem lehet üres")
     private Integer hosszMp;
+
     private List<String> tagStringList;
     @Builder.Default
     private List<ZeneToEsemenyDto> esemenyek=new ArrayList<>();
