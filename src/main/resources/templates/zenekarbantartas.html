@@ -11,7 +11,7 @@
 
     <title>Zene Karbantartás</title>
 </head>
-<body>
+<body onload="showModal()">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
@@ -50,14 +50,63 @@
                         </form>
                     </div>
                     <div class="col">
-                        <form th:action="@{'/tagek'}" method="get">
+                        <form th:action="@{'/tagek/zene/{zeneid}'(zeneid=${zene.id})}" method="get">
                             <input type="submit" class="btn btn-primary" value="Tagek"/>
                         </form>
-                    </div>
-                </div>
-            </td>
-
-        </tr>
+                        <!-- Modal -->
+                        <div th:classappend="${showModal ? 'show' : ''}" class="modal fade" id="tagListaModal" tabindex="-1" aria-labelledby="tagListaModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Tagek</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" th:each="kategoria : ${zeneTagSzerkeztes.tagByKategoria}">
+                                        <table class="table table-success table-striped">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col" th:text="${kategoria.getKey().getTagKategoriaString()}">Name</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <div>
+                                                <tr>
+                                                    <th>Teszt mufaj</th>
+                                                    <td>
+                                                        <div class="col">
+                                                            <form>
+                                                                <input type="submit" class="btn btn-danger"
+                                                                       value="Remove"/>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                            </tbody>
+                                        </table>
+                                        <table class="table table-danger table-striped">
+                                            <tbody>
+                                            <div>
+                                                <tr>
+                                                    <th>Teszt Mufaj</th>
+                                                    <td>
+                                                        <div class="col">
+                                                            <form>
+                                                                <input type="submit" class="btn btn-success"
+                                                                       value="Add"/>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                 </td>
+             </tr>
         </tbody>
     </table>
     <hr>
@@ -66,11 +115,11 @@
     <form
             th:action="@{'/zenekarbantartas/zene/{id}'(id=${zenePeldany.getId()})}"
             method="post" th:object="${zenePeldany}" class="row">
-            <div th:if="${zeneError != null}"
-                 class="alert alert-danger"
-                 th:text="${zeneError}">
-                Hibaüzenet
-            </div>
+        <div th:if="${zeneError != null}"
+             class="alert alert-danger"
+             th:text="${zeneError}">
+            Hibaüzenet
+        </div>
         <div class="col">
             <label>
                 <input type="text"
@@ -140,6 +189,16 @@
             }, false)
         })
     })()
+
+    function showModal() {
+        const modalElement = document.getElementById('tagListaModal');
+        if (modalElement.classList.contains("show")) {
+            let myModal = new bootstrap.Modal(modalElement, {
+                keyboard: false
+            })
+            myModal.show();
+        }
+    }
 </script>
 </body>
 </html>

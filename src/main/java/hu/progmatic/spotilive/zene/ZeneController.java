@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.tag.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +19,18 @@ public class ZeneController {
     @Autowired
     ZeneService zeneKarbantartasService;
 
+    @Autowired
+    TagService tagService;
+
     @GetMapping("/zene")
     public String oldaBetoltes() {
+        return "/zenekarbantartas";
+    }
+
+    @GetMapping("/tagek/zene/{zeneid}")
+    public String modalBetoltes(Model model, @PathVariable Integer zeneid){
+        model.addAttribute("showModal",true);
+        model.addAttribute("zeneTagSzerkeztes", tagService.getZeneTagSzerkesztesListaDto(zeneid));
         return "/zenekarbantartas";
     }
 
@@ -72,6 +83,7 @@ public class ZeneController {
         return "/zenekarbantartas";
     }
 
+
     @ModelAttribute("zenePeldany")
     public ZeneDto getZenePeldany() {
         return ZeneDto.builder().build();
@@ -91,9 +103,20 @@ public class ZeneController {
     public String getCim() {
         return "Számok";
     }
-
     @ModelAttribute("zeneError")
     public String getZeneError(){
         return null;
     }
+
+
+    @ModelAttribute("zeneTagSzerkeztes")
+    public ZeneTagSzerkesztesListaDto getZeneTagSzerkeztes(){
+        return ZeneTagSzerkesztesListaDto.builder().build();
+    }
+    @ModelAttribute("showModal")
+    public boolean showModal(){
+        return false;
+    }
+
+
 }
