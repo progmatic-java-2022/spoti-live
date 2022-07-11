@@ -38,22 +38,23 @@
         <td th:text="${zene.tagStringList}">taglista valahogy</td>
         <td>
             <div class="row">
-            <div class="col">
-                <form th:action="@{'/zenekarbantartas/zene/edit/{id}'(id=${zene.id})}" method="get">
-                    <input type="submit" class="btn btn-primary" value="Módosít"/>
-                </form>
-            </div>
-            <div class="col">
-                <form th:action="@{'/zenekarbantartas/zene/delete/{id}'(id=${zene.id})}" method="post">
-                    <input type="submit" class="btn btn-danger" value="Törlés"/>
-                </form>
-            </div>
+                <div class="col">
+                    <form th:action="@{'/zenekarbantartas/zene/edit/{id}'(id=${zene.id})}" method="get">
+                        <input type="submit" class="btn btn-primary" value="Módosít"/>
+                    </form>
+                </div>
+                <div class="col">
+                    <form th:action="@{'/zenekarbantartas/zene/delete/{id}'(id=${zene.id})}" method="post">
+                        <input type="submit" class="btn btn-danger" value="Törlés"/>
+                    </form>
+                </div>
                 <div class="col">
                     <form th:action="@{'/tagek/zene/{zeneid}'(zeneid=${zene.id})}" method="get">
                         <input type="submit" class="btn btn-primary" value="Tagek"/>
                     </form>
                     <!-- Modal -->
-                    <div th:classappend="${showModal ? 'show' : ''}" class="modal fade" id="tagListaModal" tabindex="-1" aria-labelledby="tagListaModalLabel"
+                    <div th:classappend="${showModal ? 'show' : ''}" class="modal fade" id="tagListaModal" tabindex="-1"
+                         aria-labelledby="tagListaModalLabel"
                          aria-hidden="true">
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content">
@@ -66,7 +67,9 @@
                                     <table class="table table-success table-striped">
                                         <thead class="table-dark">
                                         <tr>
-                                            <th scope="col" th:text="${kategoria.getKey().getTagKategoriaString()}">Name</th>
+                                            <th scope="col" th:text="${kategoria.getKey().getTagKategoriaString()}">
+                                                Name
+                                            </th>
                                             <th scope="col"></th>
                                         </tr>
                                         </thead>
@@ -104,9 +107,8 @@
                                         </tbody>
                                     </table>
                                 </div>
-        </div>
+                            </div>
         </td>
-
     </tr>
     </tbody>
 </table>

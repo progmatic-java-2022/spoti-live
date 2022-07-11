@@ -1,5 +1,8 @@
 package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.tag.TagService;
+import hu.progmatic.spotilive.zenekar.ZenekarDto;
+import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -92,6 +95,11 @@ public class ZeneController {
     @ModelAttribute("createZeneCommand")
     public CreateZeneCommand createZeneCommand() {
         return CreateZeneCommand.builder().build();
+    }
+
+    @ModelAttribute("zeneModositas")
+    public ZeneDto getZeneModositas(){
+        return ZeneDto.builder().build();
     }
 
     @ModelAttribute("zeneLista")
