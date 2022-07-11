@@ -7,6 +7,7 @@ import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.tag.TagKategoria;
 import hu.progmatic.spotilive.tag.TagService;
 import hu.progmatic.spotilive.tag.TagDto;
+import hu.progmatic.spotilive.zene.CreateZeneCommand;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.AddZeneToZenekarCommand;
@@ -99,10 +100,11 @@ public class DemoService {
                     .tagKategoria(TagKategoria.HANGULAT)
                     .build());
 
-            var demoZene = zeneService.createZene(ZeneDto.builder()
+            var demoZene = zeneService.createZene(CreateZeneCommand.builder()
                     .cim(DEMO_ZENE)
                     .eloado("Demo Zene előadó")
                     .hosszMp(123)
+                    .zenekarId(demoZenekar.getId())
                     .build());
 
             zeneService.addTag(demoZene.getId(), demotag.getId());
@@ -114,10 +116,6 @@ public class DemoService {
                     .zeneId(demoZene.getId())
                     .build());
 
-            zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
-                    .zeneId(demoZene.getId())
-                    .zenekarId(demoZenekar.getId())
-                    .build());
 
             clearAuthentication();
         }

@@ -1,6 +1,8 @@
 package hu.progmatic.spotilive.zenekar;
 
+import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.zene.CreateZeneCommand;
 import hu.progmatic.spotilive.zene.Zene;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
@@ -25,6 +27,13 @@ class ZenekarServiceTest {
 
     @Autowired
     ZeneService zeneService;
+
+    private Integer demoZenekarId;
+
+    @BeforeEach
+    void setUp() {
+        demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+    }
 
 
     @Test
@@ -101,15 +110,17 @@ class ZenekarServiceTest {
 
             @BeforeEach
             void setUp() {
-                zene1 = zeneService.createZene(ZeneDto.builder()
+                zene1 = zeneService.createZene(CreateZeneCommand.builder()
                         .cim("Egyes Zene Cime")
                         .eloado("Egyes zene Előadója")
                         .hosszMp(125)
+                                .zenekarId(demoZenekarId)
                         .build());
-                zene2 = zeneService.createZene(ZeneDto.builder()
+                zene2 = zeneService.createZene(CreateZeneCommand.builder()
                         .cim("Kettes zene Cime")
                         .eloado("Kettes zene Előadója")
                         .hosszMp(124)
+                                .zenekarId(demoZenekarId)
                         .build());
             }
 
@@ -119,46 +130,9 @@ class ZenekarServiceTest {
                 zeneService.deleteZeneById(zene2.getId());
             }
 
-            @Test
-            void addZeneToZenekarTest() {
-                var zenekar = zenekarService.getById(testZenekar.getId());
-                assertEquals(0, zenekar.getZenek().size());
 
-                zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
-                        .zeneId(zene1.getId())
-                        .zenekarId(zenekar.getId())
-                        .build()
-                );
-                var modositott = zenekarService.getById(zenekar.getId());
-                assertEquals(1, modositott.getZenek().size());
-            }
-
-            @Test
-            void zeneHozzaadasEsListazas() {
-                var zenekar = zenekarService.getById(testZenekar.getId());
-                zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
-                        .zenekarId(zenekar.getId())
-                        .zeneId(zene1.getId())
-                        .build());
-                zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
-                        .zenekarId(zenekar.getId())
-                        .zeneId(zene2.getId())
-                        .build());
-
-                var modositottZenekar = zenekarService.getById(zenekar.getId());
-                assertEquals(2, modositottZenekar.getZenek().size());
-
-                zenekarService.getZeneListaByZenekarId(modositottZenekar.getId());
-                assertThat(modositottZenekar.getZenek())
-                        .extracting(ZeneToZenekarDto::getZene)
-                        .extracting(Zene::getCim)
-                        .containsExactly("Egyes Zene Cime", "Kettes zene Cime");
-            }
         }
-
     }
-
-
 }
 
 

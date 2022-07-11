@@ -1,13 +1,11 @@
 package hu.progmatic.spotilive.tag;
 
 import hu.progmatic.spotilive.zene.*;
-import hu.progmatic.spotilive.zenekar.AddZenekarExeption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Set;
 
 @Transactional
 @Service
@@ -55,5 +53,14 @@ public class TagService {
         Zene zene = zeneRepository.getReferenceById(zeneId);
         List<Tag> tagek = tagRepository.findAll();
         return ZeneTagSzerkesztesListaDto.factory(zene, tagek);
+    }
+
+    public TagDto getTagDtoByNev(String nev) {
+        return TagDto.factory(tagRepository.getTagByTagNev(nev).orElseThrow());
+    }
+
+
+    public boolean isTagExistsById(Integer tagId) {
+        return tagRepository.existsById(tagId);
     }
 }

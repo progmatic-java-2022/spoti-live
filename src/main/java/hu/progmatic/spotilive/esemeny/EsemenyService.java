@@ -15,7 +15,8 @@ import java.util.List;
 @Service
 @Transactional
 @Slf4j
-public class EsemenyService {
+public class
+EsemenyService {
 
     @Autowired
     private EsemenyRepository esemenyRepository;
