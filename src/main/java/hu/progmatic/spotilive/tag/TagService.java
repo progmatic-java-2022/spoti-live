@@ -58,4 +58,9 @@ public class TagService {
     public TagDto getTagDtoByNev(String nev) {
         return TagDto.factory(tagRepository.getTagByTagNev(nev).orElseThrow());
     }
+
+
+    public boolean isTagExistsById(Integer tagId) {
+        return tagRepository.existsById(tagId);
+    }
 }
