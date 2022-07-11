@@ -13,7 +13,7 @@ public class CreateZeneCommand {
     private String cim;
     @NotBlank(message = "Nem lehet üres")
     private String eloado;
-    @NotBlank(message = "Nem lehet üres")
+    @NotNull(message = "Nem lehet üres")
     private Integer hosszMp;
     @NotNull
     private Integer zenekarId;
