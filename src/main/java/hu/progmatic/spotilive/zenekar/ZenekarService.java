@@ -18,8 +18,6 @@ public class ZenekarService {
     @Autowired
     private ZenekarRepository zenekarRepository;
 
-    @Autowired
-    private ZeneService zeneService;
 
     @RolesAllowed(UserType.Roles.ZENEKAR_KEZELES_ROLE)
     public ZenekarDto createZenekar(ZenekarDto zenekarDto) {
@@ -78,18 +76,6 @@ public class ZenekarService {
         return zenekarRepository.getReferenceById(zenekarId);
     }
 
-    public void addZeneToZenekar(AddZeneToZenekarCommand command) {
-    var zenekar = zenekarRepository.getReferenceById(command.getZenekarId());
-    var zene = zeneService.getZeneById(command.getZeneId());
-    ZeneToZenekar zeneToZenekar = ZeneToZenekar.builder().zenekar(zenekar).zene(zene).build();
-    zenekar.getZenek().add(zeneToZenekar);
-    zene.getZenekarok().add(zeneToZenekar);
-    }
-
-    public List<ZeneToZenekarDto> getZeneListaByZenekarId(Integer id) {
-        var zenekar = zenekarRepository.getReferenceById(id);
-        return zenekar.getZenek().stream().map(ZeneToZenekarDto::factory).toList();
-    }
 
 
 }

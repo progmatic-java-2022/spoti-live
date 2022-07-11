@@ -16,7 +16,6 @@ public class EsemenyDto {
     private Integer id;
     @NotEmpty(message = "Nem lehet üres")
     private String nev;
-    //@FutureOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @NotNull(message = "Meg kell adni időpontot!")
     private LocalDateTime idoPont;
