@@ -21,16 +21,14 @@ class TagServiceTest {
     TagService tagService;
     @Autowired
     ZeneService zeneService;
+
     @Autowired
     DemoServiceTestHelper demoServiceTestHelper;
 
-    private TagDto demoTag;
-
-    @BeforeEach
-    void setUp() {
-        demoTag = demoServiceTestHelper.getDemoTagDto();
+    @AfterEach
+    void tearDown() {
+        tagService.deleteAlltag();
     }
-
 
     @Test
     void createTagTest() {
@@ -69,7 +67,7 @@ class TagServiceTest {
     @Test
     void listAllTagTest() {
         TagDto dto = TagDto.builder()
-                .tagNev("Teszt tag 11")
+                .tagNev("Teszt tag")
                 .tagKategoria(TagKategoria.MUFAJ)
                 .build();
 
@@ -81,7 +79,7 @@ class TagServiceTest {
         TagDto mentettTag = tagService.createTag(dto);
         TagDto mentettTag2 = tagService.createTag(dto2);
 
-        assertThat(tagService.getAllTag()).hasSize(7);
+        assertThat(tagService.getAllTag()).hasSize(2);
 
     }
 
@@ -126,4 +124,5 @@ class TagServiceTest {
         zene = zeneService.getBycim("Cim");
         assertEquals(0, zene.getTagStringList().size());
     }
+
 }
