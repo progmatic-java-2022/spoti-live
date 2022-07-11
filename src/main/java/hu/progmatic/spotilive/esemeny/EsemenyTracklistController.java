@@ -18,7 +18,7 @@ public class EsemenyTracklistController {
     @Autowired
     EsemenyService esemenyService;
 
-    @GetMapping("/zenelista/esemeny/{esemenyId}")
+    @GetMapping("/esemeny/zenelista/{esemenyId}")
     public String esemenyTracklistBeltoltese(
             Model model, @PathVariable("esemenyId") Integer esemenyId) {
         model.addAttribute("esemenytracklist", esemenyService.getEsemenyZeneiByLikesAndAbc(esemenyId));
@@ -26,7 +26,7 @@ public class EsemenyTracklistController {
         return "/esemenytracklist";
     }
 
-    @PostMapping("/zenelista/{zeneId}/esemeny/{esemenyId}")
+    @PostMapping("/esemeny/{esemenyId}/zenelista/{zeneId}")
     public String addSzavazat(
             @PathVariable("zeneId") Integer zeneId,
             @PathVariable("esemenyId") Integer esemenyId,

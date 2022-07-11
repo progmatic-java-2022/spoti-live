@@ -1,9 +1,11 @@
 package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.tag.TagKategoria;
 import hu.progmatic.spotilive.tag.TagService;
+import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,21 +22,39 @@ class ZeneServiceTest {
     ZeneService zeneService;
     @Autowired
     TagService tagService;
+    @Autowired
+    ZenekarService zenekarService;
+
+    private Integer demoZenekarId;
+
+    @BeforeEach
+    void setUp() {
+        demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+        demozene = demoServiceTestHelper.getDemoZeneDto();
+    }
+
+    @Autowired
+    DemoServiceTestHelper demoServiceTestHelper;
+
+    private ZeneDto demozene;
 
     @Test
     void createZeneTest() {
-        ZeneDto zeneDto = ZeneDto.builder()
+        CreateZeneCommand zene = CreateZeneCommand.builder()
                 .cim("Create zene cim")
                 .hosszMp(123)
                 .eloado("Valami előadó")
+                .zenekarId(demoZenekarId)
                 .build();
-        ZeneDto mentettZene = zeneService.createZene(zeneDto);
+
+        ZeneDto mentettZene = zeneService.createZene(zene);
 
         assertThat(mentettZene).extracting(ZeneDto::getId).isNotNull();
     }
 
     @Nested
     public class LetezoZenevelTest {
+
         ZeneDto testZene;
 
         @AfterEach
@@ -44,20 +64,21 @@ class ZeneServiceTest {
 
         @BeforeEach
         void setUp() {
-            testZene = ZeneDto.builder()
+             testZene = zeneService.createZene(CreateZeneCommand.builder()
                     .cim("Teszt Zene")
                     .eloado("teszt előadó")
                     .hosszMp(123)
-                    .build();
-            testZene = zeneService.createZene(testZene);
+                    .zenekarId(demoZenekarId)
+                    .build());
         }
 
         @Test
         void deleteTest() {
-            ZeneDto deletezene = zeneService.createZene(ZeneDto.builder()
+            ZeneDto deletezene = zeneService.createZene(CreateZeneCommand.builder()
                     .cim("Delete zenecim")
                     .eloado("delete előadó")
                     .hosszMp(123)
+                    .zenekarId(demoZenekarId)
                     .build());
             List<ZeneDto> lekertZenek = zeneService.findAllDto();
             assertThat(lekertZenek)
@@ -146,5 +167,10 @@ class ZeneServiceTest {
                     .extracting(TagDto::getTagNev)
                     .contains("Hangulat tag");
         }
+    }
+
+    @Test
+    void getZeneByNevTest() {
+        assertThat(zeneService.getZeneByNev(demozene.getCim())).extracting(ZeneDto::getCim).isEqualTo(demozene.getCim());
     }
 }

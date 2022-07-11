@@ -1,8 +1,12 @@
 package hu.progmatic.spotilive.tag;
 
+import hu.progmatic.spotilive.demo.DemoService;
+import hu.progmatic.spotilive.zene.CreateZeneCommand;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
+import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +23,15 @@ class TagServiceTest {
     TagService tagService;
     @Autowired
     ZeneService zeneService;
+    @Autowired
+    private ZenekarService zenekarService;
+
+    private Integer demoZenekarId;
+
+    @BeforeEach
+    void setUp() {
+        demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+    }
 
     @AfterEach
     void tearDown() {
@@ -104,10 +117,11 @@ class TagServiceTest {
                 .extracting(TagDto::getTagNev)
                 .contains("Teszt tag 2");
 
-        ZeneDto zene = zeneService.createZene(ZeneDto.builder()
+        ZeneDto zene = zeneService.createZene(CreateZeneCommand.builder()
                 .cim("Cim")
                 .eloado("eloado")
                 .hosszMp(50)
+                        .zenekarId(demoZenekarId)
                 .build());
 
         zeneService.addTag(zene.getId(), mentettTag2.getId());

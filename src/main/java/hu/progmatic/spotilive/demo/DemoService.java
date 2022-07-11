@@ -7,6 +7,7 @@ import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.tag.TagKategoria;
 import hu.progmatic.spotilive.tag.TagService;
 import hu.progmatic.spotilive.tag.TagDto;
+import hu.progmatic.spotilive.zene.CreateZeneCommand;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.AddZeneToZenekarCommand;

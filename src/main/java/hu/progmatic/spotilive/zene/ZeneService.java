@@ -3,6 +3,8 @@ package hu.progmatic.spotilive.zene;
 import hu.progmatic.spotilive.tag.Tag;
 import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.tag.TagRepository;
+import hu.progmatic.spotilive.zenekar.Zenekar;
+import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,15 +20,21 @@ public class ZeneService {
     @Autowired
     TagRepository tagRepository;
 
-    public ZeneDto createZene(ZeneDto zeneDto) {
-        if(zeneRepository.getZeneByCim(zeneDto.getCim()).isPresent()){
+    @Autowired
+    ZenekarService zenekarService;
+
+    public ZeneDto createZene(CreateZeneCommand command) {
+        if (zeneRepository.getZeneByCim(command.getCim()).isPresent()) {
             throw new CreateZeneExeption("Zene már létezik ilyen címmel");
         }
-        Zene zene = Zene.builder()
-                .eloado(zeneDto.getEloado())
-                .hosszMp(zeneDto.getHosszMp())
-                .cim(zeneDto.getCim()).build();
-        return ZeneDto.factory( zeneRepository.save(zene));
+        Zenekar zenekar = zenekarService.getZenekarEntityById(command.getZenekarId());
+        Zene ujZene = Zene.builder()
+                .cim(command.getCim())
+                .eloado(command.getEloado())
+                .hosszMp(command.getHosszMp())
+                .zenekar(zenekar)
+                .build();
+        return ZeneDto.factory(zeneRepository.save(ujZene));
     }
 
     public void deleteZeneById(Integer id) {
@@ -62,15 +70,15 @@ public class ZeneService {
     }
 
     public void addTag(Integer zeneId, Integer tagId) {
-    Zene zene = zeneRepository.getReferenceById(zeneId);
-    Tag tag = tagRepository.getReferenceById(tagId);
-    TagToZene tagToZeneEntity = TagToZene
-            .builder()
-            .tag(tag)
-            .zene(zene)
-            .build();
-    zene.getTagToZeneEntityList().add(tagToZeneEntity);
-    tag.getTagToZeneEntityList().add(tagToZeneEntity);
+        Zene zene = zeneRepository.getReferenceById(zeneId);
+        Tag tag = tagRepository.getReferenceById(tagId);
+        TagToZene tagToZeneEntity = TagToZene
+                .builder()
+                .tag(tag)
+                .zene(zene)
+                .build();
+        zene.getTagToZeneEntityList().add(tagToZeneEntity);
+        tag.getTagToZeneEntityList().add(tagToZeneEntity);
     }
 
     public List<TagDto> listAllTagDtoByZeneId(Integer zeneId) {
@@ -90,12 +98,16 @@ public class ZeneService {
                 .filter(tagToZeneEntity -> tagToZeneEntity.getTag().getId().equals(tagId))
                 .findFirst()
                 .orElseThrow();
-    zene.getTagToZeneEntityList().remove(tagToZene);
-    tag.getTagToZeneEntityList().remove(tagToZene);
+        zene.getTagToZeneEntityList().remove(tagToZene);
+        tag.getTagToZeneEntityList().remove(tagToZene);
 
     }
 
     public Zene getZeneById(Integer zeneId) {
         return zeneRepository.getReferenceById(zeneId);
+    }
+
+    public ZeneDto getZeneByNev(String nev){
+        return ZeneDto.factory(zeneRepository.getZeneByCim(nev).orElseThrow());
     }
 }

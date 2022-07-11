@@ -41,7 +41,7 @@
         <td>
         <div class="row">
             <div class="col">
-                <form  th:action="@{'/zenelista/{zeneId}/esemeny/{esemenyId}'
+                <form  th:action="@{'/esemeny/{esemenyId}/zenelista/{zeneId}'
                 (zeneId=${zene.zene.id}, esemenyId=${zene.esemeny.id})}"
                        method="post">
                     <input type="submit" class="btn btn-success" value="Like">
