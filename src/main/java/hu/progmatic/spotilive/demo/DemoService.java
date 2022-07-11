@@ -37,6 +37,8 @@ public class DemoService {
 
     public static final String DEMO_TAG = "Demo tag";
     public static final String DEMO_ZENE = "Demo zene cím";
+    public static final String DEMO_ZENE2 = "Demo zene cím 2";
+    public static final String DEMO_ZENE3 = "Demo zene cím 3";
     @Autowired
     ZenekarService zenekarService;
     @Autowired
@@ -105,6 +107,18 @@ public class DemoService {
                     .hosszMp(123)
                     .build());
 
+            var demoZene2 = zeneService.createZene(ZeneDto.builder()
+                    .cim(DEMO_ZENE2)
+                    .eloado("Demo Zene előadó 2")
+                    .hosszMp(456)
+                    .build());
+
+            var demoZene3 = zeneService.createZene(ZeneDto.builder()
+                    .cim(DEMO_ZENE3)
+                    .eloado("Demo Zene előadó 3")
+                    .hosszMp(789)
+                    .build());
+
             zeneService.addTag(demoZene.getId(), demotag.getId());
             zeneService.addTag(demoZene.getId(), hangulatTag.getId());
 
@@ -114,8 +128,30 @@ public class DemoService {
                     .zeneId(demoZene.getId())
                     .build());
 
+            esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand
+                    .builder()
+                    .esemenyId(demoEsemeny.getId())
+                    .zeneId(demoZene2.getId())
+                    .build());
+
+            esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand
+                    .builder()
+                    .esemenyId(demoEsemeny.getId())
+                    .zeneId(demoZene3.getId())
+                    .build());
+
             zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
                     .zeneId(demoZene.getId())
+                    .zenekarId(demoZenekar.getId())
+                    .build());
+
+            zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
+                    .zeneId(demoZene2.getId())
+                    .zenekarId(demoZenekar.getId())
+                    .build());
+
+            zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
+                    .zeneId(demoZene3.getId())
                     .zenekarId(demoZenekar.getId())
                     .build());
 
