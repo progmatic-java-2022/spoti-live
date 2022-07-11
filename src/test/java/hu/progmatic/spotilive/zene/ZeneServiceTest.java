@@ -30,17 +30,13 @@ class ZeneServiceTest {
     @BeforeEach
     void setUp() {
         demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+        demozene = demoServiceTestHelper.getDemoZeneDto();
     }
 
     @Autowired
     DemoServiceTestHelper demoServiceTestHelper;
 
     private ZeneDto demozene;
-
-    @BeforeEach
-    void setUp() {
-        demozene = demoServiceTestHelper.getDemoZeneDto();
-    }
 
     @Test
     void createZeneTest() {
