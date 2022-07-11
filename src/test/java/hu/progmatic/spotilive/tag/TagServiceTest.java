@@ -1,8 +1,10 @@
 package hu.progmatic.spotilive.tag;
 
+import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,11 +21,16 @@ class TagServiceTest {
     TagService tagService;
     @Autowired
     ZeneService zeneService;
+    @Autowired
+    DemoServiceTestHelper demoServiceTestHelper;
 
-    @AfterEach
-    void tearDown() {
-        tagService.deleteAlltag();
+    private TagDto demoTag;
+
+    @BeforeEach
+    void setUp() {
+        demoTag = demoServiceTestHelper.getDemoTagDto();
     }
+
 
     @Test
     void createTagTest() {
@@ -62,7 +69,7 @@ class TagServiceTest {
     @Test
     void listAllTagTest() {
         TagDto dto = TagDto.builder()
-                .tagNev("Teszt tag")
+                .tagNev("Teszt tag 11")
                 .tagKategoria(TagKategoria.MUFAJ)
                 .build();
 
@@ -74,7 +81,7 @@ class TagServiceTest {
         TagDto mentettTag = tagService.createTag(dto);
         TagDto mentettTag2 = tagService.createTag(dto2);
 
-        assertThat(tagService.getAllTag()).hasSize(2);
+        assertThat(tagService.getAllTag()).hasSize(7);
 
     }
 

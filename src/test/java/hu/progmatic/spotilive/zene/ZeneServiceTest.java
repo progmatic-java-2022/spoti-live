@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.tag.TagKategoria;
@@ -20,6 +21,16 @@ class ZeneServiceTest {
     ZeneService zeneService;
     @Autowired
     TagService tagService;
+
+    @Autowired
+    DemoServiceTestHelper demoServiceTestHelper;
+
+    private ZeneDto demozene;
+
+    @BeforeEach
+    void setUp() {
+        demozene = demoServiceTestHelper.getDemoZeneDto();
+    }
 
     @Test
     void createZeneTest() {
@@ -125,7 +136,6 @@ class ZeneServiceTest {
         }
 
         @Test
-        @Disabled
         void zeneTagSzerkesztesListaDto() {
             Integer testZeneId = zeneService.getBycim(DemoService.DEMO_ZENE).getId();
             ZeneTagSzerkesztesListaDto dto = tagService.getZeneTagSzerkesztesListaDto(testZeneId);
@@ -146,5 +156,10 @@ class ZeneServiceTest {
                     .extracting(TagDto::getTagNev)
                     .contains("Hangulat tag");
         }
+    }
+
+    @Test
+    void getZeneByNevTest() {
+        assertThat(zeneService.getZeneByNev(demozene.getCim())).extracting(ZeneDto::getCim).isEqualTo(demozene.getCim());
     }
 }

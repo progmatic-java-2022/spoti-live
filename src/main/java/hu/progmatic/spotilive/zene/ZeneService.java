@@ -98,4 +98,8 @@ public class ZeneService {
     public Zene getZeneById(Integer zeneId) {
         return zeneRepository.getReferenceById(zeneId);
     }
+
+    public ZeneDto getZeneByNev(String nev){
+        return ZeneDto.factory(zeneRepository.getZeneByCim(nev).orElseThrow());
+    }
 }

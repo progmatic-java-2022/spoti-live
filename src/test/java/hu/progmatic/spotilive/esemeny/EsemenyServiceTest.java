@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.esemeny;
 
+import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zene.Zene;
@@ -25,8 +26,7 @@ class EsemenyServiceTest {
     private EsemenyService esemenyService;
 
     @Autowired
-    private ZenekarService zenekarService;
-
+    private DemoServiceTestHelper demoServiceTestHelper;
 
     private Integer demoZenekarId;
     @Autowired
@@ -34,7 +34,7 @@ class EsemenyServiceTest {
 
     @BeforeEach
     void setUp() {
-        demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+        demoZenekarId = demoServiceTestHelper.getdemoZeneKarId();
     }
 
     @Test
