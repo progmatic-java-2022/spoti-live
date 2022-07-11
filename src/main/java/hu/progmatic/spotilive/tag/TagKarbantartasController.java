@@ -62,11 +62,11 @@ public class TagKarbantartasController {
     @PostMapping("tag/{id}")
     public String modositasMentese(
             @PathVariable ("id") Integer id,
-            @ModelAttribute("tagPeldany") @Valid TagDto tagDto,
+            @ModelAttribute("tageditcommand") @Valid TagEditCommand tagEditCommand,
             BindingResult bindingResult
     ) {
         if (!bindingResult.hasErrors()) {
-            tagService.editTagById(TagEditCommand.builder().build());
+            tagService.editTagById(tagEditCommand);
             return "redirect:/tag";
         }
         return "/tagkarbantartas";
@@ -82,6 +82,10 @@ public class TagKarbantartasController {
         return TagDto.builder().build();
     }
 
+    @ModelAttribute("tageditcommand")
+    public TagEditCommand commandPeldany(TagDto tagDto){
+        return TagEditCommand.builder().tagId(tagDto.getId()).tagNev(tagDto.getTagNev()).tagKategoria(tagDto.getTagKategoria()).build();
+    }
     @ModelAttribute("tagkategoriak")
     public List<TagKategoria> getKategoriak() {
         return List.of(TagKategoria.values());
