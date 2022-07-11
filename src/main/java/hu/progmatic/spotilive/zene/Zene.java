@@ -1,14 +1,10 @@
 package hu.progmatic.spotilive.zene;
 
-import hu.progmatic.spotilive.esemeny.EsemenyDto;
 import hu.progmatic.spotilive.esemeny.ZeneToEsemeny;
-import hu.progmatic.spotilive.esemeny.ZeneToEsemenyDto;
-import hu.progmatic.spotilive.zenekar.ZeneToZenekar;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +31,5 @@ public class Zene {
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zene")
     private List<ZeneToEsemeny> esemenyek = new ArrayList<>();
-    @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zene", orphanRemoval = true)
-    private List<ZeneToZenekar> zenekarok = new ArrayList<>();
 
 }

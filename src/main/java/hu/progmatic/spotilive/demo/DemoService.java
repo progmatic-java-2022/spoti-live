@@ -114,10 +114,6 @@ public class DemoService {
                     .zeneId(demoZene.getId())
                     .build());
 
-            zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
-                    .zeneId(demoZene.getId())
-                    .zenekarId(demoZenekar.getId())
-                    .build());
 
             clearAuthentication();
         }

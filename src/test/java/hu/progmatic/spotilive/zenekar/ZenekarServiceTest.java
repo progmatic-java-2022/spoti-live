@@ -119,46 +119,9 @@ class ZenekarServiceTest {
                 zeneService.deleteZeneById(zene2.getId());
             }
 
-            @Test
-            void addZeneToZenekarTest() {
-                var zenekar = zenekarService.getById(testZenekar.getId());
-                assertEquals(0, zenekar.getZenek().size());
 
-                zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
-                        .zeneId(zene1.getId())
-                        .zenekarId(zenekar.getId())
-                        .build()
-                );
-                var modositott = zenekarService.getById(zenekar.getId());
-                assertEquals(1, modositott.getZenek().size());
-            }
-
-            @Test
-            void zeneHozzaadasEsListazas() {
-                var zenekar = zenekarService.getById(testZenekar.getId());
-                zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
-                        .zenekarId(zenekar.getId())
-                        .zeneId(zene1.getId())
-                        .build());
-                zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
-                        .zenekarId(zenekar.getId())
-                        .zeneId(zene2.getId())
-                        .build());
-
-                var modositottZenekar = zenekarService.getById(zenekar.getId());
-                assertEquals(2, modositottZenekar.getZenek().size());
-
-                zenekarService.getZeneListaByZenekarId(modositottZenekar.getId());
-                assertThat(modositottZenekar.getZenek())
-                        .extracting(ZeneToZenekarDto::getZene)
-                        .extracting(Zene::getCim)
-                        .containsExactly("Egyes Zene Cime", "Kettes zene Cime");
-            }
         }
-
     }
-
-
 }
 
 

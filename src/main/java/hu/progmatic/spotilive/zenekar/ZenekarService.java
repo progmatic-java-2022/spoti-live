@@ -78,18 +78,6 @@ public class ZenekarService {
         return zenekarRepository.getReferenceById(zenekarId);
     }
 
-    public void addZeneToZenekar(AddZeneToZenekarCommand command) {
-    var zenekar = zenekarRepository.getReferenceById(command.getZenekarId());
-    var zene = zeneService.getZeneById(command.getZeneId());
-    ZeneToZenekar zeneToZenekar = ZeneToZenekar.builder().zenekar(zenekar).zene(zene).build();
-    zenekar.getZenek().add(zeneToZenekar);
-    zene.getZenekarok().add(zeneToZenekar);
-    }
-
-    public List<ZeneToZenekarDto> getZeneListaByZenekarId(Integer id) {
-        var zenekar = zenekarRepository.getReferenceById(id);
-        return zenekar.getZenek().stream().map(ZeneToZenekarDto::factory).toList();
-    }
 
 
 }
