@@ -146,7 +146,7 @@ class ZeneServiceTest {
         }
 
         @Test
-        @Disabled
+
         void zeneTagSzerkesztesListaDto() {
             Integer testZeneId = zeneService.getBycim(DemoService.DEMO_ZENE).getId();
             ZeneTagSzerkesztesListaDto dto = tagService.getZeneTagSzerkesztesListaDto(testZeneId);

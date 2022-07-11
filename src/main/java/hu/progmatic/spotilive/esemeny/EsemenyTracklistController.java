@@ -36,7 +36,7 @@ public class EsemenyTracklistController {
                 .zeneId(zeneId)
                 .build());
 
-        return "redirect:/zenelista/esemeny/{esemenyId}";
+        return "redirect:/esemeny/zenelista/" + esemenyId;
     }
 
 

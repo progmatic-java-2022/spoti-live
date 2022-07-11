@@ -102,22 +102,25 @@ public class DemoService {
                     .tagKategoria(TagKategoria.HANGULAT)
                     .build());
 
-            var demoZene = zeneService.createZene(ZeneDto.builder()
+            var demoZene = zeneService.createZene(CreateZeneCommand.builder()
                     .cim(DEMO_ZENE)
                     .eloado("Demo Zene előadó")
                     .hosszMp(123)
+                    .zenekarId(demoZenekar.getId())
                     .build());
 
-            var demoZene2 = zeneService.createZene(ZeneDto.builder()
+            var demoZene2 = zeneService.createZene(CreateZeneCommand.builder()
                     .cim(DEMO_ZENE2)
                     .eloado("Demo Zene előadó 2")
                     .hosszMp(456)
+                    .zenekarId(demoZenekar.getId())
                     .build());
 
-            var demoZene3 = zeneService.createZene(ZeneDto.builder()
+            var demoZene3 = zeneService.createZene(CreateZeneCommand.builder()
                     .cim(DEMO_ZENE3)
                     .eloado("Demo Zene előadó 3")
                     .hosszMp(789)
+                    .zenekarId(demoZenekar.getId())
                     .build());
 
             zeneService.addTag(demoZene.getId(), demotag.getId());
@@ -141,20 +144,6 @@ public class DemoService {
                     .zeneId(demoZene3.getId())
                     .build());
 
-            zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
-                    .zeneId(demoZene.getId())
-                    .zenekarId(demoZenekar.getId())
-                    .build());
-
-            zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
-                    .zeneId(demoZene2.getId())
-                    .zenekarId(demoZenekar.getId())
-                    .build());
-
-            zenekarService.addZeneToZenekar(AddZeneToZenekarCommand.builder()
-                    .zeneId(demoZene3.getId())
-                    .zenekarId(demoZenekar.getId())
-                    .build());
 
             clearAuthentication();
         }
