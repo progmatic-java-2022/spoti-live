@@ -1,6 +1,8 @@
 package hu.progmatic.spotilive.zenekar;
 
+import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.zene.CreateZeneCommand;
 import hu.progmatic.spotilive.zene.Zene;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
@@ -25,6 +27,13 @@ class ZenekarServiceTest {
 
     @Autowired
     ZeneService zeneService;
+
+    private Integer demoZenekarId;
+
+    @BeforeEach
+    void setUp() {
+        demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+    }
 
 
     @Test
@@ -101,15 +110,17 @@ class ZenekarServiceTest {
 
             @BeforeEach
             void setUp() {
-                zene1 = zeneService.createZene(ZeneDto.builder()
+                zene1 = zeneService.createZene(CreateZeneCommand.builder()
                         .cim("Egyes Zene Cime")
                         .eloado("Egyes zene Előadója")
                         .hosszMp(125)
+                                .zenekarId(demoZenekarId)
                         .build());
-                zene2 = zeneService.createZene(ZeneDto.builder()
+                zene2 = zeneService.createZene(CreateZeneCommand.builder()
                         .cim("Kettes zene Cime")
                         .eloado("Kettes zene Előadója")
                         .hosszMp(124)
+                                .zenekarId(demoZenekarId)
                         .build());
             }
 

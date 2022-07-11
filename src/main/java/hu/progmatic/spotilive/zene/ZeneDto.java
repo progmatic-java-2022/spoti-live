@@ -24,6 +24,8 @@ public class ZeneDto {
     @Builder.Default
     private List<ZeneToEsemenyDto> esemenyek=new ArrayList<>();
 
+    private String zenekarNev;
+
 
     public static ZeneDto factory(Zene zene) {
         return ZeneDto.builder()
@@ -32,6 +34,7 @@ public class ZeneDto {
                 .eloado(zene.getEloado())
                 .hosszMp(zene.getHosszMp())
                 .tagStringList(getTagStringList(zene.getTagToZeneEntityList()))
+                .zenekarNev(zene.getZenekar().getNev())
                 .build();
     }
 

@@ -18,8 +18,6 @@ public class ZenekarService {
     @Autowired
     private ZenekarRepository zenekarRepository;
 
-    @Autowired
-    private ZeneService zeneService;
 
     @RolesAllowed(UserType.Roles.ZENEKAR_KEZELES_ROLE)
     public ZenekarDto createZenekar(ZenekarDto zenekarDto) {

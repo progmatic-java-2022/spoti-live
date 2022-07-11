@@ -2,6 +2,7 @@ package hu.progmatic.spotilive.esemeny;
 
 import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.zene.CreateZeneCommand;
 import hu.progmatic.spotilive.zene.Zene;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
@@ -24,13 +25,13 @@ class EsemenyServiceTest {
     @Autowired
     private EsemenyService esemenyService;
 
-    @Autowired
-    private ZenekarService zenekarService;
 
 
-    private Integer demoZenekarId;
     @Autowired
     private ZeneService zeneService;
+    @Autowired
+    private ZenekarService zenekarService;
+    private Integer demoZenekarId;
 
     @BeforeEach
     void setUp() {
@@ -140,10 +141,11 @@ class EsemenyServiceTest {
 
         @Test
         void addZeneToEsemenyTest() {
-            var zene = zeneService.createZene(ZeneDto.builder()
+            var zene = zeneService.createZene(CreateZeneCommand.builder()
                     .cim("Valami cím")
                     .eloado("Valami előadó")
                     .hosszMp(123)
+                            .zenekarId(demoZenekarId)
                     .build());
 
             esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand.builder()
@@ -168,17 +170,19 @@ class EsemenyServiceTest {
 
             @BeforeEach
             void setUp() {
-                zene1 = zeneService.createZene(ZeneDto
+                zene1 = zeneService.createZene(CreateZeneCommand
                         .builder()
                         .cim("Teszt zene1")
                         .hosszMp(123)
                         .eloado("Teszt eloado1")
+                                .zenekarId(demoZenekarId)
                         .build());
-                zene2 = zeneService.createZene(ZeneDto
+                zene2 = zeneService.createZene(CreateZeneCommand
                         .builder()
                         .eloado("Teszt eloado2")
                         .hosszMp(123)
                         .cim("Teszt zene2")
+                                .zenekarId(demoZenekarId)
                         .build());
 
                 esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand

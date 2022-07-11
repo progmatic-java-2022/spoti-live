@@ -25,14 +25,14 @@ public class ZeneController {
 
     @PostMapping("/zenekarbantartas/zene")
     public String addZene(
-            @ModelAttribute("zenePeldany") @Valid ZeneDto dto,
+            @ModelAttribute("zenePeldany") @Valid CreateZeneCommand command,
             BindingResult bindingresult,
             Model model
     ) {
         model.addAttribute("zeneError", null);
         if (!bindingresult.hasErrors()) {
             try {
-                zeneKarbantartasService.createZene(dto);
+                zeneKarbantartasService.createZene(command);
             }catch (CreateZeneExeption e){
                 model.addAttribute("zeneError", e.getMessage());
                 return "/zenekarbantartas";

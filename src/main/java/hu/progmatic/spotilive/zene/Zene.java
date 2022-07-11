@@ -1,6 +1,7 @@
 package hu.progmatic.spotilive.zene;
 
 import hu.progmatic.spotilive.esemeny.ZeneToEsemeny;
+import hu.progmatic.spotilive.zenekar.Zenekar;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,5 +32,8 @@ public class Zene {
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zene")
     private List<ZeneToEsemeny> esemenyek = new ArrayList<>();
+    @ManyToOne
+    @NotNull
+    private Zenekar zenekar;
 
 }

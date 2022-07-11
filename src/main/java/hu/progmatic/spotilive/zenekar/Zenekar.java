@@ -1,6 +1,7 @@
 package hu.progmatic.spotilive.zenekar;
 
 import hu.progmatic.spotilive.esemeny.Esemeny;
+import hu.progmatic.spotilive.zene.Zene;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,8 +27,14 @@ public class Zenekar {
     @Column(unique = true)
     private String telefonszam;
     private String leiras;
+    private String varos;
+
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "zenekar")
     private List<Esemeny> esemenyek = new ArrayList<>();
-    private String varos;
+
+
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true, mappedBy = "zenekar")
+    private List<Zene> zeneLista = new ArrayList<>();
 }
