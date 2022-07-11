@@ -32,6 +32,11 @@
             <td>
                 <div class="row">
                     <div class="col">
+                        <form th:action="@{'/tag/{id}'(id=${tag.id})}" method="get">
+                            <input type="submit" class="btn btn-primary" value="Módosít"/>
+                        </form>
+                    </div>
+                    <div class="col">
                         <form th:action="@{'/tag/delete/{id}'(id=${tag.id})}" method="post">
                             <input type="submit" class="btn btn-danger" value="Törlés"/>
                         </form>
@@ -42,7 +47,9 @@
         </tbody>
     </table>
     <h3 th:if="${tagPeldany.getId() == null}">Új Tag létrehozása</h3>
-    <form th:action="@{'/tag/add'}"
+    <h3 th:if="${tagPeldany.getId() != null}">Tag módosítása</h3>
+    <form th:if="${tagPeldany.getId() == null}"
+            th:action="@{'/tag/add'}"
             method="post" th:object="${tagPeldany}" class="row">
         <div class="form-row">
             <div th:if="${createTagError != null}"
@@ -73,7 +80,43 @@
             </select>
         </div>
         <div class="col">
-            <input class="btn btn-primary" type="submit" value="Hozzáad"/>
+            <input th:if="${tagPeldany.getId() == null}" class="btn btn-primary" type="submit" value="Hozzáad"/>
+
+        </div>
+    </form>
+    <form th:if="${tagPeldany.getId() != null}"
+          th:action="@{'/tag/{id}' (id=${tagPeldany.id})}"
+          method="post" th:object="${tagPeldany}" class="row">
+        <div class="form-row">
+            <div th:if="${createTagError != null}"
+                 class="alert alert-danger"
+                 th:text="${createTagError}">
+                Hibaüzenet
+            </div>
+        </div>
+        <div class="col">
+            <label>
+                <input
+                        class="form-control"
+                        placeholder="Nev"
+                        th:field="*{tagNev}"
+                        th:classappend="${#fields.hasErrors('tagNev')} ? 'is-invalid' : 'is-valid'"/>
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('tagNev')}"
+                     th:errors="*{tagNev}">
+                    Hibaüzenet
+                </div>
+            </label>
+        </div>
+        <div class="col">
+            <select th:field="*{tagKategoria}" class="form-select" >
+                <option value="valassz">Válassz Kategóriát</option>
+                <option th:each="tagkategoria : ${tagkategoriak}" th:value="${tagkategoria}"
+                        th:text="${tagkategoria.getTagKategoriaString()}" value="1">Kategoria</option>
+            </select>
+        </div>
+        <div class="col">
+            <input th:if="${tagPeldany.getId() != null}" class="btn btn-primary" type="submit" value="Módosít"/>
         </div>
     </form>
 </ul>

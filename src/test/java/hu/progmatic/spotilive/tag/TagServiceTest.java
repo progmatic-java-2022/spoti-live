@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,6 +30,8 @@ class TagServiceTest {
 
     private Integer demoZenekarId;
 
+    private List<Integer> testTagIds = new ArrayList<>();
+
     @BeforeEach
     void setUp() {
         demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
@@ -35,7 +39,10 @@ class TagServiceTest {
 
     @AfterEach
     void tearDown() {
-        tagService.deleteAlltag();
+        testTagIds
+                .stream()
+                .filter(tagService::isTagExistsById)
+                .forEach(tagService::deleteTagById);
     }
 
     @Test
@@ -45,9 +52,15 @@ class TagServiceTest {
                 .tagKategoria(TagKategoria.MUFAJ)
                 .build();
 
-        TagDto mentettTag = tagService.createTag(dto);
+        TagDto mentettTag = createTag(dto);
         assertThat(tagService.getTagById(mentettTag.getId())).isNotNull();
 
+    }
+
+    private TagDto createTag(TagDto dto) {
+        TagDto tag = tagService.createTag(dto);
+        testTagIds.add(tag.getId());
+        return tag;
     }
 
     @Test
@@ -57,7 +70,7 @@ class TagServiceTest {
                 .tagKategoria(TagKategoria.MUFAJ)
                 .build();
 
-        TagDto mentettTag = tagService.createTag(dto);
+        TagDto mentettTag = createTag(dto);
 
         TagEditCommand command = TagEditCommand.builder()
                 .tagId(mentettTag.getId())
@@ -84,11 +97,12 @@ class TagServiceTest {
                 .tagKategoria(TagKategoria.HANGULAT)
                 .build();
 
-        TagDto mentettTag = tagService.createTag(dto);
-        TagDto mentettTag2 = tagService.createTag(dto2);
+        createTag(dto);
+        createTag(dto2);
 
-        assertThat(tagService.getAllTag()).hasSize(2);
-
+        assertThat(tagService.getAllTag())
+                .extracting(TagDto::getTagNev)
+                .containsAll(List.of("Teszt tag", "Teszt tag 2"));
     }
 
     @Test
@@ -104,8 +118,8 @@ class TagServiceTest {
                 .build();
 
 
-        TagDto mentettTag = tagService.createTag(dto);
-        TagDto mentettTag2 = tagService.createTag(dto2);
+        TagDto mentettTag = createTag(dto);
+        TagDto mentettTag2 = createTag(dto2);
 
 
         tagService.deleteTagById(mentettTag.getId());

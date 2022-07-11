@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.tag;
 
+import hu.progmatic.spotilive.esemeny.EsemenyDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,6 +53,25 @@ public class TagKarbantartasController {
         return "redirect:/tag";
     }
 
+    @GetMapping ("/tag/{id}")
+    public String tagModositas(Model model, @PathVariable("id") Integer id){
+        model.addAttribute("tagPeldany", tagService.getTagById(id));
+        return "/tagkarbantartas";
+    }
+
+    @PostMapping("tag/{id}")
+    public String modositasMentese(
+            @PathVariable ("id") Integer id,
+            @ModelAttribute("tageditcommand") @Valid TagEditCommand tagEditCommand,
+            BindingResult bindingResult
+    ) {
+        if (!bindingResult.hasErrors()) {
+            tagService.editTagById(tagEditCommand);
+            return "redirect:/tag";
+        }
+        return "/tagkarbantartas";
+    }
+
     @ModelAttribute("tagek")
     public List<TagDto> getTagek() {
         return tagService.getAllTag();
@@ -62,6 +82,10 @@ public class TagKarbantartasController {
         return TagDto.builder().build();
     }
 
+    @ModelAttribute("tageditcommand")
+    public TagEditCommand commandPeldany(TagDto tagDto){
+        return TagEditCommand.builder().tagId(tagDto.getId()).tagNev(tagDto.getTagNev()).tagKategoria(tagDto.getTagKategoria()).build();
+    }
     @ModelAttribute("tagkategoriak")
     public List<TagKategoria> getKategoriak() {
         return List.of(TagKategoria.values());
@@ -71,5 +95,7 @@ public class TagKarbantartasController {
     public String ujTagHiba() {
         return null;
     }
+
+
 
 }

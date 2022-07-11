@@ -22,13 +22,17 @@ public class Zene {
     private Integer id;
     @NotBlank(message = "Nem lehet üres")
     private String cim;
+
     @NotBlank(message = "Nem lehet üres")
     private String eloado;
+
     @NotNull(message = "Nem lehet üres")
     private Integer hosszMp;
+
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "zene")
     private List<TagToZene> tagToZeneEntityList = new ArrayList<>();
+
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zene")
     private List<ZeneToEsemeny> esemenyek = new ArrayList<>();
