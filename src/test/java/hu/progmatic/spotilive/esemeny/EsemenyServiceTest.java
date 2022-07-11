@@ -25,13 +25,13 @@ class EsemenyServiceTest {
     @Autowired
     private EsemenyService esemenyService;
 
-
-
-    @Autowired
-    private ZeneService zeneService;
     @Autowired
     private ZenekarService zenekarService;
+
+
     private Integer demoZenekarId;
+    @Autowired
+    private ZeneService zeneService;
 
     @BeforeEach
     void setUp() {
@@ -145,7 +145,7 @@ class EsemenyServiceTest {
                     .cim("Valami cím")
                     .eloado("Valami előadó")
                     .hosszMp(123)
-                            .zenekarId(demoZenekarId)
+                    .zenekarId(demoZenekarId)
                     .build());
 
             esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand.builder()
@@ -175,14 +175,14 @@ class EsemenyServiceTest {
                         .cim("Teszt zene1")
                         .hosszMp(123)
                         .eloado("Teszt eloado1")
-                                .zenekarId(demoZenekarId)
+                        .zenekarId(demoZenekarId)
                         .build());
                 zene2 = zeneService.createZene(CreateZeneCommand
                         .builder()
                         .eloado("Teszt eloado2")
                         .hosszMp(123)
                         .cim("Teszt zene2")
-                                .zenekarId(demoZenekarId)
+                        .zenekarId(demoZenekarId)
                         .build());
 
                 esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand
