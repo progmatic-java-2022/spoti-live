@@ -51,11 +51,17 @@ public class TagService {
                             .map(Zene::getCim)
                             .toList();
                     String zenek = "";
+                    boolean isElso = true;
                     for (String zene : liszt){
-                        zenek += zene;
+                        if (isElso){
+                            zenek += zene;
+                            isElso = false;
+                        }else {
+                        zenek += ", " + zene;
+                        }
                     }
 
-            throw new TagTorlesException("A tag nem törölhető, mert a következő zenékhez hozzá van rendelve: \n" + zenek + "\n");
+            throw new TagTorlesException("A tag nem törölhető, mert a következő zenékhez hozzá van rendelve: " + zenek + "!");
         }
         tagRepository.deleteById(id);
     }
