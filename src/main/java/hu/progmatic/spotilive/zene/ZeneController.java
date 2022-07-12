@@ -98,7 +98,7 @@ public class ZeneController {
     }
 
     @ModelAttribute("zeneModositas")
-    public ZeneDto getZeneModositas(){
+    public ZeneDto zeneModositas(){
         return ZeneDto.builder().build();
     }
 
