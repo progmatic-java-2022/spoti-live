@@ -56,6 +56,23 @@ public class ZeneController {
         }
         return "/zenekarbantartas";
     }
+    @PostMapping("/zenekarbantartas/zene/{zeneid}/tag/{tagid}/add")
+    public String addTagToZene(
+            Model model,
+            @PathVariable Integer zeneid,
+            @PathVariable Integer tagid){
+        zeneKarbantartasService.addTag(zeneid,tagid);
+        return "redirect:/tagek/zene/{zeneid}";
+    }
+    @PostMapping("/zenekarbantartas/zene/{zeneid}/tag/{tagid}/remove")
+    public String removeTagFromZene(
+            Model model,
+            @PathVariable Integer zeneid,
+            @PathVariable Integer tagid
+    ){
+        zeneKarbantartasService.deleteTagFromZene(tagid,zeneid);
+        return "redirect:/tagek/zene/{zeneid}";
+    }
 
     @PostMapping("/zenekarbantartas/zene/{id}")
     public String editZene(
