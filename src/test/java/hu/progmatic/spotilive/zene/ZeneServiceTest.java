@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 class ZeneServiceTest {
@@ -50,6 +51,8 @@ class ZeneServiceTest {
         ZeneDto mentettZene = zeneService.createZene(zene);
 
         assertThat(mentettZene).extracting(ZeneDto::getId).isNotNull();
+        assertNotNull(mentettZene.getZenekarId());
+        assertEquals(demoZenekarId,mentettZene.getZenekarId());
     }
 
     @Nested
