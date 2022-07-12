@@ -74,14 +74,14 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <div>
+                                        <div th:each="tag : ${kategoria.getValue().getHozzaadott()}">
                                             <tr>
-                                                <th>Teszt mufaj</th>
+                                                <th th:text="${tag.tagNev}">Teszt mufaj</th>
                                                 <td>
                                                     <div class="col">
-                                                        <form>
+                                                        <form th:action="@{'/zenekarbantartas/zene/{zeneid}/tag/{tagid}/remove'(zeneid=${zene.id}, tagid=${tag.id})}" method="post">
                                                             <input type="submit" class="btn btn-danger"
-                                                                   value="Remove"/>
+                                                                   value="Törlés"/>
                                                         </form>
                                                     </div>
                                                 </td>
@@ -91,14 +91,14 @@
                                     </table>
                                     <table class="table table-danger table-striped">
                                         <tbody>
-                                        <div>
+                                        <div th:each="tag : ${kategoria.getValue().getNemHozzaadott()}">
                                             <tr>
-                                                <th>Teszt Mufaj</th>
+                                                <th th:text="${tag.tagNev}">Teszt Mufaj</th>
                                                 <td>
                                                     <div class="col">
-                                                        <form>
+                                                        <form th:action="@{'/zenekarbantartas/zene/{zeneid}/tag/{tagid}/add'(zeneid=${zene.id}, tagid=${tag.id})}" method="post">
                                                             <input type="submit" class="btn btn-success"
-                                                                   value="Add"/>
+                                                                   value="Hozzáadás"/>
                                                         </form>
                                                     </div>
                                                 </td>
@@ -108,6 +108,10 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </td>
     </tr>
     </tbody>
