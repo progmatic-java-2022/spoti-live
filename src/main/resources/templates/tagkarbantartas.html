@@ -46,6 +46,11 @@
         </tr>
         </tbody>
     </table>
+    <div th:if="${deletetagerror != null}"
+                 class="alert alert-danger"
+                 th:text="${deletetagerror}">
+    Hibaüzenet
+    </div>
     <h3 th:if="${tagPeldany.getId() == null}">Új Tag létrehozása</h3>
     <h3 th:if="${tagPeldany.getId() != null}">Tag módosítása</h3>
     <form th:if="${tagPeldany.getId() == null}"

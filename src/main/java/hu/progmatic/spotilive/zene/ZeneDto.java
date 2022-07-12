@@ -5,6 +5,7 @@ import hu.progmatic.spotilive.tag.Tag;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -21,6 +22,7 @@ public class ZeneDto {
     private String eloado;
 
     @NotNull(message = "Nem lehet üres")
+    @Min(message = "A zene hossza minimum 120 másodperc!", value = 120)
     private Integer hosszMp;
 
     private List<String> tagStringList;
