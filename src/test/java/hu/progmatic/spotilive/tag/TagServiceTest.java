@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,13 +137,6 @@ class TagServiceTest {
                         .zenekarId(demoZenekarId)
                 .build());
 
-        zeneService.addTag(zene.getId(), mentettTag2.getId());
-        zene = zeneService.getBycim("Cim");
-        assertEquals(1, zene.getTagStringList().size());
-
-        tagService.deleteTagById(mentettTag2.getId());
-
-        zene = zeneService.getBycim("Cim");
-        assertEquals(0, zene.getTagStringList().size());
     }
+
 }
