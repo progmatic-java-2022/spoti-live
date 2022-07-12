@@ -43,7 +43,17 @@ public class TagService {
 
     public void deleteTagById(Integer id) {
         if(tagRepository.getReferenceById(id).getTagToZeneEntityList().size() != 0){
-            throw new TagTorlesException("nemtörlöd");
+                    List<String> liszt = tagRepository.getReferenceById(id).getTagToZeneEntityList()
+                            .stream()
+                            .map(TagToZene::getZene)
+                            .map(Zene::getCim)
+                            .toList();
+                    String zenek = "";
+                    for (String zene : liszt){
+                        zenek += zene;
+                    }
+
+            throw new TagTorlesException("A tag nem törölhető, mert a következő zenékhez hozzá van rendelve: \n" + zenek + "\n");
         }
         tagRepository.deleteById(id);
     }
