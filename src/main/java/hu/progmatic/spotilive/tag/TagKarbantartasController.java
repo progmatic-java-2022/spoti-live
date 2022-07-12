@@ -49,8 +49,14 @@ public class TagKarbantartasController {
             Model model,
             @PathVariable Integer id
     ) {
-        tagService.deleteTagById(id);
-        return "redirect:/tag";
+        try {
+            tagService.deleteTagById(id);
+        } catch (TagTorlesException e){
+            model.addAttribute("deletetagerror", e.getMessage());
+            return "/tagkarbantartas";
+        }
+            return "redirect:/tag";
+
     }
 
     @GetMapping ("/tag/{id}")
@@ -96,6 +102,10 @@ public class TagKarbantartasController {
         return null;
     }
 
+    @ModelAttribute("deletetagerror")
+    public String torlesHiba(){
+        return null;
+    }
 
 
 }

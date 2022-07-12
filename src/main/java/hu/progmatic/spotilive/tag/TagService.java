@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -41,6 +42,9 @@ public class TagService {
     }
 
     public void deleteTagById(Integer id) {
+        if(tagRepository.getReferenceById(id).getTagToZeneEntityList().size() != 0){
+            throw new TagTorlesException("nemtörlöd");
+        }
         tagRepository.deleteById(id);
     }
 
