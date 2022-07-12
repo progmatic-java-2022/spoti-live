@@ -116,6 +116,11 @@
     </tr>
     </tbody>
 </table>
+<div th:if="${zeneError != null}"
+     class="alert alert-danger"
+     th:text="${zeneError}">
+    Hibaüzenet
+</div>
 <hr>
 <h3 th:if="${zeneModositas.id == null}">Új Zene létrehozása</h3>
 <h3 th:if="${zeneModositas.id != null}">Zene szerkesztése</h3>
@@ -187,11 +192,6 @@
       method="post" th:object="${zeneModositas}" class="row">
     <div class="col">
         <label th:text="${zeneModositas.zenekarNev}"></label>
-    </div>
-    <div th:if="${zeneError != null}"
-         class="alert alert-danger"
-         th:text="${zeneError}">
-        Hibaüzenet
     </div>
     <div class="col">
         <label>
