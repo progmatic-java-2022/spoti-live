@@ -59,7 +59,7 @@
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Tagek</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel" >Tagek</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
@@ -79,7 +79,8 @@
                                                 <th th:text="${tag.tagNev}">Teszt mufaj</th>
                                                 <td>
                                                     <div class="col">
-                                                        <form th:action="@{'/zenekarbantartas/zene/{zeneid}/tag/{tagid}/remove'(zeneid=${zene.id}, tagid=${tag.id})}" method="post">
+                                                        <form th:action="@{'/zenekarbantartas/zene/{zeneid}/tag/{tagid}/remove'
+                                                        (zeneid=${zeneTagSzerkeztes.zeneId}, tagid=${tag.id})}" method="post">
                                                             <input type="submit" class="btn btn-danger"
                                                                    value="Törlés"/>
                                                         </form>
@@ -96,7 +97,8 @@
                                                 <th th:text="${tag.tagNev}">Teszt Mufaj</th>
                                                 <td>
                                                     <div class="col">
-                                                        <form th:action="@{'/zenekarbantartas/zene/{zeneid}/tag/{tagid}/add'(zeneid=${zene.id}, tagid=${tag.id})}" method="post">
+                                                        <form th:action="@{'/zenekarbantartas/zene/{zeneid}/tag/{tagid}/add'
+                                                        (zeneid=${zeneTagSzerkeztes.zeneId}, tagid=${tag.id})}" method="post">
                                                             <input type="submit" class="btn btn-success"
                                                                    value="Hozzáadás"/>
                                                         </form>
