@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -19,7 +18,7 @@ public class TagService {
 
     public TagDto createTag(TagDto dto) {
         if (tagRepository.getTagByTagNev(dto.getTagNev()).isPresent()) {
-            throw new createTagkarExeption("Tag már létezik ilyen névvel!");
+            throw new CreateTagExeption("Tag már létezik ilyen névvel!");
         }
         Tag tagEntity = Tag.builder()
                 .tagNev(dto.getTagNev())
@@ -32,6 +31,9 @@ public class TagService {
     }
 
     public void editTagById(TagEditCommand command) {
+        if(tagRepository.getTagByTagNev(command.getTagNev()).isPresent()){
+            throw new CreateTagExeption("Tag már létezik ilyen névvel!");
+        }
         Tag tagEntity = tagRepository.getReferenceById(command.getTagId());
         tagEntity.setTagNev(command.getTagNev());
         tagEntity.setTagKategoria(command.getTagKategoria());

@@ -1,6 +1,5 @@
 package hu.progmatic.spotilive.tag;
 
-import hu.progmatic.spotilive.esemeny.EsemenyDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +34,7 @@ public class TagKarbantartasController {
             try {
                 TagDto ujTag = tagService.createTag(tagDto);
                 model.addAttribute("tagPeldany", ujTag);
-            } catch (createTagkarExeption e){
+            } catch (CreateTagExeption e){
                 model.addAttribute("createTagError", e.getMessage());
                 return "/tagkarbantartas";
             }
@@ -69,10 +68,16 @@ public class TagKarbantartasController {
     public String modositasMentese(
             @PathVariable ("id") Integer id,
             @ModelAttribute("tageditcommand") @Valid TagEditCommand tagEditCommand,
-            BindingResult bindingResult
+            BindingResult bindingResult,
+            Model model
     ) {
         if (!bindingResult.hasErrors()) {
-            tagService.editTagById(tagEditCommand);
+           try {
+               tagService.editTagById(tagEditCommand);
+           }catch (CreateTagExeption e){
+               model.addAttribute("createTagError", e.getMessage());
+               return "/tagkarbantartas";
+           }
             return "redirect:/tag";
         }
         return "/tagkarbantartas";
