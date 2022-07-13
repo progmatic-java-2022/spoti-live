@@ -11,4 +11,5 @@ public class UjFelhasznaloCommand {
   private String nev;
   private String jelszo;
   private UserType role;
+  private Integer zenekarId;
 }

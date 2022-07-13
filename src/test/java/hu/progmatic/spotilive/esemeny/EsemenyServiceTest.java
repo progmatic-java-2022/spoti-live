@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.esemeny;
 
+import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zene.CreateZeneCommand;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 
 
 import java.time.LocalDateTime;
@@ -29,13 +31,15 @@ class EsemenyServiceTest {
     private ZenekarService zenekarService;
 
 
+    @Autowired
+    private DemoServiceTestHelper demoServiceTestHelper;
     private Integer demoZenekarId;
     @Autowired
     private ZeneService zeneService;
 
     @BeforeEach
     void setUp() {
-        demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+        demoZenekarId = demoServiceTestHelper.getdemoZeneKar1Id();
     }
 
     @Test
@@ -49,14 +53,12 @@ class EsemenyServiceTest {
 
         assertNotNull(letrehozott.getId());
         assertEquals("Tódor Születésnapja", letrehozott.getNev());
-        assertEquals(DemoService.DEMO_ZENEKAR, letrehozott.getZenekarNev());
-
-        esemenyService.deleteEsemeny(letrehozott.getId());
-        assertEquals(1, esemenyService.countAllEsemeny());
+        assertEquals(demoServiceTestHelper.getdemoZeneKarNev(), letrehozott.getZenekarNev());
 
         var esemenyek = esemenyService.findAllEsemeny();
         assertThat(esemenyek).extracting(EsemenyDto::getNev)
-                .contains("Demo esemény");
+            .contains("Tódor Születésnapja");
+        esemenyService.deleteEsemeny(letrehozott.getId());
     }
 
 
@@ -72,10 +74,9 @@ class EsemenyServiceTest {
         assertNotNull(letrehozott.getId());
 
         esemenyService.deleteEsemeny(letrehozott.getId());
-        assertEquals(1, esemenyService.countAllEsemeny());
         var esemenyek = esemenyService.findAllEsemeny();
         assertThat(esemenyek).extracting(EsemenyDto::getNev)
-                .contains("Demo esemény");
+                .doesNotContain("Törlendő esemény");
 
     }
 
@@ -110,9 +111,9 @@ class EsemenyServiceTest {
         void esemenyListazasTest() {
             var esemenyList = esemenyService.findAllEsemeny();
             assertThat(esemenyList)
-                    .hasSize(3)
+                    .hasSizeGreaterThan(2)
                     .extracting(EsemenyDto::getNev)
-                    .contains("Tódor Születésnapja", "Demo esemény");
+                    .contains("Tódor Születésnapja");
         }
 
         @Test
@@ -135,9 +136,8 @@ class EsemenyServiceTest {
             assertEquals("modositott név", updatelt.getNev());
 
             esemenyService.deleteEsemeny(updatelt.getId());
-            assertThat(esemenyService.findAllEsemeny())
-                    .hasSize(3);
         }
+
 
         @Test
         void addZeneToEsemenyTest() {
@@ -164,6 +164,7 @@ class EsemenyServiceTest {
         }
 
         @Nested
+        @WithUserDetails(DemoService.ZENEKAR_1_FELHASZNALO)
         class EsemenyZenekkelTest {
             ZeneDto zene1;
             ZeneDto zene2;

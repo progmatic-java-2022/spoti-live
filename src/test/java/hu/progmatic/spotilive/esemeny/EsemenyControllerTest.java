@@ -1,9 +1,8 @@
 package hu.progmatic.spotilive.esemeny;
 
+import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.MockMvcTestHelper;
-import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
-import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +14,9 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+
+import static hu.progmatic.spotilive.demo.DemoService.ZENEKAR_1_FELHASZNALO;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -28,15 +30,15 @@ class EsemenyControllerTest {
   private EsemenyService esemenyService;
 
   @Autowired
-  private ZenekarService zenekarService;
+  private DemoServiceTestHelper demoServiceTestHelper;
 
   private Integer demoZenekarId;
   private Integer demoEsemenyId;
 
   @BeforeEach
   void setUp() {
-    demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
-    demoEsemenyId = esemenyService.getByName(DemoService.DEMO_ESEMENY).getId();
+    demoZenekarId = demoServiceTestHelper.getdemoZeneKar1Id();
+    demoEsemenyId = demoServiceTestHelper.getdemoEsemenyId();
   }
 
   @Test
@@ -81,7 +83,7 @@ class EsemenyControllerTest {
   }
 
   @Test
-  @WithUserDetails("zenekar")
+  @WithUserDetails(ZENEKAR_1_FELHASZNALO)
   @DisplayName("Zenekarral belépve megjelenik a zenekar hozzáadása szöveg")
   void zenekarHozzaadasaMegjelenik() throws Exception {
     MockMvcTestHelper
@@ -105,7 +107,7 @@ class EsemenyControllerTest {
   }
 
   @Test
-  @WithUserDetails("zenekar")
+  @WithUserDetails(ZENEKAR_1_FELHASZNALO)
   @DisplayName("Esemény létrehozásakor megjelennek a hibaüzenetek, ha nincs rendesen kitöltve")
   void esemenyLetrehozasHibauzenetek() throws Exception {
     MockMvcTestHelper
@@ -121,7 +123,7 @@ class EsemenyControllerTest {
   }
 
   @Test
-  @WithUserDetails("zenekar")
+  @WithUserDetails(ZENEKAR_1_FELHASZNALO)
   @DisplayName("Esemény létrehozásakor létrejön az esemény")
   void esemenyLetrehozas() throws Exception {
     MockMvcTestHelper
@@ -144,7 +146,7 @@ class EsemenyControllerTest {
   }
 
   @Test
-  @WithUserDetails("zenekar")
+  @WithUserDetails(ZENEKAR_1_FELHASZNALO)
   @DisplayName("Esemény módosítás után elmentődik")
   void esemenyMenteseTest() throws Exception {
     MockMvcTestHelper
@@ -220,7 +222,7 @@ class EsemenyControllerTest {
 
   @Test
   @DisplayName("Esemény szerkesztésekor megjelnnek-e az adatok")
-  @WithUserDetails("zenekar")
+  @WithUserDetails(ZENEKAR_1_FELHASZNALO)
   void esemenySzerkesztes() throws Exception {
     MockMvcTestHelper
             .testRequest(mockMvc)

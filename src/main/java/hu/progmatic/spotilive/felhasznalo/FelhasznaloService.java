@@ -1,7 +1,10 @@
 package hu.progmatic.spotilive.felhasznalo;
 
+import hu.progmatic.spotilive.zenekar.Zenekar;
+import hu.progmatic.spotilive.zenekar.ZenekarService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +23,8 @@ public class FelhasznaloService {
 
   private final FelhasznaloRepository felhasznaloRepository;
   private final PasswordEncoder encoder;
+  @Autowired
+  private ZenekarService zenekarService;
 
   public FelhasznaloService(FelhasznaloRepository felhasznaloRepository, PasswordEncoder encoder) {
     this.felhasznaloRepository = felhasznaloRepository;
@@ -36,12 +41,22 @@ public class FelhasznaloService {
     if (felhasznaloRepository.findByNev(command.getNev()).isPresent()) {
       throw new FelhasznaloLetrehozasException("Ilyen névvel már létezik felhasználó!");
     }
+    Zenekar zenekar = getZenekar(command);
     Felhasznalo felhasznalo = Felhasznalo.builder()
         .nev(command.getNev())
         .jelszo(encoder.encode(command.getJelszo()))
         .role(command.getRole())
+        .zenekar(zenekar)
         .build();
     felhasznaloRepository.save(felhasznalo);
+  }
+
+  private Zenekar getZenekar(UjFelhasznaloCommand command) {
+    Zenekar zenekar = null;
+    if (command.getZenekarId() != null) {
+      zenekar = zenekarService.getZenekarEntityById(command.getZenekarId());
+    }
+    return zenekar;
   }
 
   @RolesAllowed(UserType.Roles.USER_WRITE_ROLE)
@@ -52,16 +67,6 @@ public class FelhasznaloService {
   @RolesAllowed(UserType.Roles.USER_READ_ROLE)
   public Optional<Felhasznalo> findByName(String nev) {
     return felhasznaloRepository.findByNev(nev);
-  }
-
-  @EventListener(ContextRefreshedEvent.class)
-  public void init() {
-    if (felhasznaloRepository.count() == 0) {
-      add(new UjFelhasznaloCommand("admin", "adminpass", UserType.ADMIN));
-      add(new UjFelhasznaloCommand("zenekar", "zenekar", UserType.ZENEKAR));
-      add(new UjFelhasznaloCommand("user", "user", UserType.USER));
-      add(new UjFelhasznaloCommand("guest", "guest", UserType.GUEST));
-    }
   }
 
   public boolean hasRole(String role) {
@@ -78,6 +83,21 @@ public class FelhasznaloService {
       return null;
     }
     return userPrincipal.getFelhasznaloId();
+  }
+
+  public boolean isAdmin() {
+    MyUserDetails userPrincipal = getMyUserDetails();
+    if (userPrincipal == null) {
+      return false;
+    }
+    return userPrincipal.getRole().equals(UserType.ADMIN);
+  }
+  public Integer getZenekarId() {
+    MyUserDetails userPrincipal = getMyUserDetails();
+    if (userPrincipal == null) {
+      return null;
+    }
+    return userPrincipal.getZenekarId();
   }
 
   private MyUserDetails getMyUserDetails() {

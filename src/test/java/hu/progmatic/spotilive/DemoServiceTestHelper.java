@@ -1,10 +1,12 @@
 package hu.progmatic.spotilive;
 
 import hu.progmatic.spotilive.demo.DemoService;
+import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.tag.TagService;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
+import hu.progmatic.spotilive.zenekar.ZenekarDto;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,16 +22,34 @@ public class DemoServiceTestHelper {
 
     @Autowired
     TagService tagservice;
+    @Autowired
+    private EsemenyService esemenyService;
 
-    public Integer getdemoZeneKarId() {
-        return zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+
+    public Integer getdemoZeneKar1Id() {
+        return getDemoZenekar1().getId();
     }
 
-    public ZeneDto getDemoZeneDto() {
-        return zeneService.getZeneByNev(DemoService.DEMO_ZENE);
+    private ZenekarDto getDemoZenekar1() {
+        return zenekarService.getByName(DemoService.PREFIX1 + DemoService.DEMO_ZENEKAR);
+    }
+
+    public ZeneDto getDemoZenekar1ZeneDto() {
+        return zeneService.getZeneByNev(DemoService.PREFIX1 + DemoService.DEMO_ZENE);
+    }
+    public ZeneDto getDemoZenekar2ZeneDto() {
+        return zeneService.getZeneByNev(DemoService.PREFIX2 + DemoService.DEMO_ZENE);
     }
 
     public TagDto getDemoTagDto(){
         return tagservice.getTagDtoByNev(DemoService.DEMO_TAG);
+    }
+
+    public String getdemoZeneKarNev() {
+        return getDemoZenekar1().getNev();
+    }
+
+    public Integer getdemoEsemenyId() {
+        return esemenyService.getByName(DemoService.PREFIX1 + DemoService.DEMO_ESEMENY).getId();
     }
 }

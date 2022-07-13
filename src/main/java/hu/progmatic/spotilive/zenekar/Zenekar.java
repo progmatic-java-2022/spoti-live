@@ -1,6 +1,7 @@
 package hu.progmatic.spotilive.zenekar;
 
 import hu.progmatic.spotilive.esemeny.Esemeny;
+import hu.progmatic.spotilive.felhasznalo.Felhasznalo;
 import hu.progmatic.spotilive.zene.Zene;
 import lombok.*;
 
@@ -37,4 +38,8 @@ public class Zenekar {
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true, mappedBy = "zenekar")
     private List<Zene> zeneLista = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "zenekar")
+    private List<Felhasznalo> tagok = new ArrayList<>();
 }

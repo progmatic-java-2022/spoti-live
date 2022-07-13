@@ -14,12 +14,18 @@ public class MyUserDetails implements UserDetails {
   private final String jelszo;
   private final String nev;
   private final UserType role;
+  private final Integer zenekarId;
 
   public MyUserDetails(Felhasznalo felhasznalo) {
     jelszo = felhasznalo.getJelszo();
     nev = felhasznalo.getNev();
     role = felhasznalo.getRole();
     felhasznaloId = felhasznalo.getId();
+    if (felhasznalo.getZenekar() != null) {
+      zenekarId = felhasznalo.getZenekar().getId();
+    } else {
+      zenekarId = null;
+    }
   }
 
   @Override
@@ -63,5 +69,9 @@ public class MyUserDetails implements UserDetails {
 
   public Long getFelhasznaloId() {
     return felhasznaloId;
+  }
+
+  public Integer getZenekarId() {
+    return zenekarId;
   }
 }

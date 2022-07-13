@@ -1,9 +1,8 @@
 package hu.progmatic.spotilive.zenekar;
 
-import hu.progmatic.spotilive.demo.DemoService;
+import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zene.CreateZeneCommand;
-import hu.progmatic.spotilive.zene.Zene;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import org.junit.jupiter.api.AfterEach;
@@ -28,11 +27,14 @@ class ZenekarServiceTest {
     @Autowired
     ZeneService zeneService;
 
+    @Autowired
+    private DemoServiceTestHelper demoServiceTestHelper;
+
     private Integer demoZenekarId;
 
     @BeforeEach
     void setUp() {
-        demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+        demoZenekarId = demoServiceTestHelper.getdemoZeneKar1Id();
     }
 
 

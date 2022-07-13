@@ -121,7 +121,7 @@ public class ZeneController {
 
     @ModelAttribute("zeneLista")
     public List<ZeneDto> getZenek() {
-        return zeneKarbantartasService.findAllDto();
+        return zeneKarbantartasService.findAllModosithatoDto();
     }
 
     @ModelAttribute("ujZeneError")

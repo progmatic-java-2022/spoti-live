@@ -1,6 +1,6 @@
 package hu.progmatic.spotilive.tag;
 
-import hu.progmatic.spotilive.demo.DemoService;
+import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.zene.CreateZeneCommand;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
@@ -27,13 +27,16 @@ class TagServiceTest {
     @Autowired
     private ZenekarService zenekarService;
 
+    @Autowired
+    private DemoServiceTestHelper demoServiceTestHelper;
+
     private Integer demoZenekarId;
 
     private List<Integer> testTagIds = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
-        demoZenekarId = zenekarService.getByName(DemoService.DEMO_ZENEKAR).getId();
+        demoZenekarId = demoServiceTestHelper.getdemoZeneKar1Id();
     }
 
     @AfterEach

@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.felhasznalo;
 
+import hu.progmatic.spotilive.zenekar.Zenekar;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,4 +23,7 @@ public class Felhasznalo {
 
   @Enumerated(EnumType.STRING)
   private UserType role;
+
+  @ManyToOne
+  private Zenekar zenekar;
 }

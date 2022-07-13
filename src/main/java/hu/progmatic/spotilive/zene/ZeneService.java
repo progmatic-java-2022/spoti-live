@@ -1,5 +1,7 @@
 package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
+import hu.progmatic.spotilive.felhasznalo.NincsJogosultsagAZenekarhozException;
 import hu.progmatic.spotilive.tag.Tag;
 import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.tag.TagRepository;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 @Transactional
 @Service
@@ -22,6 +25,9 @@ public class ZeneService {
 
     @Autowired
     ZenekarService zenekarService;
+
+    @Autowired
+    private FelhasznaloService felhasznaloService;
 
     public ZeneDto createZene(CreateZeneCommand command) {
         if (zeneRepository.getZeneByCim(command.getCim()).isPresent()) {
@@ -38,7 +44,21 @@ public class ZeneService {
     }
 
     public void deleteZeneById(Integer id) {
+        exceptionDobasHaNincsJogosultsagAZenehez(id);
         zeneRepository.deleteById(id);
+    }
+
+    private void exceptionDobasHaNincsJogosultsagAZenehez(Integer id) {
+        if (felhasznaloService.isAdmin()) {
+            return;
+        }
+        var zene = zeneRepository.getReferenceById(id);
+        var felhasznaloZenekarId = felhasznaloService.getZenekarId();
+        if (!Objects.equals(zene.getZenekar().getId(), felhasznaloZenekarId)) {
+            throw new NincsJogosultsagAZenekarhozException(
+                "Zenekar jogosultsággal nem módosítható más zenéje!"
+            );
+        }
     }
 
     public List<ZeneDto> findAllDto() {
@@ -109,5 +129,18 @@ public class ZeneService {
 
     public ZeneDto getZeneByNev(String nev){
         return ZeneDto.factory(zeneRepository.getZeneByCim(nev).orElseThrow());
+    }
+
+    public List<ZeneDto> findAllModosithatoDto() {
+        if (felhasznaloService.isAdmin()) {
+            return findAllDto();
+        }
+        Integer zenekarId = felhasznaloService.getZenekarId();
+        Zenekar zenekar = zenekarService.getZenekarEntityById(zenekarId);
+        return zeneRepository
+            .findAllByZenekar(zenekar)
+            .stream()
+            .map(ZeneDto::factory)
+            .toList();
     }
 }
