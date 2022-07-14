@@ -77,6 +77,7 @@ public class ZeneService {
     }
 
     public ZeneDto editZene(ZeneDto dto) {
+        exceptionDobasHaNincsJogosultsagAZenehez(dto.getId());
         Zene zene = zeneRepository.getReferenceById(dto.getId());
         zene.setCim(dto.getCim());
         zene.setEloado(dto.getEloado());
