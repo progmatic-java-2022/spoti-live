@@ -1,5 +1,7 @@
 package hu.progmatic.spotilive.zene;
 
+import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
+import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.tag.TagService;
 import hu.progmatic.spotilive.zenekar.ZenekarDto;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
@@ -25,6 +27,9 @@ public class ZeneController {
 
     @Autowired
     TagService tagService;
+    @Autowired
+    private FelhasznaloService felhasznaloService;
+
 
     @GetMapping("/zene")
     public String oldaBetoltes() {
@@ -150,4 +155,7 @@ public class ZeneController {
     public boolean showModal(){
         return false;
     }
+
+    @ModelAttribute("adminModositasJogVan")
+    public boolean adminModositasJogVan(){return felhasznaloService.hasRole(UserType.Roles.USER_WRITE_ROLE);}
 }

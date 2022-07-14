@@ -20,7 +20,7 @@
 <table class="table table-success table-striped">
     <thead>
     <tr>
-        <th scope="col">Zenekar</th>
+        <th th:if="${adminModositasJogVan}" scope="col">Zenekar</th>
         <th scope="col">Cim</th>
         <th scope="col">Eloado</th>
         <th scope="col">HosszMp</th>
@@ -31,7 +31,7 @@
 
     <tbody>
     <tr th:each="zene : ${zeneLista}">
-        <td th:text="${zene.zenekarNev}">Zenekar</td>
+        <td th:if="${adminModositasJogVan}" th:text="${zene.zenekarNev}">Zenekar</td>
         <td th:text="${zene.cim}">Nev</td>
         <td th:text="${zene.eloado}">Eloado</td>
         <td th:text="${zene.hosszMp}">Hossz</td>
