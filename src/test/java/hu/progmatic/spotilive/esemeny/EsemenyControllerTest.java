@@ -38,7 +38,7 @@ class EsemenyControllerTest {
   @BeforeEach
   void setUp() {
     demoZenekarId = demoServiceTestHelper.getdemoZeneKar1Id();
-    demoEsemenyId = demoServiceTestHelper.getdemoEsemenyId();
+    demoEsemenyId = demoServiceTestHelper.getZenekar1demoEsemenyId();
   }
 
   @Test

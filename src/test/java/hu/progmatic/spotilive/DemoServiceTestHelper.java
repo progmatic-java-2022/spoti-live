@@ -49,7 +49,7 @@ public class DemoServiceTestHelper {
         return getDemoZenekar1().getNev();
     }
 
-    public Integer getdemoEsemenyId() {
+    public Integer getZenekar1demoEsemenyId() {
         return esemenyService.getByName(DemoService.PREFIX1 + DemoService.DEMO_ESEMENY).getId();
     }
 }

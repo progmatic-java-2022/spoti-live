@@ -2,6 +2,7 @@ package hu.progmatic.spotilive.esemeny;
 
 import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.demo.DemoService;
+import hu.progmatic.spotilive.felhasznalo.NincsJogosultsagAZenekarhozException;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zene.CreateZeneCommand;
 import hu.progmatic.spotilive.zene.Zene;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -115,6 +117,8 @@ class EsemenyServiceTest {
                     .extracting(EsemenyDto::getNev)
                     .contains("Tódor Születésnapja");
         }
+
+
 
         @Test
         void esemenySzerkeszteseTest() {
@@ -279,4 +283,43 @@ class EsemenyServiceTest {
             }
         }
     }
+    @Test
+    @WithUserDetails(DemoService.ZENEKAR_1_FELHASZNALO)
+    void esemenyListazasCsakUserSajatja() {
+        var sajatLista = esemenyService.findAllModosithatoDto();
+        assertThat(sajatLista)
+                .extracting(EsemenyDto::getZenekarNev)
+                .containsOnly(demoServiceTestHelper.getDemoZenekar1ZeneDto().getZenekarNev());
+    }
+
+    @Test
+    @WithUserDetails(DemoService.ZENEKAR_2_FELHASZNALO)
+    void esemenyListazasCsakUser2Sajatja() {
+        var sajatLista = esemenyService.findAllModosithatoDto();
+        assertThat(sajatLista)
+                .extracting(EsemenyDto::getZenekarNev)
+                .containsOnly(demoServiceTestHelper.getDemoZenekar2ZeneDto().getZenekarNev());
+    }
+
+    @Test
+    @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
+    void esemenyListazasAdmin() {
+        var sajatLista = esemenyService.findAllModosithatoDto();
+        assertThat(sajatLista)
+                .extracting(EsemenyDto::getZenekarNev)
+                .contains(demoServiceTestHelper.getDemoZenekar2ZeneDto().getZenekarNev())
+                .contains(demoServiceTestHelper.getDemoZenekar1ZeneDto().getZenekarNev());
+    }
+
+    @Test
+    @WithUserDetails(DemoService.ZENEKAR_2_FELHASZNALO)
+    void deleteTestNincsJogosultsag() {
+        Integer zenekar1demoEsemenyId = demoServiceTestHelper.getZenekar1demoEsemenyId();
+        assertThatThrownBy(() ->
+                esemenyService.deleteEsemeny(zenekar1demoEsemenyId)
+        )
+                .isInstanceOf(NincsJogosultsagAZenekarhozException.class)
+                .hasMessageContaining("Zenekar jogosultsággal nem módosítható más eseménye!");
+    }
+
 }

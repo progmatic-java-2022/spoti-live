@@ -1,5 +1,7 @@
 package hu.progmatic.spotilive.esemeny;
 
+import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
+import hu.progmatic.spotilive.felhasznalo.NincsJogosultsagAZenekarhozException;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.Zenekar;
@@ -25,6 +27,8 @@ EsemenyService {
     private ZenekarService zenekarService;
     @Autowired
     private ZeneService zeneService;
+    @Autowired
+    private FelhasznaloService felhasznaloService;
 
 
     @RolesAllowed(UserType.Roles.ESEMENY_KEZELES_ROLE)
@@ -103,5 +107,19 @@ EsemenyService {
                 .stream()
                 .map(ZeneToEsemenyDto::factory)
                 .toList();
+    }
+
+    public List<EsemenyDto> findAllModosithatoDto() {
+
+        if (felhasznaloService.isAdmin()){
+            return findAllEsemeny();
+        }
+        var zenekarId = felhasznaloService.getZenekarId();
+
+        return esemenyRepository.findAllByZenekarId(zenekarId)
+                .stream()
+                .map(EsemenyDto::factory)
+                .toList();
+
     }
 }
