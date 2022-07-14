@@ -101,4 +101,10 @@ public class EsemenyController {
     public List<ZenekarDto> allZenekar(){
         return zenekarService.findAllDto();
     }
+
+    @ModelAttribute("isAdmin")
+    public boolean isAdmin(){
+        return felhasznaloService.isAdmin();
+    }
+
 }

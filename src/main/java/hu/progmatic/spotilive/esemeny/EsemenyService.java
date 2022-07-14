@@ -35,14 +35,29 @@ EsemenyService {
     @RolesAllowed(UserType.Roles.ESEMENY_KEZELES_ROLE)
     public EsemenyDto createEsemeny(CreateEsemenyCommand command) {
         Zenekar zenekar = zenekarService.getZenekarEntityById(command.getZenekarId());
-        Esemeny ujEsemeny = Esemeny
-                .builder()
-                .nev(command.getNev())
-                .idopont(command.getIdoPont())
-                .zenekar(zenekar)
-                .build();
-        zenekar.getEsemenyek().add(ujEsemeny);
-        return EsemenyDto.factory(esemenyRepository.save(ujEsemeny));
+//        if (felhasznaloService.isAdmin()) {
+            Esemeny ujEsemeny = Esemeny
+                    .builder()
+                    .nev(command.getNev())
+                    .idopont(command.getIdoPont())
+                    .zenekar(zenekar)
+                    .build();
+            zenekar.getEsemenyek().add(ujEsemeny);
+            return EsemenyDto.factory(esemenyRepository.save(ujEsemeny));
+//        }
+//
+//        else {
+//            Esemeny ujEsemeny = Esemeny
+//                    .builder()
+//                    .nev(command.getNev())
+//                    .idopont(command.getIdoPont())
+//                    .zenekar(zenekarService.getZenekarEntityById(felhasznaloService.getZenekarId()))
+//                    .build();
+//            zenekar.getEsemenyek().add(ujEsemeny);
+//            return EsemenyDto.factory(esemenyRepository.save(ujEsemeny));
+//
+//        }
+
     }
 
     public EsemenyDto getEsemenyDtoById(Integer id) {
@@ -67,6 +82,8 @@ EsemenyService {
             );
         }
     }
+
+
 
     public int countAllEsemeny() {
         return (int) esemenyRepository.count();
