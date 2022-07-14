@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -50,7 +51,21 @@ EsemenyService {
     }
 
     public void deleteEsemeny(Integer id) {
+        exceptionDobasHaNincsJogosultsagEsemenyhez(id);
         esemenyRepository.deleteById(id);
+    }
+
+    private void exceptionDobasHaNincsJogosultsagEsemenyhez(Integer id) {
+        if (felhasznaloService.isAdmin()) {
+            return;
+        }
+        Esemeny esemeny = esemenyRepository.getReferenceById(id);
+        var felhasznaloZenekarId = felhasznaloService.getZenekarId();
+        if (!Objects.equals(esemeny.getZenekar().getId(), felhasznaloZenekarId)) {
+            throw new NincsJogosultsagAZenekarhozException(
+                    "Zenekar jogosultsággal nem módosítható más eseménye!"
+            );
+        }
     }
 
     public int countAllEsemeny() {
