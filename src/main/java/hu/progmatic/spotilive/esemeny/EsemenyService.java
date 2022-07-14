@@ -33,12 +33,12 @@ EsemenyService {
 
 
     @RolesAllowed(UserType.Roles.ESEMENY_KEZELES_ROLE)
-    public EsemenyDto createEsemeny(CreateEsemenyCommand esemeny) {
-        Zenekar zenekar = zenekarService.getZenekarEntityById(esemeny.getZenekarId());
+    public EsemenyDto createEsemeny(CreateEsemenyCommand command) {
+        Zenekar zenekar = zenekarService.getZenekarEntityById(command.getZenekarId());
         Esemeny ujEsemeny = Esemeny
                 .builder()
-                .nev(esemeny.getNev())
-                .idopont(esemeny.getIdoPont())
+                .nev(command.getNev())
+                .idopont(command.getIdoPont())
                 .zenekar(zenekar)
                 .build();
         zenekar.getEsemenyek().add(ujEsemeny);
