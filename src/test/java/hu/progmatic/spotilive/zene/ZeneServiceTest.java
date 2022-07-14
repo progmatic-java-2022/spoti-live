@@ -166,6 +166,16 @@ class ZeneServiceTest {
       assertEquals("Edited cim", modositott.getCim());
 
     }
+    @Test
+    void editTestNincsJogosultsaga() {
+     var masikZenekarZene = demoServiceTestHelper.getDemoZenekar2ZeneDto();
+      assertThatThrownBy(() ->
+              zeneService.editZene(masikZenekarZene)
+      )
+              .isInstanceOf(NincsJogosultsagAZenekarhozException.class)
+              .hasMessageContaining("Zenekar jogosultsággal nem módosítható más zenéje!");
+
+    }
 
     @Test
     void getByIdTest() {
