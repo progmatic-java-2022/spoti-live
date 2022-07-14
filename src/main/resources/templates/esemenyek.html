@@ -24,7 +24,7 @@
     <thead>
     <tr>
         <th scope="col">Id</th>
-        <th scope="col">Zenekar neve</th>
+        <th scope="col" th:if="${isAdmin} ">Zenekar neve</th>
         <th scope="col">Esemeny neve</th>
         <th scope="col">Időpont</th>
         <th scope="col"></th>
@@ -33,7 +33,7 @@
     <tbody>
     <tr th:each="esemeny : ${esemenyekLista}">
         <td th:text="${esemeny.id}">Id</td>
-        <td th:text="${esemeny.zenekarNev}">Zenekar neve</td>
+        <td th:if="${isAdmin} " th:text="${esemeny.zenekarNev}">Zenekar neve</td>
         <td th:text="${esemeny.nev}">Név</td>
         <td th:text="${esemeny.idoPont}">Időpont</td>
         <td>
@@ -68,7 +68,7 @@
         th:action="@{'/esemeny'}"
         method="post" th:object="${createEsemenyCommand}" class="row">
     <div class="col">
-        <label>
+        <label th:if="${isAdmin} ">
             <select th:field="*{zenekarId}" class="form-select">
                 <option th:each="zenekar : ${allZenekar}" th:value="${zenekar.getId()}" th:text="${zenekar.getNev()}"></option>
             </select>
