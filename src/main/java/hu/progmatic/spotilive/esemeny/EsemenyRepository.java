@@ -18,4 +18,6 @@ where zene.esemeny.id = :esemenyId
 order by zene.szavazat desc , zene.zene.cim asc
 """)
     List<ZeneToEsemeny> getZenekByLikesAndAbc(@Param("esemenyId") Integer esemenyid);
+
+    List<Esemeny> findAllByZenekarId(Integer zenekarId);
 }
