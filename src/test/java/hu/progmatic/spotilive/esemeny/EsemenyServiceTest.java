@@ -45,6 +45,7 @@ class EsemenyServiceTest {
     }
 
     @Test
+    @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
     void esemenyLetrehozasaTest() {
         CreateEsemenyCommand esemeny = CreateEsemenyCommand.builder()
                 .nev("Tódor Születésnapja")
@@ -65,6 +66,7 @@ class EsemenyServiceTest {
 
 
     @Test
+    @WithUserDetails(DemoService.ZENEKAR_1_FELHASZNALO)
     void esemenyTorleseTest() {
         CreateEsemenyCommand esemeny = CreateEsemenyCommand.builder()
                 .nev("Törlendő esemény")
@@ -83,6 +85,7 @@ class EsemenyServiceTest {
     }
 
     @Nested
+    @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
     class TesztLetezoEsemenyekkel {
         EsemenyDto esemeny1;
         EsemenyDto esemeny2;
@@ -168,7 +171,7 @@ class EsemenyServiceTest {
         }
 
         @Nested
-        @WithUserDetails(DemoService.ZENEKAR_1_FELHASZNALO)
+        @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
         class EsemenyZenekkelTest {
             ZeneDto zene1;
             ZeneDto zene2;

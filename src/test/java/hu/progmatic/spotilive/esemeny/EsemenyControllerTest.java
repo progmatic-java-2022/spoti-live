@@ -2,6 +2,7 @@ package hu.progmatic.spotilive.esemeny;
 
 import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.MockMvcTestHelper;
+import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 
+import static hu.progmatic.spotilive.demo.DemoService.ADMIN_FELHASZNALO;
 import static hu.progmatic.spotilive.demo.DemoService.ZENEKAR_1_FELHASZNALO;
 
 
@@ -56,7 +58,7 @@ class EsemenyControllerTest {
   }
 
   @Test
-  @WithMockUser(roles = UserType.Roles.ESEMENY_KEZELES_ROLE)
+  @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
   void esemenyTorleseTest() throws Exception {
     var esemeny = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
             .nev("Esküvő")
@@ -123,7 +125,7 @@ class EsemenyControllerTest {
   }
 
   @Test
-  @WithUserDetails(ZENEKAR_1_FELHASZNALO)
+  @WithMockUser(ADMIN_FELHASZNALO)
   @DisplayName("Esemény létrehozásakor létrejön az esemény")
   void esemenyLetrehozas() throws Exception {
     MockMvcTestHelper
@@ -136,17 +138,19 @@ class EsemenyControllerTest {
             .expectRedirectedToUrlPattern("/esemeny?**")
             .expectContentNotContainsString("Nem lehet üres")
             .expectContentNotContainsString("Meg kell adni időpontot!");
-    Integer esemenyId = esemenyService.findAllEsemeny()
-            .stream()
-            .filter(esemeny -> esemeny.getNev().equals("Esemény létrehozása teszt esemény"))
-            .map(EsemenyDto::getId)
-            .findFirst()
-            .orElseThrow();
+    Integer esemenyId = esemenyService.getByName("Esemény létrehozása teszt esemény").getId();
+
+//    Integer esemenyId = esemenyService.findAllEsemeny()
+//            .stream()
+//            .filter(esemeny -> esemeny.getNev().equals("Esemény létrehozása teszt esemény"))
+//            .map(EsemenyDto::getId)
+//            .findFirst()
+//            .orElseThrow();
     esemenyService.deleteEsemeny(esemenyId);
   }
 
   @Test
-  @WithUserDetails(ZENEKAR_1_FELHASZNALO)
+  @WithMockUser(ADMIN_FELHASZNALO)
   @DisplayName("Esemény módosítás után elmentődik")
   void esemenyMenteseTest() throws Exception {
     MockMvcTestHelper
@@ -156,7 +160,7 @@ class EsemenyControllerTest {
             .addFormParameter("nev", "Esemény mentése teszt esemény")
             .addFormParameter("idoPont", "2222-07-05T13:45")
             .buildRequest()
-            .expectRedirectedToUrlPattern("/esemeny?**")
+            .expectStatusIsOk()
             .expectContentNotContainsString("Nem lehet üres")
             .expectContentNotContainsString("Meg kell adni időpontot!");
 
