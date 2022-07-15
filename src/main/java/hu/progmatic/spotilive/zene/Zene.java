@@ -35,7 +35,7 @@ public class Zene {
 
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zene")
-    private List<Szavazat> esemenyek = new ArrayList<>();
+    private List<Szavazat> szavazatok = new ArrayList<>();
     @ManyToOne
     @NotNull
     private Zenekar zenekar;

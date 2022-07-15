@@ -118,7 +118,7 @@ EsemenyService {
                 .esemeny(esemeny)
                 .build();
         esemeny.getZenek().add(zeneEsemeny);
-        zene.getEsemenyek().add(zeneEsemeny);
+        zene.getSzavazatok().add(zeneEsemeny);
 
     }
 
@@ -134,12 +134,12 @@ EsemenyService {
 
 
 
-    public List<SzavazatTracklistDto> getEsemenyZeneiByLikesAndAbc(Integer esemenyid) {
-        return esemenyRepository.getZenekByLikesAndAbc(esemenyid)
-                .stream()
-                .map(SzavazatTracklistDto::factory)
-                .toList();
-    }
+//    public List<SzavazatTracklistDto> getEsemenyZeneiByLikesAndAbc(Integer esemenyid) {
+//        return esemenyRepository.getZenekByLikesAndAbc(esemenyid)
+//                .stream()
+//                .map((Szavazat zene) -> SzavazatTracklistDto.factory(zene, esemeny))
+//                .toList();
+//    }
 
     public List<EsemenyDto> findAllModosithatoDto() {
 

@@ -17,11 +17,14 @@ public class EsemenyTracklistController {
 
     @Autowired
     EsemenyService esemenyService;
+    @Autowired
+    private SzavazatService szavazatService;
+
 
     @GetMapping("/esemeny/zenelista/{esemenyId}")
     public String esemenyTracklistBeltoltese(
             Model model, @PathVariable("esemenyId") Integer esemenyId) {
-        model.addAttribute("esemenytracklist", esemenyService.getEsemenyZeneiByLikesAndAbc(esemenyId));
+        model.addAttribute("esemenytracklist", szavazatService.getEsemenyTrackList(esemenyId));
         model.addAttribute("esemenyDto", esemenyService.getEsemenyDtoById(esemenyId));
         return "/esemenytracklist";
     }
@@ -31,10 +34,14 @@ public class EsemenyTracklistController {
             @PathVariable("zeneId") Integer zeneId,
             @PathVariable("esemenyId") Integer esemenyId,
             Model model) {
-        esemenyService.addSzavazat(AddSzavazatCommand.builder()
+        esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand.builder()
                 .esemenyId(esemenyId)
                 .zeneId(zeneId)
                 .build());
+//        esemenyService.addSzavazat(AddSzavazatCommand.builder()
+//                .esemenyId(esemenyId)
+//                .zeneId(zeneId)
+//                .build());
 
         return "redirect:/esemeny/zenelista/" + esemenyId;
     }

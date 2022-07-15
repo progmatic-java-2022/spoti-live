@@ -7,17 +7,29 @@ import lombok.Data;
 @Builder
 @Data
 public class SzavazatTracklistDto {
-    private Integer id;
-    private Esemeny esemeny;
-    private Zene zene;
-    @Builder.Default
-    private Integer szavazat = 0;
+    private Integer zeneId;
+    private Integer esemenyId;
+    private String szamCim;
 
-    public static SzavazatTracklistDto factory(Szavazat entity){
+    private Integer osszSzavazat;
+
+
+
+    public static SzavazatTracklistDto factory(Zene zene, Esemeny esemeny){
         return SzavazatTracklistDto.builder()
-                .esemeny(entity.getEsemeny())
-                .zene(entity.getZene())
-                .szavazat(entity.getSzavazat())
+                .zeneId(zene.getId())
+                .esemenyId(esemeny.getId())
+                .szamCim(zene.getCim())
+                .osszSzavazat(getZeneOsszesSzavazatai(zene,esemeny))
                 .build();
+    }
+
+    private static Integer getZeneOsszesSzavazatai(Zene zene, Esemeny esemeny) {
+        return zene.getSzavazatok().stream()
+                .filter(szavazat -> szavazat.getEsemeny().getId().equals(esemeny.getId()))
+                .mapToInt(Szavazat::getSzavazat)
+                .sum();
+
+
     }
 }

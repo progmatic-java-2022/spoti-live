@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.esemeny;
 
+import hu.progmatic.spotilive.felhasznalo.Felhasznalo;
 import hu.progmatic.spotilive.zene.Zene;
 import lombok.*;
 
@@ -20,7 +21,8 @@ public class Szavazat {
     @ManyToOne
     private Zene zene;
     @Builder.Default
-    private Integer szavazat=0;
+    private Integer szavazat = 1;
+
 
 
 }
