@@ -33,19 +33,15 @@ class EsemenyServiceTest {
     private ZenekarService zenekarService;
 
 
-
-
     @Autowired
     private DemoServiceTestHelper demoServiceTestHelper;
-    private Integer demoZenekarId;
+    private Integer demoZenekar1Id;
     @Autowired
     private ZeneService zeneService;
-    @Autowired
-    private SzavazatService szavazatService;
 
     @BeforeEach
     void setUp() {
-        demoZenekarId = demoServiceTestHelper.getdemoZeneKar1Id();
+        demoZenekar1Id = demoServiceTestHelper.getdemoZeneKar1Id();
     }
 
     @Test
@@ -54,7 +50,7 @@ class EsemenyServiceTest {
         CreateEsemenyCommand esemeny = CreateEsemenyCommand.builder()
                 .nev("Tódor Születésnapja")
                 .idoPont(LocalDateTime.parse("2022-06-27T15:30"))
-                .zenekarId(demoZenekarId)
+                .zenekarId(demoZenekar1Id)
                 .build();
         EsemenyDto letrehozott = esemenyService.createEsemeny(esemeny);
 
@@ -75,7 +71,7 @@ class EsemenyServiceTest {
         CreateEsemenyCommand esemeny = CreateEsemenyCommand.builder()
                 .nev("Törlendő esemény")
                 .idoPont(LocalDateTime.parse("2022-06-27T15:30"))
-                .zenekarId(demoZenekarId)
+                .zenekarId(demoZenekar1Id)
                 .build();
         EsemenyDto letrehozott = esemenyService.createEsemeny(esemeny);
         assertEquals("Törlendő esemény", letrehozott.getNev());
@@ -100,12 +96,12 @@ class EsemenyServiceTest {
             esemeny1 = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
                     .nev("Tódor Születésnapja")
                     .idoPont(LocalDateTime.parse("2022-05-27T15:30"))
-                    .zenekarId(demoZenekarId)
+                    .zenekarId(demoZenekar1Id)
                     .build());
             esemeny2 = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
                     .nev("Tivadar Névnapja")
                     .idoPont(LocalDateTime.parse("2002-10-19T10:45"))
-                    .zenekarId(demoZenekarId)
+                    .zenekarId(demoZenekar1Id)
                     .build());
 
         }
@@ -118,23 +114,37 @@ class EsemenyServiceTest {
 
         @Test
         void esemenyListazasTest() {
-            var esemenyList = esemenyService.findAllEsemeny();
+            var esemenyList = esemenyService.findAllModosithatoDto();
             assertThat(esemenyList)
                     .hasSizeGreaterThan(2)
                     .extracting(EsemenyDto::getNev)
-                    .contains("Tódor Születésnapja");
+                    .contains("Tódor Születésnapja")
+                    .contains(demoServiceTestHelper.getZenekar1DemoEsemeny().getNev())
+                    .contains(demoServiceTestHelper.getZenekar2DemoEsemeny().getNev());
+        }
+        @Test
+        @WithUserDetails(DemoService.ZENEKAR_1_FELHASZNALO)
+        void esemenyListazasZenekaronkentTest(){
+            var esemenyList = esemenyService.findAllModosithatoDto();
+            assertThat(esemenyList)
+                    .hasSizeGreaterThan(2)
+                    .extracting(EsemenyDto::getNev)
+                    .contains("Tódor Születésnapja")
+                    .contains(demoServiceTestHelper.getZenekar1DemoEsemeny().getNev())
+                    .doesNotContain(demoServiceTestHelper.getZenekar2DemoEsemeny().getNev());
         }
 
 
 
         @Test
+        @WithUserDetails(DemoService.ZENEKAR_1_FELHASZNALO)
         void esemenySzerkeszteseTest() {
             EsemenyDto modositando;
 
             modositando = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
                     .nev(esemeny1.getNev())
                     .idoPont(esemeny1.getIdoPont())
-                    .zenekarId(demoZenekarId)
+                    .zenekarId(demoZenekar1Id)
                     .build());
 
 
@@ -142,37 +152,44 @@ class EsemenyServiceTest {
                     .nev("modositott név")
                     .idoPont(LocalDateTime.parse("2022-06-27T15:30"))
                     .build();
-            esemenyService.udpate(modosito, modositando.getId());
+            esemenyService.update(modosito, modositando.getId());
             EsemenyDto updatelt = esemenyService.getEsemenyDtoById(modositando.getId());
             assertEquals("modositott név", updatelt.getNev());
 
             esemenyService.deleteEsemeny(updatelt.getId());
         }
+        @Test
+        @WithUserDetails(DemoService.ZENEKAR_2_FELHASZNALO)
+        void esemenySzerkeszteseTestJogosultsagNelkul() {
+            EsemenyDto modositandoEsemeny = demoServiceTestHelper.getZenekar1DemoEsemeny();
+            assertThatThrownBy(() -> esemenyService.update(modositandoEsemeny,modositandoEsemeny.getId())
+            ).isInstanceOf(NincsJogosultsagAZenekarhozException.class)
+                    .hasMessageContaining("Zenekar jogosultsággal nem módosítható más eseménye!");
+        }
 
+        @Test
+        void addZeneToEsemenyTest() {
+            var zene = zeneService.createZene(CreateZeneCommand.builder()
+                    .cim("Valami cím")
+                    .eloado("Valami előadó")
+                    .hosszMp(123)
+                    .zenekarId(demoZenekar1Id)
+                    .build());
 
-//        @Test
-//        void addZeneToEsemenyTest() {
-//            var zene = zeneService.createZene(CreateZeneCommand.builder()
-//                    .cim("Valami cím")
-//                    .eloado("Valami előadó")
-//                    .hosszMp(123)
-//                    .zenekarId(demoZenekarId)
-//                    .build());
-//
-//            esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand.builder()
-//                    .esemenyId(esemeny1.getId())
-//                    .zeneId(zene.getId())
-//                    .build());
-//
-//            var esemenyZenevel = esemenyService.getEsemenyDtoById(esemeny1.getId());
-//            assertEquals("Tódor Születésnapja", esemenyZenevel.getNev());
-//
-//            assertThat(esemenyZenevel.getZenek())
-//                    .hasSize(1)
-//                    .extracting(zenek -> zenek.getZene().getEloado())
-//                    .contains("Valami előadó");
-//
-//        }
+            esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand.builder()
+                    .esemenyId(esemeny1.getId())
+                    .zeneId(zene.getId())
+                    .build());
+
+            var esemenyZenevel = esemenyService.getEsemenyDtoById(esemeny1.getId());
+            assertEquals("Tódor Születésnapja", esemenyZenevel.getNev());
+
+            assertThat(esemenyZenevel.getZenek())
+                    .hasSize(1)
+                    .extracting(zenek -> zenek.getZene().getEloado())
+                    .contains("Valami előadó");
+
+        }
 
         @Nested
         @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
@@ -187,14 +204,14 @@ class EsemenyServiceTest {
                         .cim("Teszt zene1")
                         .hosszMp(123)
                         .eloado("Teszt eloado1")
-                        .zenekarId(demoZenekarId)
+                        .zenekarId(demoZenekar1Id)
                         .build());
                 zene2 = zeneService.createZene(CreateZeneCommand
                         .builder()
                         .eloado("Teszt eloado2")
                         .hosszMp(123)
                         .cim("Teszt zene2")
-                        .zenekarId(demoZenekarId)
+                        .zenekarId(demoZenekar1Id)
                         .build());
 
                 esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand

@@ -62,6 +62,10 @@ class TagServiceTest {
     }
 
     private TagDto createTag(TagDto dto) {
+        tagService.getAllTag()
+            .stream()
+            .filter(tag -> tag.getTagNev().equals(dto.getTagNev()))
+            .forEach(tag -> tagService.deleteTagById(tag.getId()));
         TagDto tag = tagService.createTag(dto);
         testTagIds.add(tag.getId());
         return tag;
@@ -132,17 +136,9 @@ class TagServiceTest {
         List<TagDto> osszesTag = tagService.getAllTag();
 
         assertThat(osszesTag)
-                .hasSize(4)
                 .extracting(TagDto::getTagNev)
-                .contains("Teszt tag 2");
-
-        ZeneDto zene = zeneService.createZene(CreateZeneCommand.builder()
-                .cim("Cim")
-                .eloado("eloado")
-                .hosszMp(50)
-                        .zenekarId(demoZenekarId)
-                .build());
-
+                .contains("Teszt tag 2")
+                .doesNotContain("Teszt tag");
     }
 
 }

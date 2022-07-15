@@ -34,30 +34,21 @@ EsemenyService {
 
     @RolesAllowed(UserType.Roles.ESEMENY_KEZELES_ROLE)
     public EsemenyDto createEsemeny(CreateEsemenyCommand command) {
-        Zenekar zenekar = zenekarService.getZenekarEntityById(command.getZenekarId());
-//        if (felhasznaloService.isAdmin()) {
-            Esemeny ujEsemeny = Esemeny
-                    .builder()
-                    .nev(command.getNev())
-                    .idopont(command.getIdoPont())
-                    .zenekar(zenekar)
-                    .build();
-            zenekar.getEsemenyek().add(ujEsemeny);
-            return EsemenyDto.factory(esemenyRepository.save(ujEsemeny));
-//        }
-//
-//        else {
-//            Esemeny ujEsemeny = Esemeny
-//                    .builder()
-//                    .nev(command.getNev())
-//                    .idopont(command.getIdoPont())
-//                    .zenekar(zenekarService.getZenekarEntityById(felhasznaloService.getZenekarId()))
-//                    .build();
-//            zenekar.getEsemenyek().add(ujEsemeny);
-//            return EsemenyDto.factory(esemenyRepository.save(ujEsemeny));
-//
-//        }
-
+        Integer zenekarId;
+        if (felhasznaloService.isAdmin()) {
+            zenekarId = command.getZenekarId();
+        } else {
+            zenekarId = felhasznaloService.getZenekarId();
+        }
+        Zenekar zenekar = zenekarService.getZenekarEntityById(zenekarId);
+        Esemeny ujEsemeny = Esemeny
+                .builder()
+                .nev(command.getNev())
+                .idopont(command.getIdoPont())
+                .zenekar(zenekar)
+                .build();
+        zenekar.getEsemenyek().add(ujEsemeny);
+        return EsemenyDto.factory(esemenyRepository.save(ujEsemeny));
     }
 
     public EsemenyDto getEsemenyDtoById(Integer id) {
@@ -94,7 +85,8 @@ EsemenyService {
     }
 
 
-    public void udpate(EsemenyDto modositott, Integer id) {
+    public void update(EsemenyDto modositott, Integer id) {
+        exceptionDobasHaNincsJogosultsagEsemenyhez(id);
         var modositando = esemenyRepository.getReferenceById(id);
         modositando.setNev(modositott.getNev());
         modositando.setIdopont(modositott.getIdoPont());
@@ -123,27 +115,26 @@ EsemenyService {
     }
 
     public void addSzavazat(AddSzavazatCommand command) {
-    var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
-    var modositando = esemeny.getZenek()
-            .stream()
-            .filter(zene -> zene.getZene().getId().equals(command.getZeneId()))
-            .findFirst()
-            .orElseThrow();
-    modositando.setSzavazat(modositando.getSzavazat() + 1);
+        var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
+        var modositando = esemeny.getZenek()
+                .stream()
+                .filter(zene -> zene.getZene().getId().equals(command.getZeneId()))
+                .findFirst()
+                .orElseThrow();
+        modositando.setSzavazat(modositando.getSzavazat() + 1);
     }
 
 
-
-//    public List<SzavazatTracklistDto> getEsemenyZeneiByLikesAndAbc(Integer esemenyid) {
-//        return esemenyRepository.getZenekByLikesAndAbc(esemenyid)
-//                .stream()
-//                .map((Szavazat zene) -> SzavazatTracklistDto.factory(zene, esemeny))
-//                .toList();
-//    }
+    public List<SzavazatTracklistDto> getEsemenyZeneiByLikesAndAbc(Integer esemenyid) {
+        return esemenyRepository.getZenekByLikesAndAbc(esemenyid)
+                .stream()
+                .map(SzavazatTracklistDto::factory)
+                .toList();
+    }
 
     public List<EsemenyDto> findAllModosithatoDto() {
 
-        if (felhasznaloService.isAdmin()){
+        if (felhasznaloService.isAdmin()) {
             return findAllEsemeny();
         }
         var zenekarId = felhasznaloService.getZenekarId();

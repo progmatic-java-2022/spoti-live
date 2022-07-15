@@ -1,6 +1,7 @@
 package hu.progmatic.spotilive;
 
 import hu.progmatic.spotilive.demo.DemoService;
+import hu.progmatic.spotilive.esemeny.EsemenyDto;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.tag.TagService;
@@ -50,6 +51,13 @@ public class DemoServiceTestHelper {
     }
 
     public Integer getZenekar1demoEsemenyId() {
-        return esemenyService.getByName(DemoService.PREFIX1 + DemoService.DEMO_ESEMENY).getId();
+        return getZenekar1DemoEsemeny().getId();
+    }
+
+    public EsemenyDto getZenekar1DemoEsemeny() {
+        return esemenyService.getByName(DemoService.PREFIX1 + DemoService.DEMO_ESEMENY);
+    }
+    public EsemenyDto getZenekar2DemoEsemeny() {
+        return esemenyService.getByName(DemoService.PREFIX2 + DemoService.DEMO_ESEMENY);
     }
 }
