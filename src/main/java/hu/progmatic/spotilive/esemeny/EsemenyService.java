@@ -102,7 +102,7 @@ EsemenyService {
         return esemenyRepository.getReferenceById(id);
     }
 
-    public void addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand command) {
+    public void addZeneSzavazattoEsemenyByZeneId(AddZeneToEsemenyCommand command) {
         var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
         var zene = zeneService.getZeneById(command.getZeneId());
         Szavazat zeneEsemeny = Szavazat.builder()
@@ -125,12 +125,6 @@ EsemenyService {
     }
 
 
-    public List<SzavazatTracklistDto> getEsemenyZeneiByLikesAndAbc(Integer esemenyid) {
-        return esemenyRepository.getZenekByLikesAndAbc(esemenyid)
-                .stream()
-                .map(SzavazatTracklistDto::factory)
-                .toList();
-    }
 
     public List<EsemenyDto> findAllModosithatoDto() {
 

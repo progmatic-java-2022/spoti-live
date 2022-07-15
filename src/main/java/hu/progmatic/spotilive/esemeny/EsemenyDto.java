@@ -21,7 +21,7 @@ public class EsemenyDto {
 
     private String zenekarNev;
     @Builder.Default
-    private List<SzavazatDto> zenek = new ArrayList<>();
+    private List<SzavazatDto> szavazatDtos = new ArrayList<>();
 
 
     public static EsemenyDto factory(Esemeny esemeny) {
@@ -31,7 +31,7 @@ public class EsemenyDto {
                 .nev(esemeny.getNev())
                 .idoPont(esemeny.getIdopont())
                 .zenekarNev(esemeny.getZenekar().getNev())
-                .zenek(esemeny.getZenek().stream()
+                .szavazatDtos(esemeny.getZenek().stream()
                         .map(SzavazatDto::factory)
                         .toList())
                 .build();

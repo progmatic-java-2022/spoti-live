@@ -5,7 +5,6 @@ import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.NincsJogosultsagAZenekarhozException;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zene.CreateZeneCommand;
-import hu.progmatic.spotilive.zene.Zene;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
@@ -33,11 +32,15 @@ class EsemenyServiceTest {
     private ZenekarService zenekarService;
 
 
+
+
     @Autowired
     private DemoServiceTestHelper demoServiceTestHelper;
     private Integer demoZenekar1Id;
     @Autowired
     private ZeneService zeneService;
+    @Autowired
+    private SzavazatService szavazatService;
 
     @BeforeEach
     void setUp() {
@@ -176,7 +179,7 @@ class EsemenyServiceTest {
                     .zenekarId(demoZenekar1Id)
                     .build());
 
-            esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand.builder()
+            esemenyService.addZeneSzavazattoEsemenyByZeneId(AddZeneToEsemenyCommand.builder()
                     .esemenyId(esemeny1.getId())
                     .zeneId(zene.getId())
                     .build());
@@ -184,10 +187,9 @@ class EsemenyServiceTest {
             var esemenyZenevel = esemenyService.getEsemenyDtoById(esemeny1.getId());
             assertEquals("Tódor Születésnapja", esemenyZenevel.getNev());
 
-            assertThat(esemenyZenevel.getZenek())
+            assertThat(esemenyZenevel.getSzavazatDtos())
                     .hasSize(1)
-                    .extracting(zenek -> zenek.getZene().getEloado())
-                    .contains("Valami előadó");
+                    ;
 
         }
 
@@ -214,13 +216,13 @@ class EsemenyServiceTest {
                         .zenekarId(demoZenekar1Id)
                         .build());
 
-                esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand
+                esemenyService.addZeneSzavazattoEsemenyByZeneId(AddZeneToEsemenyCommand
                         .builder()
                         .zeneId(zene1.getId())
                         .esemenyId(esemeny1.getId())
                         .build());
 
-                esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand
+                esemenyService.addZeneSzavazattoEsemenyByZeneId(AddZeneToEsemenyCommand
                         .builder()
                         .esemenyId(esemeny1.getId())
                         .zeneId(zene2.getId())
@@ -233,25 +235,6 @@ class EsemenyServiceTest {
                 zeneService.deleteZeneById(zene2.getId());
             }
 
-//            @Test
-//            void addSzavazatToZene() {
-//                var esemenyZenevel = esemenyService.getEsemenyDtoById(esemeny1.getId());
-//                assertEquals(2, esemenyZenevel.getZenek().size());
-//                assertEquals("Teszt zene1", zeneService.getBycim("Teszt zene1").getCim());
-//
-//                esemenyService.addSzavazat(AddSzavazatCommand.builder()
-//                        .esemenyId(esemenyZenevel.getId())
-//                        .zeneId(zeneService.getBycim("Teszt zene1").getId())
-//                        .build());
-//                var modositottEsemeny = esemenyService.getEsemenyDtoById(esemeny1.getId());
-//                var zeneSzavazattal = modositottEsemeny.getZenek().stream()
-//                        .filter(zene -> zene.getZene().getId().equals(
-//                                zeneService.getBycim("Teszt zene1").getId()))
-//                        .findFirst()
-//                        .orElseThrow();
-//                assertEquals(1, zeneSzavazattal.getOsszSzavazat());
-//
-//            }
 
             @Nested
             class ZenekSzavazattalTest {
@@ -351,6 +334,6 @@ class EsemenyServiceTest {
         var esemenyId = demoServiceTestHelper.getZenekar1demoEsemenyId();
         List<SzavazatTracklistDto> list = szavazatService.getEsemenyTrackList(esemenyId);
         assertThat(list)
-                .hasSize(4);
+                .hasSize(3);
     }
 }
