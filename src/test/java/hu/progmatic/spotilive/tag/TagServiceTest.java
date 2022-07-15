@@ -62,6 +62,10 @@ class TagServiceTest {
     }
 
     private TagDto createTag(TagDto dto) {
+        tagService.getAllTag()
+            .stream()
+            .filter(tag -> tag.getTagNev().equals(dto.getTagNev()))
+            .forEach(tag -> tagService.deleteTagById(tag.getId()));
         TagDto tag = tagService.createTag(dto);
         testTagIds.add(tag.getId());
         return tag;
