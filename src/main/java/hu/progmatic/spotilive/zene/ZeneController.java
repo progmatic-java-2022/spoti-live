@@ -155,6 +155,10 @@ public class ZeneController {
     public boolean showModal(){
         return false;
     }
+    @ModelAttribute("isAdmin")
+    public boolean isAdmin() {
+        return felhasznaloService.isAdmin();
+    }
 
     @ModelAttribute("adminModositasJogVan")
     public boolean adminModositasJogVan(){return felhasznaloService.hasRole(UserType.Roles.USER_WRITE_ROLE);}

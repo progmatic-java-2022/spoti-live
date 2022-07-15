@@ -130,7 +130,7 @@
 <form th:if="${zeneModositas.id == null}"
       th:action="@{'/zenekarbantartas/zene'}"
       method="post" th:object="${createZeneCommand}" class="row">
-    <div class="col">
+    <div th:if="${isAdmin}" class="col">
         <label>
             <select th:field="*{zenekarId}" class="form-select">
                 <option th:each="zenekar : ${allZenekar}" th:value="${zenekar.getId()}"
@@ -189,11 +189,11 @@
 
 <!-- Módisítás-->
 
-<form th:if="${zeneModositas.id != null}"
+<form  th:if="${zeneModositas.id != null}"
       th:action="@{'/zenekarbantartas/zene/{id}'(id=${zeneModositas.id})}"
       method="post" th:object="${zeneModositas}" class="row">
     <div class="col">
-        <label th:text="${zeneModositas.zenekarNev}"></label>
+        <label  th:text="${zeneModositas.zenekarNev}"></label>
     </div>
     <div class="col">
         <label>
