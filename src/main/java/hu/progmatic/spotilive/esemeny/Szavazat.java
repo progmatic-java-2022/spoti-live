@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ZeneToEsemeny {
+public class Szavazat {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

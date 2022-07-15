@@ -41,7 +41,7 @@ public class EsemenyTracklistController {
 
 
     @ModelAttribute("esemenytracklist")
-    public List<ZeneToEsemenyDto> esemenyZenei() {
+    public List<SzavazatTracklistDto> esemenyZenei() {
         return new ArrayList<>();
     }
 

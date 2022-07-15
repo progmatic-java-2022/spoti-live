@@ -4,19 +4,17 @@ import hu.progmatic.spotilive.zene.Zene;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Id;
-
 @Builder
 @Data
-public class ZeneToEsemenyDto {
+public class SzavazatTracklistDto {
     private Integer id;
     private Esemeny esemeny;
     private Zene zene;
     @Builder.Default
     private Integer szavazat = 0;
 
-    public static ZeneToEsemenyDto factory(ZeneToEsemeny entity){
-        return ZeneToEsemenyDto.builder()
+    public static SzavazatTracklistDto factory(Szavazat entity){
+        return SzavazatTracklistDto.builder()
                 .esemeny(entity.getEsemeny())
                 .zene(entity.getZene())
                 .szavazat(entity.getSzavazat())
