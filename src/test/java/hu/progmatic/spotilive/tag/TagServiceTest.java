@@ -1,6 +1,7 @@
 package hu.progmatic.spotilive.tag;
 
 import hu.progmatic.spotilive.DemoServiceTestHelper;
+import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.zene.CreateZeneCommand;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithUserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +110,7 @@ class TagServiceTest {
     }
 
     @Test
+    @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
     void deleteTagByIdTest() {
         TagDto dto = TagDto.builder()
                 .tagNev("Teszt tag")

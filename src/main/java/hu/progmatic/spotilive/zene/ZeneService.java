@@ -33,15 +33,14 @@ public class ZeneService {
         if (zeneRepository.getZeneByCim(command.getCim()).isPresent()) {
             throw new CreateZeneExeption("Zene már létezik ilyen címmel");
         }
-//        Integer zenekarId;
-//        if (felhasznaloService.isAdmin()){
-//            zenekarId=command.getZenekarId();
-//        }else {
-//            zenekarId=felhasznaloService.getZenekarId();
-//        }
-//
-//        Zenekar zenekar = zenekarService.getZenekarEntityById(zenekarId);
-        var zenekar = zenekarService.getZenekarEntityById(command.getZenekarId());
+        Integer zenekarId;
+        if (felhasznaloService.isAdmin()){
+            zenekarId=command.getZenekarId();
+        }else {
+            zenekarId=felhasznaloService.getZenekarId();
+        }
+
+        Zenekar zenekar = zenekarService.getZenekarEntityById(zenekarId);
         Zene ujZene = Zene.builder()
                 .cim(command.getCim())
                 .eloado(command.getEloado())

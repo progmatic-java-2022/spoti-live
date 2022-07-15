@@ -3,9 +3,7 @@ package hu.progmatic.spotilive.esemeny;
 import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.MockMvcTestHelper;
 import hu.progmatic.spotilive.demo.DemoService;
-import hu.progmatic.spotilive.felhasznalo.UserType;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,8 +124,7 @@ class EsemenyControllerTest {
   }
 
   @Test
-  @Disabled
-  @WithMockUser(ZENEKAR_1_FELHASZNALO)
+  @WithUserDetails(ZENEKAR_1_FELHASZNALO)
   @DisplayName("Esemény létrehozásakor létrejön az esemény")
   void esemenyLetrehozas() throws Exception {
     MockMvcTestHelper
@@ -147,12 +144,18 @@ class EsemenyControllerTest {
             .map(EsemenyDto::getId)
             .findFirst()
             .orElseThrow();
-    esemenyService.deleteEsemeny(esemenyId);
+    torles(esemenyId);
+  }
+
+  private void torles(Integer esemenyId) throws Exception {
+    MockMvcTestHelper
+        .testRequest(mockMvc)
+            .postRequest("/esemeny/delete/" + esemenyId)
+                .expectRedirectedToUrlPattern("/esemeny?**");
   }
 
   @Test
-  @Disabled
-  @WithMockUser(ADMIN_FELHASZNALO)
+  @WithUserDetails(ADMIN_FELHASZNALO)
   @DisplayName("Esemény módosítás után elmentődik")
   void esemenyMenteseTest() throws Exception {
     MockMvcTestHelper
@@ -162,7 +165,7 @@ class EsemenyControllerTest {
             .addFormParameter("nev", "Esemény mentése teszt esemény")
             .addFormParameter("idoPont", "2222-07-05T13:45")
             .buildRequest()
-            .expectStatusIsOk()
+            .expectRedirectedToUrlPattern("/esemeny?**")
             .expectContentNotContainsString("Nem lehet üres")
             .expectContentNotContainsString("Meg kell adni időpontot!");
 
@@ -196,12 +199,12 @@ class EsemenyControllerTest {
             .expectStatusIsOk()
             .expectContentContainsString("Esemény mentése teszt esemény módosított");
 
-    esemenyService.deleteEsemeny(esemenyId);
+    torles(esemenyId);
   }
 
   @Test
   @WithUserDetails("guest")
-  @DisplayName("Esemény modositás látszik-e guestként")
+  @DisplayName("Esemény modositás nem látszik guestként")
   void esemenyModositasGuest() throws Exception {
     MockMvcTestHelper
             .testRequest(mockMvc)
@@ -214,8 +217,8 @@ class EsemenyControllerTest {
 
   @Test
   @WithUserDetails("guest")
-  @DisplayName("Esemény törlés látszik-e guest-ként")
-  void esemenyTorleseGust() throws Exception {
+  @DisplayName("Esemény törlés nem látszik guest-ként")
+  void esemenyTorleseGuest() throws Exception {
     MockMvcTestHelper
             .testRequest(mockMvc)
             .postRequest("/esemeny")
@@ -227,7 +230,7 @@ class EsemenyControllerTest {
   }
 
   @Test
-  @DisplayName("Esemény szerkesztésekor megjelnnek-e az adatok")
+  @DisplayName("Esemény szerkesztésekor megjelennek az adatok")
   @WithUserDetails(ZENEKAR_1_FELHASZNALO)
   void esemenySzerkesztes() throws Exception {
     MockMvcTestHelper

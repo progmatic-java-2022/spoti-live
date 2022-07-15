@@ -80,6 +80,7 @@ public class DemoService {
   public void init() {
     if (zenekarService.count() == 0) {
       configureAuthentication(
+          UserType.Roles.ADMIN_ROLE,
           UserType.Roles.ZENEKAR_KEZELES_ROLE,
           UserType.Roles.ESEMENY_KEZELES_ROLE,
           UserType.Roles.USER_WRITE_ROLE

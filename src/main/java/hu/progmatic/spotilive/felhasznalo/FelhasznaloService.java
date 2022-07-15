@@ -3,10 +3,7 @@ package hu.progmatic.spotilive.felhasznalo;
 import hu.progmatic.spotilive.zenekar.Zenekar;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
 import lombok.extern.java.Log;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -70,11 +67,17 @@ public class FelhasznaloService {
   }
 
   public boolean hasRole(String role) {
-    MyUserDetails userPrincipal = getMyUserDetails();
-    if (userPrincipal == null) {
-      return false;
-    }
-    return userPrincipal.getRole().hasRole(role);
+    return SecurityContextHolder
+        .getContext()
+        .getAuthentication()
+        .getAuthorities()
+        .stream()
+        .anyMatch(
+            grantedAuthority ->
+                grantedAuthority
+                    .getAuthority()
+                    .equals(MyUserDetails.ROLE_PREFIX + role)
+        );
   }
 
   public Long getFelhasznaloId() {
@@ -88,7 +91,7 @@ public class FelhasznaloService {
   public boolean isAdmin() {
     MyUserDetails userPrincipal = getMyUserDetails();
     if (userPrincipal == null) {
-      return false;
+      return hasRole(UserType.Roles.ADMIN_ROLE);
     }
     return userPrincipal.getRole().equals(UserType.ADMIN);
   }

@@ -101,7 +101,6 @@ class ZeneServiceTest {
     }
 
     @Test
-    @Disabled
     @WithUserDetails(ZENEKAR_1_FELHASZNALO)
     void createZeneTestJogosultsagNelkul() {
         CreateZeneCommand zene = CreateZeneCommand.builder()
