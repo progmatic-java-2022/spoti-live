@@ -57,4 +57,7 @@ public class DemoServiceTestHelper {
     public EsemenyDto getZenekar1DemoEsemeny() {
         return esemenyService.getByName(DemoService.PREFIX1 + DemoService.DEMO_ESEMENY);
     }
+    public EsemenyDto getZenekar2DemoEsemeny() {
+        return esemenyService.getByName(DemoService.PREFIX2 + DemoService.DEMO_ESEMENY);
+    }
 }

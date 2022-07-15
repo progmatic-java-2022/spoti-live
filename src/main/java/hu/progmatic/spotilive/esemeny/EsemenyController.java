@@ -75,7 +75,7 @@ public class EsemenyController {
 
     @ModelAttribute("esemenyekLista")
     public List<EsemenyDto> getEsemenyekLista() {
-        return esemenyService.findAllEsemeny();
+        return esemenyService.findAllModosithatoDto();
     }
 
     @ModelAttribute("createEsemenyCommand")

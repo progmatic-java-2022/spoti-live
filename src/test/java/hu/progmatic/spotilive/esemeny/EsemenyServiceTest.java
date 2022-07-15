@@ -114,12 +114,26 @@ class EsemenyServiceTest {
         }
 
         @Test
+        @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
         void esemenyListazasTest() {
-            var esemenyList = esemenyService.findAllEsemeny();
+            var esemenyList = esemenyService.findAllModosithatoDto();
             assertThat(esemenyList)
                     .hasSizeGreaterThan(2)
                     .extracting(EsemenyDto::getNev)
-                    .contains("Tódor Születésnapja");
+                    .contains("Tódor Születésnapja")
+                    .contains(demoServiceTestHelper.getZenekar1DemoEsemeny().getNev())
+                    .contains(demoServiceTestHelper.getZenekar2DemoEsemeny().getNev());
+        }
+        @Test
+        @WithUserDetails(DemoService.ZENEKAR_1_FELHASZNALO)
+        void esemenyListazasZenekaronkentTest(){
+            var esemenyList = esemenyService.findAllModosithatoDto();
+            assertThat(esemenyList)
+                    .hasSizeGreaterThan(2)
+                    .extracting(EsemenyDto::getNev)
+                    .contains("Tódor Születésnapja")
+                    .contains(demoServiceTestHelper.getZenekar1DemoEsemeny().getNev())
+                    .doesNotContain(demoServiceTestHelper.getZenekar2DemoEsemeny().getNev());
         }
 
 

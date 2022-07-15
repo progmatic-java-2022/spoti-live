@@ -17,6 +17,5 @@ public class CreateEsemenyCommand {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @NotNull(message = "Meg kell adni időpontot!")
     private LocalDateTime idoPont;
-    @NotNull
     private Integer zenekarId;
 }

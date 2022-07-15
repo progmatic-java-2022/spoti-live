@@ -124,7 +124,6 @@ EsemenyService {
     }
 
 
-
     public List<SzavazatTracklistDto> getEsemenyZeneiByLikesAndAbc(Integer esemenyid) {
         return esemenyRepository.getZenekByLikesAndAbc(esemenyid)
                 .stream()
@@ -145,5 +144,6 @@ EsemenyService {
                 .toList();
 
     }
+
 
 }
