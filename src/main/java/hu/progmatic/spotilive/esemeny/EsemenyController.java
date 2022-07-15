@@ -54,7 +54,7 @@ public class EsemenyController {
             Model model
     ) {
         if (!bindingResult.hasErrors()) {
-            esemenyService.udpate(ujEsemeny, id);
+            esemenyService.update(ujEsemeny, id);
             return "redirect:/esemeny";
         }
         return "/esemenyek";
