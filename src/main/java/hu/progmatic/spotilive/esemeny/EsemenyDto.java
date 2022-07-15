@@ -1,6 +1,5 @@
 package hu.progmatic.spotilive.esemeny;
 
-import hu.progmatic.spotilive.zene.Zene;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,7 +21,7 @@ public class EsemenyDto {
 
     private String zenekarNev;
     @Builder.Default
-    private List<ZeneToEsemenyDto> zenek = new ArrayList<>();
+    private List<SzavazatTracklistDto> zenek = new ArrayList<>();
 
 
     public static EsemenyDto factory(Esemeny esemeny) {
@@ -33,7 +32,7 @@ public class EsemenyDto {
                 .idoPont(esemeny.getIdopont())
                 .zenekarNev(esemeny.getZenekar().getNev())
                 .zenek(esemeny.getZenek().stream()
-                        .map(ZeneToEsemenyDto::factory)
+                        .map(SzavazatTracklistDto::factory)
                         .toList())
                 .build();
     }

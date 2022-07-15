@@ -13,11 +13,11 @@ public interface EsemenyRepository extends JpaRepository<Esemeny, Integer> {
 
     @Query("""
 select zene
-from ZeneToEsemeny zene
+from Szavazat zene
 where zene.esemeny.id = :esemenyId
 order by zene.szavazat desc , zene.zene.cim asc
 """)
-    List<ZeneToEsemeny> getZenekByLikesAndAbc(@Param("esemenyId") Integer esemenyid);
+    List<Szavazat> getZenekByLikesAndAbc(@Param("esemenyId") Integer esemenyid);
 
     List<Esemeny> findAllByZenekarId(Integer zenekarId);
 }

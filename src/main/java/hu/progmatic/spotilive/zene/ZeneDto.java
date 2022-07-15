@@ -1,13 +1,12 @@
 package hu.progmatic.spotilive.zene;
 
-import hu.progmatic.spotilive.esemeny.ZeneToEsemenyDto;
+import hu.progmatic.spotilive.esemeny.SzavazatTracklistDto;
 import hu.progmatic.spotilive.tag.Tag;
 import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,7 @@ public class ZeneDto {
 
     private List<String> tagStringList;
     @Builder.Default
-    private List<ZeneToEsemenyDto> esemenyek=new ArrayList<>();
+    private List<SzavazatTracklistDto> esemenyek=new ArrayList<>();
 
     private String zenekarNev;
     private Integer zenekarId;

@@ -5,8 +5,6 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -33,7 +31,7 @@ public class Esemeny {
     private Zenekar zenekar;
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "esemeny", orphanRemoval = true)
-    private List<ZeneToEsemeny> zenek = new ArrayList<>();
+    private List<Szavazat> zenek = new ArrayList<>();
 
 
 }
