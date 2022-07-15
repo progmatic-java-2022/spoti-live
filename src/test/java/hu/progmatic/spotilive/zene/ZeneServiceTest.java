@@ -2,6 +2,7 @@ package hu.progmatic.spotilive.zene;
 
 import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.demo.DemoService;
+import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
 import hu.progmatic.spotilive.felhasznalo.NincsJogosultsagAZenekarhozException;
 import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.tag.TagKategoria;
@@ -40,6 +41,9 @@ class ZeneServiceTest {
 
     @Autowired
     DemoServiceTestHelper demoServiceTestHelper;
+
+    @Autowired
+    FelhasznaloService felhasznaloService;
 
     private ZeneDto demozene;
 
@@ -110,6 +114,9 @@ class ZeneServiceTest {
                 .build();
 
         ZeneDto mentettZene = zeneService.createZene(zene);
+
+        assertThat(mentettZene).extracting(ZeneDto::getId).isNotNull();
+        assertThat(mentettZene.getZenekarId()).isEqualTo(felhasznaloService.getZenekarId());
 
     }
 
