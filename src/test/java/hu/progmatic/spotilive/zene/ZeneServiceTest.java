@@ -102,6 +102,7 @@ class ZeneServiceTest {
         assertThat(mentettZene).extracting(ZeneDto::getId).isNotNull();
         assertNotNull(mentettZene.getZenekarId());
         assertEquals(demoZenekarId, mentettZene.getZenekarId());
+        zeneService.deleteZeneById(mentettZene.getId());
     }
 
     @Test
@@ -117,7 +118,7 @@ class ZeneServiceTest {
 
         assertThat(mentettZene).extracting(ZeneDto::getId).isNotNull();
         assertThat(mentettZene.getZenekarId()).isEqualTo(felhasznaloService.getZenekarId());
-
+        zeneService.deleteZeneById(mentettZene.getId());
     }
 
     @Nested
