@@ -20,9 +20,6 @@ public class UjVendegController {
     @Autowired
     FelhasznaloService felhasznaloService;
 
-    @Autowired
-    MeghivoService meghivoService;
-
     @GetMapping("/felhasznalo/vendeg")
     public String vendeg() {
         return "ujvendegletrehozasa";
@@ -33,8 +30,6 @@ public class UjVendegController {
             @ModelAttribute ("ujVendegCommand") @Valid UjVendegCommand command,
             BindingResult bindingResult,
             Model model) {
-
-
        if (!bindingResult.hasErrors()) {
            try {
                felhasznaloService.addGuest(command);
@@ -50,16 +45,10 @@ public class UjVendegController {
            }
        }
         return "ujvendegletrehozasa";
-
     }
 
     @ModelAttribute("ujVendegCommand")
     public UjVendegCommand ujVendegCommand() {
         return new UjVendegCommand();
     }
-
-
-
-
-
 }
