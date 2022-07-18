@@ -38,7 +38,6 @@
     </tr>
     </tbody>
 </table>
-
 <hr>
 <h3 th:if="${hasUserWriteRole}">Új felhasználó létrehozása</h3>
 <form th:if="${hasUserWriteRole}"
@@ -71,6 +70,10 @@
         <input class="btn btn-primary" type="submit" value="Hozzáad"/>
     </div>
 </form>
-<h3 th:text="'Bejelntkezett felhasználó id: ' + ${userId}">Felhasználó id: 2</h3>
+<hr>
+    <h3>Új vendég felhasználó létrehozása</h3>
+    <a href="#" th:href="@{/felhasznalo/vendeg}" class="btn btn-primary">Létrehozás</a>
+<hr>
+<h3 th:text="'Bejelentkezett felhasználó id: ' + ${userId}">Felhasználó id: 2</h3>
 </body>
 </html>

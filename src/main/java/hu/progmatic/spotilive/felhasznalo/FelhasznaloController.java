@@ -60,6 +60,7 @@ public class FelhasznaloController {
     return new UjFelhasznaloCommand();
   }
 
+
   @ModelAttribute("ujFelhasznaloError")
   public String ujFelhasznaloError() {
     return null;
