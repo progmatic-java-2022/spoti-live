@@ -34,7 +34,7 @@ public class EsemenyTracklistController {
             @PathVariable("zeneId") Integer zeneId,
             @PathVariable("esemenyId") Integer esemenyId,
             Model model) {
-        esemenyService.addZeneSzavazattoEsemenyByZeneId(AddZeneToEsemenyCommand.builder()
+        esemenyService.addSzavazat(AddZeneToEsemenyCommand.builder()
                 .esemenyId(esemenyId)
                 .zeneId(zeneId)
                 .build());

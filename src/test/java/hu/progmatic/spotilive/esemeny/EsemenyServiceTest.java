@@ -179,7 +179,7 @@ class EsemenyServiceTest {
                     .zenekarId(demoZenekar1Id)
                     .build());
 
-            esemenyService.addZeneSzavazattoEsemenyByZeneId(AddZeneToEsemenyCommand.builder()
+            esemenyService.addSzavazat(AddZeneToEsemenyCommand.builder()
                     .esemenyId(esemeny1.getId())
                     .zeneId(zene.getId())
                     .build());
@@ -216,13 +216,13 @@ class EsemenyServiceTest {
                         .zenekarId(demoZenekar1Id)
                         .build());
 
-                esemenyService.addZeneSzavazattoEsemenyByZeneId(AddZeneToEsemenyCommand
+                esemenyService.addSzavazat(AddZeneToEsemenyCommand
                         .builder()
                         .zeneId(zene1.getId())
                         .esemenyId(esemeny1.getId())
                         .build());
 
-                esemenyService.addZeneSzavazattoEsemenyByZeneId(AddZeneToEsemenyCommand
+                esemenyService.addSzavazat(AddZeneToEsemenyCommand
                         .builder()
                         .esemenyId(esemeny1.getId())
                         .zeneId(zene2.getId())
@@ -241,52 +241,58 @@ class EsemenyServiceTest {
                 @BeforeEach
                 void setUp() {
 
-
-                    esemenyService.addSzavazat(AddSzavazatCommand.builder()
+                    esemenyService.addSzavazat(AddZeneToEsemenyCommand.builder()
                             .esemenyId(esemeny1.getId())
                             .zeneId(zene1.getId())
                             .build());
 
-                    esemenyService.addSzavazat(AddSzavazatCommand.builder()
+                    esemenyService.addSzavazat(AddZeneToEsemenyCommand.builder()
                             .esemenyId(esemeny1.getId())
                             .zeneId(zene1.getId())
                             .build());
 
-                    esemenyService.addSzavazat(AddSzavazatCommand.builder()
+                    esemenyService.addSzavazat(AddZeneToEsemenyCommand.builder()
                             .esemenyId(esemeny1.getId())
                             .zeneId(zene1.getId())
                             .build());
 
-                    esemenyService.addSzavazat(AddSzavazatCommand.builder()
+                    esemenyService.addSzavazat(AddZeneToEsemenyCommand.builder()
                             .esemenyId(esemeny1.getId())
                             .zeneId(zene2.getId())
                             .build());
                 }
 
-//                @Test
-//                void zeneListBySzavazat() {
-//                    var esemenyZenevel = esemenyService.getEsemenyDtoById(esemeny1.getId());
-//                    assertEquals(3, esemenyZenevel.getZenek().stream()
-//                            .filter(zene -> zene.getZene().getId().equals(
-//                                    zeneService.getBycim("Teszt zene1").getId()))
-//                            .findFirst()
-//                            .orElseThrow().getOsszSzavazat());
-//
-//                    assertEquals(1, esemenyZenevel.getZenek().stream()
-//                            .filter(zene -> zene.getZene().getId().equals(
-//                                    zeneService.getBycim("Teszt zene2").getId()))
-//                            .findFirst()
-//                            .orElseThrow().getOsszSzavazat());
-//
-//                    List<SzavazatTracklistDto> rendezettLista = esemenyService.getEsemenyZeneiByLikesAndAbc(esemenyZenevel.getId());
-//                    assertThat(rendezettLista)
-//                            .hasSize(2)
-//                            .extracting(SzavazatTracklistDto::getZene)
-//                            .extracting(Zene::getCim)
-//                            .containsExactly("Teszt zene1", "Teszt zene2");
-//                }
-//
-//
+                @Test
+                void zeneListBySzavazat() {
+                    var szavazatok1 = szavazatService.getEsemenyTrackList(esemeny1.getId());
+                    var szavazatok2 = szavazatService.getEsemenyTrackList(esemeny1.getId());
+
+                    assertEquals(4, szavazatok1.stream()
+                            .filter(szavazatTracklistDto -> szavazatTracklistDto.getZeneId().equals(zene1.getId()))
+                            .findFirst()
+                            .orElseThrow()
+                            .getOsszSzavazat());
+                    assertEquals(2, szavazatok2.stream()
+                            .filter(szavazatTracklistDto -> szavazatTracklistDto.getZeneId().equals(zene2.getId()))
+                            .findFirst()
+                            .orElseThrow()
+                            .getOsszSzavazat());
+
+
+                    List<SzavazatTracklistDto> rendezettLista = szavazatService.getEsemenyTrackList(esemeny1.getId());
+                    assertThat(rendezettLista)
+                            .extracting(SzavazatTracklistDto::getSzamCim)
+                            .containsExactly(
+                                    "Teszt zene1",
+                                    "Teszt zene2",
+                                    "1_zenekar_Demo zene cím",
+                                    "1_zenekar_Demo zene cím 2",
+                                    "1_zenekar_Demo zene cím 3",
+                                    "Valami cím");
+
+                }
+
+
             }
         }
     }

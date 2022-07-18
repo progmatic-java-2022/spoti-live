@@ -172,22 +172,5 @@ public class DemoService {
     zeneService.addTag(demoZene.getId(), tagService.getTagDtoByNev(DEMO_TAG).getId());
     zeneService.addTag(demoZene.getId(), tagService.getTagDtoByNev(DEMO_HANGULAT_TAG).getId());
 
-//    esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand
-//        .builder()
-//        .esemenyId(demoEsemeny.getId())
-//        .zeneId(demoZene.getId())
-//        .build());
-//
-//    esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand
-//        .builder()
-//        .esemenyId(demoEsemeny.getId())
-//        .zeneId(demoZene2.getId())
-//        .build());
-
-//    esemenyService.addZenetoEsemenyByZeneId(AddZeneToEsemenyCommand
-//        .builder()
-//        .esemenyId(demoEsemeny.getId())
-//        .zeneId(demoZene3.getId())
-//        .build());
   }
 }

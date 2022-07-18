@@ -102,7 +102,7 @@ EsemenyService {
         return esemenyRepository.getReferenceById(id);
     }
 
-    public void addZeneSzavazattoEsemenyByZeneId(AddZeneToEsemenyCommand command) {
+    public void addSzavazat(AddZeneToEsemenyCommand command) {
         var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
         var zene = zeneService.getZeneById(command.getZeneId());
         Szavazat zeneEsemeny = Szavazat.builder()
@@ -113,17 +113,6 @@ EsemenyService {
         zene.getSzavazatok().add(zeneEsemeny);
 
     }
-
-    public void addSzavazat(AddSzavazatCommand command) {
-        var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
-        var modositando = esemeny.getZenek()
-                .stream()
-                .filter(zene -> zene.getZene().getId().equals(command.getZeneId()))
-                .findFirst()
-                .orElseThrow();
-        modositando.setSzavazat(modositando.getSzavazat() + 1);
-    }
-
 
 
     public List<EsemenyDto> findAllModosithatoDto() {
