@@ -26,4 +26,8 @@ public class Felhasznalo {
 
   @ManyToOne
   private Zenekar zenekar;
+
+  @OneToOne (cascade = CascadeType.ALL, mappedBy = "felhasznalo")
+  @Builder.Default
+  private Meghivo meghivo = null;
 }

@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class UjVendegCommand {
 
     private String nev;
-    private String jelszo;
+    private String jelszo1;
+    private String jelszo2;
 
 }
