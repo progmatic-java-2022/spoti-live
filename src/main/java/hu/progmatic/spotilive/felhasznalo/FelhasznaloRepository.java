@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface FelhasznaloRepository extends JpaRepository<Felhasznalo, Long> {
   Optional<Felhasznalo> findByNev(String nev);
+  Felhasznalo getFelhasznaloById(Long id);
 }

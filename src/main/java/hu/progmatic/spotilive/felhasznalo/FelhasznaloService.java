@@ -78,6 +78,11 @@ public class FelhasznaloService {
     return felhasznaloRepository.findByNev(nev);
   }
 
+
+  public Felhasznalo getById(Long id) {
+    return felhasznaloRepository.getFelhasznaloById(id);
+  }
+
   public boolean hasRole(String role) {
     return SecurityContextHolder
         .getContext()

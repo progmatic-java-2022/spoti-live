@@ -1,9 +1,12 @@
 package hu.progmatic.spotilive.felhasznalo;
 
+import hu.progmatic.spotilive.esemeny.Szavazat;
 import hu.progmatic.spotilive.zenekar.Zenekar;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,6 +29,10 @@ public class Felhasznalo {
 
   @ManyToOne
   private Zenekar zenekar;
+
+  @OneToMany(mappedBy = "felhasznalo")
+  @Builder.Default
+  private List<Szavazat> szavazatok = new ArrayList<>();
 
   @OneToOne (cascade = CascadeType.ALL, mappedBy = "felhasznalo")
   @Builder.Default

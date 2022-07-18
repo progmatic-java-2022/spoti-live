@@ -105,12 +105,15 @@ EsemenyService {
     public void addSzavazat(AddZeneToEsemenyCommand command) {
         var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
         var zene = zeneService.getZeneById(command.getZeneId());
-        Szavazat zeneEsemeny = Szavazat.builder()
-                .zene(zene)
+        var felhasznaloId = felhasznaloService.getFelhasznaloId();
+        var felhasznalo = felhasznaloService.getById(felhasznaloId);
+        Szavazat szavazat = Szavazat.builder()
                 .esemeny(esemeny)
+                .zene(zene)
+                .felhasznalo(felhasznalo)
                 .build();
-        esemeny.getZenek().add(zeneEsemeny);
-        zene.getSzavazatok().add(zeneEsemeny);
+        esemeny.getZenek().add(szavazat);
+        zene.getSzavazatok().add(szavazat);
 
     }
 

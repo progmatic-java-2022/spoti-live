@@ -28,6 +28,7 @@
         <th scope="col">Id</th>
         <th scope="col">Cim</th>
         <th scope="col">Szavazatok</th>
+        <th scope="col">Saját szavazatok</th>
         <th scope="col"></th>
         <th scope="col"></th>
     </tr>
@@ -37,6 +38,7 @@
         <td th:text="${zene.zeneId}">Id</td>
         <td th:text="${zene.szamCim}">Cím</td>
         <td th:text="${zene.osszSzavazat}">Szavazat</td>
+        <td th:text="${zene.szavazatByFelhasznalo}">Szavazat</td>
         <td></td>
         <td>
         <div class="row">
