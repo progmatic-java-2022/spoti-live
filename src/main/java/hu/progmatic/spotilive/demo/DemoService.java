@@ -1,6 +1,5 @@
 package hu.progmatic.spotilive.demo;
 
-import hu.progmatic.spotilive.esemeny.AddZeneToEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.CreateEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;

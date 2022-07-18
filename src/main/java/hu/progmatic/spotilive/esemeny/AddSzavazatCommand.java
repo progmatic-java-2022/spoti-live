@@ -6,6 +6,6 @@ import lombok.Data;
 @Builder
 @Data
 public class AddSzavazatCommand {
-    private Integer esemenyId;
-    private Integer zeneId;
+    Integer esemenyId;
+    Integer zeneId;
 }
