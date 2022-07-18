@@ -54,7 +54,8 @@ public class FelhasznaloService {
     }
     Felhasznalo felhasznalo = Felhasznalo.builder()
             .nev(command.getNev())
-            .jelszo(encoder.encode(command.getJelszo()))
+            .role(UserType.GUEST)
+            .jelszo(encoder.encode(command.getJelszo1()))
             .build();
     felhasznaloRepository.save(felhasznalo);
   }
