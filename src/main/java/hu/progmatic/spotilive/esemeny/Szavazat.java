@@ -21,7 +21,7 @@ public class Szavazat {
     @ManyToOne
     private Zene zene;
     @Builder.Default
-    private Integer szavazat = 1;
+    private Integer szavazat = 0;
     @ManyToOne
     private Felhasznalo felhasznalo;
 

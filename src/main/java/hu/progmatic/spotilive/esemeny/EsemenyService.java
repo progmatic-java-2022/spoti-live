@@ -1,8 +1,10 @@
 package hu.progmatic.spotilive.esemeny;
 
+import hu.progmatic.spotilive.felhasznalo.Felhasznalo;
 import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
 import hu.progmatic.spotilive.felhasznalo.NincsJogosultsagAZenekarhozException;
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.zene.Zene;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.Zenekar;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
@@ -75,7 +77,6 @@ EsemenyService {
     }
 
 
-
     public int countAllEsemeny() {
         return (int) esemenyRepository.count();
     }
@@ -103,18 +104,38 @@ EsemenyService {
     }
 
     public void addSzavazat(AddSzavazatCommand command) {
+        Szavazat szavazat = getOrCreateSajatSzavazat(command);
+        szavazat.setSzavazat(szavazat.getSzavazat() + 1);
+    }
+
+
+
+    private Szavazat getOrCreateSajatSzavazat(AddSzavazatCommand command) {
         var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
         var zene = zeneService.getZeneById(command.getZeneId());
         var felhasznaloId = felhasznaloService.getFelhasznaloId();
         var felhasznalo = felhasznaloService.getById(felhasznaloId);
-        Szavazat szavazat = Szavazat.builder()
+        return felhasznalo.getSzavazatok()
+                .stream()
+                .filter(
+                        keresettSzavazat ->
+                                keresettSzavazat.getEsemeny().getId().equals(esemeny.getId())
+                                && keresettSzavazat.getZene().getId().equals(zene.getId())
+                )
+                .findAny()
+                .orElseGet(() -> ujSzavazat(esemeny, zene, felhasznalo));
+    }
+
+    private Szavazat ujSzavazat(Esemeny esemeny, Zene zene, Felhasznalo felhasznalo) {
+        Szavazat ujSzavazat = Szavazat.builder()
                 .esemeny(esemeny)
                 .zene(zene)
                 .felhasznalo(felhasznalo)
+                .szavazat(0)
                 .build();
-        esemeny.getZenek().add(szavazat);
-        zene.getSzavazatok().add(szavazat);
-
+        esemeny.getZenek().add(ujSzavazat);
+        zene.getSzavazatok().add(ujSzavazat);
+        return ujSzavazat;
     }
 
 
