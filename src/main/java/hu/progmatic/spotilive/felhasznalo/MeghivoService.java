@@ -45,7 +45,7 @@ public class MeghivoService {
         return MeghivoDto.factory(meghivoRepository.findMeghivoByUuidEquals(uuid));
     }
 
-    public void deleteAll() {
-        meghivoRepository.deleteAll();
+    public void deleteById(Integer id) {
+        meghivoRepository.deleteById(id);
     }
 }

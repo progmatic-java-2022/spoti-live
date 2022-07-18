@@ -23,12 +23,10 @@ class MeghivoServiceTest {
         var meghivo = meghivoService.meghivoLetrehozasa();
         assertNull(meghivo.getFelhasznalo());
         assertEquals("testUUId", meghivo.getUuid());
+
+        meghivoService.deleteById(meghivo.getId());
     }
 
-    @AfterEach
-    void tearDown() {
-        meghivoService.deleteAll();
-    }
 
     @Test
     void FelhasznalasaTest() {
@@ -57,6 +55,7 @@ class MeghivoServiceTest {
             hibaUzenet = e.getMessage();
         }
         assertEquals("Ezt már elhasználták!",hibaUzenet);
+        meghivoService.deleteById(meghivo.getId());
     }
 
 }
