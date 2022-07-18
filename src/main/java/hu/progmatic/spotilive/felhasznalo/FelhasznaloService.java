@@ -48,7 +48,7 @@ public class FelhasznaloService {
     felhasznaloRepository.save(felhasznalo);
   }
 
-  public void addGuest(UjVendegCommand command) {
+  public Felhasznalo addGuest(UjVendegCommand command) {
     if (felhasznaloRepository.findByNev(command.getNev()).isPresent()) {
       throw new FelhasznaloLetrehozasException(
               "nev",
@@ -72,7 +72,7 @@ public class FelhasznaloService {
               "A két jelszó nem egyezik"
       );
     }
-    felhasznaloRepository.save(felhasznalo);
+    return felhasznaloRepository.save(felhasznalo);
   }
 
   private Zenekar getZenekar(UjFelhasznaloCommand command) {
