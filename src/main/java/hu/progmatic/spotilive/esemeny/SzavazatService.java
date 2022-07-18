@@ -27,22 +27,6 @@ public class SzavazatService {
     private SzavazatRepository szavazatRepository;
 
 
-    public SzavazatDto createSzavazat(SzavazatDto dto){
-        var zene = zeneService.getZeneById(dto.getZeneId());
-        var esemeny = esemenyService.getEsemenyById(dto.getEsemenyId());
-        var felhasznaloId = felhasznaloService.getFelhasznaloId();
-        var felhasznalo = felhasznaloService.getById(felhasznaloId);
-        Szavazat szavazat = Szavazat.builder()
-                .esemeny(esemeny)
-                .zene(zene)
-                .felhasznalo(felhasznalo)
-                .build();
-        felhasznalo.getSzavazatok().add(szavazat);
-        zene.getSzavazatok().add(szavazat);
-        esemeny.getZenek().add(szavazat);
-       return SzavazatDto.factory(szavazatRepository.save(szavazat));
-    }
-
 
     public List<SzavazatTracklistDto> getEsemenyTrackList(Integer esemenyId) {
         var esemeny = esemenyService.getEsemenyById(esemenyId);
