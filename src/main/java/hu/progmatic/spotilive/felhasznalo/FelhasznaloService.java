@@ -50,13 +50,22 @@ public class FelhasznaloService {
 
   public void addGuest(UjVendegCommand command) {
     if (felhasznaloRepository.findByNev(command.getNev()).isPresent()) {
-      throw new FelhasznaloLetrehozasException("Ilyen névvel már létezik felhasználó!");
+      throw new FelhasznaloLetrehozasException(
+              "nev",
+              "Ilyen névvel már létezik felhasználó!"
+      );
     }
     Felhasznalo felhasznalo = Felhasznalo.builder()
             .nev(command.getNev())
             .role(UserType.GUEST)
             .jelszo(encoder.encode(command.getJelszo1()))
             .build();
+    if (!command.getJelszo1().equals(command.getJelszo2())){
+      throw new FelhasznaloLetrehozasException(
+              "jelszo1",
+              "A két jelszó nem egyezik"
+      );
+    }
     felhasznaloRepository.save(felhasznalo);
   }
 

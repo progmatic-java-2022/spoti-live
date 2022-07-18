@@ -17,7 +17,7 @@
         crossorigin="anonymous"></script>
 
 <h3>Új vendég létrehozása</h3>
-<form th:action="@{/felhasznalo/vendeg}" method="post" th:object="${ujFelhasznaloCommand}">
+<form th:action="@{/felhasznalo/vendeg}" method="post" th:object="${ujVendegCommand}">
     <div>
         <div th:if="${ujVendegError != null}"
              class="alert alert-danger"
@@ -29,21 +29,39 @@
                    class="form-control"
                    name="nev"
                    placeholder="Felhasználónév"
-                   th:field="*{nev}"/>
+                   th:field="*{nev}"
+                   th:classappend="${#fields.hasErrors('nev')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('nev')}"
+                 th:errors="*{nev}">
+                Hibaüzenet
+            </div>
         </label>
         <label>
             <input type="password"
                    class="form-control"
                    name="jelszo"
                    placeholder="Jelszó"
-                   th:field="*{jelszo1}"/>
+                   th:field="*{jelszo1}"
+                   th:classappend="${#fields.hasErrors('jelszo1')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('jelszo1')}"
+                 th:errors="*{jelszo1}">
+                Hibaüzenet
+            </div>
         </label>
         <label>
             <input type="password"
                    class="form-control"
                    name="jelszoellenorzes"
                    placeholder="Jelszó még egyszer"
-                   th:field="*{jelszo2}"/>
+                   th:field="*{jelszo2}"
+                   th:classappend="${#fields.hasErrors('jelszo2')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('jelszo2')}"
+                 th:errors="*{jelszo2}">
+                Hibaüzenet
+            </div>
         </label>
 
         <input class="btn btn-primary" type="submit" value="Mentés"/>
