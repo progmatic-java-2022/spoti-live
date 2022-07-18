@@ -31,6 +31,8 @@
         <th scope="col">Saját szavazatok</th>
         <th scope="col"></th>
         <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -39,6 +41,7 @@
         <td th:text="${zene.szamCim}">Cím</td>
         <td th:text="${zene.osszSzavazat}">Szavazat</td>
         <td th:text="${zene.szavazatByFelhasznalo}">Szavazat</td>
+        <td></td>
         <td></td>
         <td>
         <div class="row">
@@ -50,6 +53,17 @@
                 </form>
             </div>
         </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col" th:if="${zene.szavazatByFelhasznalo != 0}">
+                    <form  th:action="@{'/esemeny/delete/{esemenyId}/zenelista/{zeneId}'
+                (zeneId=${zene.zeneId}, esemenyId=${zene.esemenyId})}"
+                           method="post">
+                        <input type="submit" class="btn btn-danger" value="Like visszavonása">
+                    </form>
+                </div>
+            </div>
         </td>
 
     </tr>

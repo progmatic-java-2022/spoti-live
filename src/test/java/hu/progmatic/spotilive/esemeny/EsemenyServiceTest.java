@@ -179,7 +179,7 @@ class EsemenyServiceTest {
                     .zenekarId(demoZenekar1Id)
                     .build());
 
-            esemenyService.addSzavazat(AddSzavazatCommand.builder()
+            esemenyService.addSzavazat(SzavazatCommand.builder()
                     .esemenyId(esemeny1.getId())
                     .zeneId(zene.getId())
                     .build());
@@ -216,13 +216,13 @@ class EsemenyServiceTest {
                         .zenekarId(demoZenekar1Id)
                         .build());
 
-                esemenyService.addSzavazat(AddSzavazatCommand
+                esemenyService.addSzavazat(SzavazatCommand
                         .builder()
                         .zeneId(zene1.getId())
                         .esemenyId(esemeny1.getId())
                         .build());
 
-                esemenyService.addSzavazat(AddSzavazatCommand
+                esemenyService.addSzavazat(SzavazatCommand
                         .builder()
                         .esemenyId(esemeny1.getId())
                         .zeneId(zene2.getId())
@@ -241,22 +241,22 @@ class EsemenyServiceTest {
                 @BeforeEach
                 void setUp() {
 
-                    esemenyService.addSzavazat(AddSzavazatCommand.builder()
+                    esemenyService.addSzavazat(SzavazatCommand.builder()
                             .esemenyId(esemeny1.getId())
                             .zeneId(zene1.getId())
                             .build());
 
-                    esemenyService.addSzavazat(AddSzavazatCommand.builder()
+                    esemenyService.addSzavazat(SzavazatCommand.builder()
                             .esemenyId(esemeny1.getId())
                             .zeneId(zene1.getId())
                             .build());
 
-                    esemenyService.addSzavazat(AddSzavazatCommand.builder()
+                    esemenyService.addSzavazat(SzavazatCommand.builder()
                             .esemenyId(esemeny1.getId())
                             .zeneId(zene1.getId())
                             .build());
 
-                    esemenyService.addSzavazat(AddSzavazatCommand.builder()
+                    esemenyService.addSzavazat(SzavazatCommand.builder()
                             .esemenyId(esemeny1.getId())
                             .zeneId(zene2.getId())
                             .build());

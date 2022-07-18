@@ -41,4 +41,9 @@ public class SzavazatService {
                 .sorted((o1, o2) -> o2.getOsszSzavazat() - o1.getOsszSzavazat())
                 .toList();
     }
+
+    public void deleteSzavazatById(Integer id) {
+        var szavazat = szavazatRepository.getReferenceById(id);
+        szavazatRepository.delete(szavazat);
+    }
 }

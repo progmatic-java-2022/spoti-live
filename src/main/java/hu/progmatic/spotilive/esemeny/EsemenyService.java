@@ -32,6 +32,8 @@ EsemenyService {
     private ZeneService zeneService;
     @Autowired
     private FelhasznaloService felhasznaloService;
+    @Autowired
+    private SzavazatRepository szavazatRepository;
 
 
     @RolesAllowed(UserType.Roles.ESEMENY_KEZELES_ROLE)
@@ -103,14 +105,38 @@ EsemenyService {
         return esemenyRepository.getReferenceById(id);
     }
 
-    public void addSzavazat(AddSzavazatCommand command) {
+    public void addSzavazat(SzavazatCommand command) {
         Szavazat szavazat = getOrCreateSajatSzavazat(command);
         szavazat.setSzavazat(szavazat.getSzavazat() + 1);
     }
 
+    public void deleteSzavazat(SzavazatCommand command){
+        var felhasznaloId = felhasznaloService.getFelhasznaloId();
+        var felhasznalo = felhasznaloService.getById(felhasznaloId);
+        var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
+        var zene = zeneService.getZeneById(command.getZeneId());
+        Szavazat szavazat = felhasznalo.getSzavazatok()
+                .stream()
+                .filter(
+                        keresettSzavazat ->
+                                keresettSzavazat.getEsemeny().getId().equals(esemeny.getId())
+                                        && keresettSzavazat.getZene().getId().equals(zene.getId())
+                )
+                .findFirst()
+                .orElseThrow();
+        if (szavazat.getSzavazat() == 1){
+            zene.getSzavazatok().remove(szavazat);
+            felhasznalo.getSzavazatok().remove(szavazat);
+            szavazatRepository.delete(szavazat);
+        }
+        else {
+            szavazat.setSzavazat(szavazat.getSzavazat() - 1);
+        }
+    }
 
 
-    private Szavazat getOrCreateSajatSzavazat(AddSzavazatCommand command) {
+
+    private Szavazat getOrCreateSajatSzavazat(SzavazatCommand command) {
         var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
         var zene = zeneService.getZeneById(command.getZeneId());
         var felhasznaloId = felhasznaloService.getFelhasznaloId();
@@ -151,5 +177,9 @@ EsemenyService {
                 .map(EsemenyDto::factory)
                 .toList();
 
+    }
+
+    public boolean vanSajatSzavazat() {
+        return false;
     }
 }

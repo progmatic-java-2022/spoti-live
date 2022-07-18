@@ -34,15 +34,22 @@ public class EsemenyTracklistController {
             @PathVariable("zeneId") Integer zeneId,
             @PathVariable("esemenyId") Integer esemenyId,
             Model model) {
-        esemenyService.addSzavazat(AddSzavazatCommand.builder()
+        esemenyService.addSzavazat(SzavazatCommand.builder()
                 .esemenyId(esemenyId)
                 .zeneId(zeneId)
                 .build());
-//        esemenyService.addSzavazat(AddSzavazatCommand.builder()
-//                .esemenyId(esemenyId)
-//                .zeneId(zeneId)
-//                .build());
+        return "redirect:/esemeny/zenelista/" + esemenyId;
+    }
 
+    @PostMapping("/esemeny/delete/{esemenyId}/zenelista/{zeneId}")
+    public String deleteSzavazat(
+            @PathVariable("zeneId") Integer zeneId,
+            @PathVariable("esemenyId") Integer esemenyId,
+            Model model) {
+        esemenyService.deleteSzavazat(SzavazatCommand.builder()
+                .esemenyId(esemenyId)
+                .zeneId(zeneId)
+                .build());
         return "redirect:/esemeny/zenelista/" + esemenyId;
     }
 
@@ -51,6 +58,7 @@ public class EsemenyTracklistController {
     public List<SzavazatTracklistDto> esemenyZenei() {
         return new ArrayList<>();
     }
+
 
     @ModelAttribute("esemenyDto")
     public EsemenyDto aktualisEsemeny() {

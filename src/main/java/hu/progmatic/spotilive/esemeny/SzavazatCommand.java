@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class AddSzavazatCommand {
+public class SzavazatCommand {
     Integer esemenyId;
     Integer zeneId;
 }
