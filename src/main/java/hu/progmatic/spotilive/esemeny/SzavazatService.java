@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -46,6 +47,8 @@ public class SzavazatService {
 
         return zeneList.stream()
                 .map(zene -> SzavazatTracklistDto.factory(zene,esemeny))
+                .sorted(Comparator.comparing(SzavazatTracklistDto::getSzamCim))
+                .sorted((o1, o2) -> o2.getOsszSzavazat() - o1.getOsszSzavazat())
                 .toList();
     }
 }
