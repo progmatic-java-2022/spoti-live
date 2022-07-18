@@ -102,7 +102,7 @@ EsemenyService {
         return esemenyRepository.getReferenceById(id);
     }
 
-    public void addSzavazat(AddZeneToEsemenyCommand command) {
+    public void addSzavazat(AddSzavazatCommand command) {
         var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
         var zene = zeneService.getZeneById(command.getZeneId());
         var felhasznaloId = felhasznaloService.getFelhasznaloId();
