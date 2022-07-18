@@ -48,6 +48,18 @@ public class FelhasznaloService {
     felhasznaloRepository.save(felhasznalo);
   }
 
+  public void addGuest(UjVendegCommand command) {
+    if (felhasznaloRepository.findByNev(command.getNev()).isPresent()) {
+      throw new FelhasznaloLetrehozasException("Ilyen névvel már létezik felhasználó!");
+    }
+    Felhasznalo felhasznalo = Felhasznalo.builder()
+            .nev(command.getNev())
+            .role(UserType.GUEST)
+            .jelszo(encoder.encode(command.getJelszo1()))
+            .build();
+    felhasznaloRepository.save(felhasznalo);
+  }
+
   private Zenekar getZenekar(UjFelhasznaloCommand command) {
     Zenekar zenekar = null;
     if (command.getZenekarId() != null) {
