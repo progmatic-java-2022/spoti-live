@@ -64,6 +64,11 @@
                     </form>
                 </div>
             </div>
+            <div class="row">
+                <div class="col" th:if="${zene.szavazatByFelhasznalo == 0}">
+                        <input  type="button" class="btn btn-danger" disabled data-bs-toggle="button" value="Like visszavonása">
+                </div>
+            </div>
         </td>
 
     </tr>
