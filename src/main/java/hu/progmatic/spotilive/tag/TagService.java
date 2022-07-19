@@ -66,9 +66,7 @@ public class TagService {
         tagRepository.deleteById(id);
     }
 
-    public void deleteAlltag() {
-        tagRepository.deleteAll();
-    }
+
 
 
     public ZeneTagSzerkesztesListaDto getZeneTagSzerkesztesListaDto(Integer zeneId) {
