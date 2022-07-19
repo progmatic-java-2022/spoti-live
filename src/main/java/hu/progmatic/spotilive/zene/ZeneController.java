@@ -2,6 +2,7 @@ package hu.progmatic.spotilive.zene;
 
 import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.tag.TagService;
 import hu.progmatic.spotilive.zenekar.ZenekarDto;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
@@ -133,11 +134,6 @@ public class ZeneController {
     public String ujZeneError() {
         return null;
     }
-
-    @ModelAttribute("getCim")
-    public String getCim() {
-        return "Számok";
-    }
     @ModelAttribute("zeneError")
     public String getZeneError(){
         return null;
@@ -162,4 +158,10 @@ public class ZeneController {
 
     @ModelAttribute("adminModositasJogVan")
     public boolean adminModositasJogVan(){return felhasznaloService.hasRole(UserType.Roles.USER_WRITE_ROLE);}
+
+    @ModelAttribute("osszesTag")
+    public List<TagDto> osszesTag(){
+        return tagService.getAllTag();
+    }
+
 }
