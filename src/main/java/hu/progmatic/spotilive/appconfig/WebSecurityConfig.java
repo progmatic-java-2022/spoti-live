@@ -20,6 +20,7 @@ public class WebSecurityConfig {
         .csrf().disable()
         .authorizeRequests()
         .antMatchers("/sarkozyadam/esemeny/**").permitAll()
+        .antMatchers("/public/**").permitAll()
         .antMatchers("/**").authenticated()
         .and()
         .formLogin()

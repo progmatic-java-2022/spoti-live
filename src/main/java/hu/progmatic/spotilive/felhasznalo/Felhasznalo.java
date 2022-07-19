@@ -15,26 +15,29 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Felhasznalo {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-  @Column(nullable = false, unique = true)
-  private String nev;
+    @Column(nullable = false, unique = true)
+    private String nev;
 
-  private String jelszo;
+    private String jelszo;
 
-  @Enumerated(EnumType.STRING)
-  private UserType role;
+    @Enumerated(EnumType.STRING)
+    private UserType role;
 
-  @ManyToOne
-  private Zenekar zenekar;
+    @ManyToOne
+    private Zenekar zenekar;
 
-  @OneToMany(mappedBy = "felhasznalo")
-  @Builder.Default
-  private List<Szavazat> szavazatok = new ArrayList<>();
+    @OneToMany(mappedBy = "felhasznalo")
+    @Builder.Default
+    private List<Szavazat> szavazatok = new ArrayList<>();
 
-  @OneToOne (cascade = CascadeType.ALL, mappedBy = "felhasznalo")
-  @Builder.Default
-  private Meghivo meghivo = null;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "felhasznalo")
+    @Builder.Default
+    private Meghivo meghivo = null;
+    @OneToOne(mappedBy = "felhasznalo", cascade = CascadeType.ALL)
+    private Kredit kredit;
+
 }

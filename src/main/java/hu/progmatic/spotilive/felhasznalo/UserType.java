@@ -18,7 +18,8 @@ public enum UserType {
             Roles.ESEMENY_KEZELES_ROLE,
             Roles.ZENEKAR_KEZELES_ROLE
     ),
-    GUEST();
+    GUEST(Roles.GUEST_READ_ROLE);
+
 
     private final String[] roles;
 
@@ -41,6 +42,7 @@ public enum UserType {
         public static final String USER_READ_ROLE = "USER_READ";
         public static final String ESEMENY_KEZELES_ROLE = "ESEMENY_KEZELES";
         public static final String ZENEKAR_KEZELES_ROLE = "ZENEKAR_KEZELES";
+        public static final String GUEST_READ_ROLE = "GUEST_READ";
 
     }
 
