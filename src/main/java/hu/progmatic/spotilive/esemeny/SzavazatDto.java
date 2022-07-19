@@ -13,7 +13,6 @@ public class SzavazatDto {
     private Integer esemenyId;
     private Integer zeneId;
 
-
     public static SzavazatDto factory(Szavazat entity) {
 
        return SzavazatDto.builder()
@@ -21,8 +20,6 @@ public class SzavazatDto {
                .zeneId(entity.getZene().getId())
 
                .build();
-
-
     }
 
 }
