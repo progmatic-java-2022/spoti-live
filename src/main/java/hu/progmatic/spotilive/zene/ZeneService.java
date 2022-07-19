@@ -151,4 +151,16 @@ public class ZeneService {
             .map(ZeneDto::factory)
             .toList();
     }
+
+    public List<ZeneDto> getZenekByTagList(FilterByTagCommand command) {
+        var zenekar = zenekarService.getZenekarEntityById(command.zenekarId);
+        var tag = tagRepository.getReferenceById(command.tagId);
+        return zenekar.getZeneLista().stream()
+                .map(ZeneDto::factory)
+                .filter(zeneDto -> zeneDto.getTagStringList().contains(tag.getTagNev()))
+                .toList();
+
+
+
+    }
 }
