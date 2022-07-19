@@ -263,4 +263,15 @@ class ZeneServiceTest {
     void getZeneByNevTest() {
         assertThat(zeneService.getZeneByNev(demozene.getCim())).extracting(ZeneDto::getCim).isEqualTo(demozene.getCim());
     }
+    @Test
+    void getZeneByTag(){
+        var command = FilterByTagCommand.builder()
+                .zenekarId(demoZenekarId)
+                .tagId(demoServiceTestHelper.getDemoTagDto().getId())
+                .build();
+
+        var filterLista = zeneService.getZenekByTagList(command);
+        assertThat(filterLista).extracting(ZeneDto::getCim)
+                .contains("1_zenekar_Demo zene cím");
+    }
 }

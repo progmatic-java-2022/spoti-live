@@ -2,6 +2,27 @@
 
 # Spoti live
 
+
+Futattási követelmények:
+- Java Version : 17
+- Docker (adatbázisok futtatásához)
+- Maven
+- ![img_1.png](img_1.png)
+
+![img.png](img.png)
+
+Projekt Bemutatása:
+
+A program célja...
+
+Hogyan fordul a program?
+
+Úgy fordul...
+
+Hogyan kell futattni a programot?
+
+Úgy kell...
+
 Projekt tagok:
 - Somogyi András : https://www.linkedin.com/in/andr%C3%A1s-somogyi-9b9a87240/
 - László Tamás : -
