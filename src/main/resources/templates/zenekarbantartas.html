@@ -16,7 +16,34 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 
-<h1 th:text="${getCim}">Hello</h1>
+<h1>Számok</h1>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Szűrés tagek szerint
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Szűrés</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-check form-check-inline" th:each="tag :${osszesTag}">
+                    <input class="form-check-input" type="checkbox" value="option1">
+                    <label class="form-check-label" th:text="${tag.getTagNev()}">1</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-success" value="Mentés"/>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <table class="table table-success table-striped">
     <thead>
     <tr>
@@ -59,7 +86,7 @@
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel" >Tagek</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Tagek</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
@@ -80,7 +107,8 @@
                                                 <td>
                                                     <div class="col">
                                                         <form th:action="@{'/zenekarbantartas/zene/{zeneid}/tag/{tagid}/remove'
-                                                        (zeneid=${zeneTagSzerkeztes.zeneId}, tagid=${tag.id})}" method="post">
+                                                        (zeneid=${zeneTagSzerkeztes.zeneId}, tagid=${tag.id})}"
+                                                              method="post">
                                                             <input type="submit" class="btn btn-danger"
                                                                    value="Törlés"/>
                                                         </form>
@@ -98,7 +126,8 @@
                                                 <td>
                                                     <div class="col">
                                                         <form th:action="@{'/zenekarbantartas/zene/{zeneid}/tag/{tagid}/add'
-                                                        (zeneid=${zeneTagSzerkeztes.zeneId}, tagid=${tag.id})}" method="post">
+                                                        (zeneid=${zeneTagSzerkeztes.zeneId}, tagid=${tag.id})}"
+                                                              method="post">
                                                             <input type="submit" class="btn btn-success"
                                                                    value="Hozzáadás"/>
                                                         </form>
@@ -138,7 +167,6 @@
             </select>
         </label>
     </div>
-
     <div class="col">
         <label>
             <input type="text"
@@ -189,11 +217,11 @@
 
 <!-- Módisítás-->
 
-<form  th:if="${zeneModositas.id != null}"
+<form th:if="${zeneModositas.id != null}"
       th:action="@{'/zenekarbantartas/zene/{id}'(id=${zeneModositas.id})}"
       method="post" th:object="${zeneModositas}" class="row">
     <div class="col">
-        <label  th:text="${zeneModositas.zenekarNev}"></label>
+        <label th:text="${zeneModositas.zenekarNev}"></label>
     </div>
     <div class="col">
         <label>
