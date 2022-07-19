@@ -48,15 +48,15 @@ public class FelhasznaloService {
     felhasznaloRepository.save(felhasznalo);
   }
 
-  public Felhasznalo addGuest(UjVendegCommand command) {
-    if (felhasznaloRepository.findByNev(command.getNev()).isPresent()) {
+  public Felhasznalo addGuest(MeghivoFelhasznalasaCommand command) {
+    if (felhasznaloRepository.findByNev(command.getFelhasznaloNev()).isPresent()) {
       throw new FelhasznaloLetrehozasException(
               "nev",
               "Ilyen névvel már létezik felhasználó!"
       );
     }
     Felhasznalo felhasznalo = Felhasznalo.builder()
-            .nev(command.getNev())
+            .nev(command.getFelhasznaloNev())
             .role(UserType.GUEST)
             .jelszo(encoder.encode(command.getJelszo1()))
             .build();

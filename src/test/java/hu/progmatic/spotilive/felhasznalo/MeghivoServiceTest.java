@@ -34,7 +34,7 @@ class MeghivoServiceTest {
         var meghivo = meghivoService.meghivoLetrehozasa();
         assertNull(meghivo.getFelhasznalo());
         assertEquals("testUUId", meghivo.getUuid());
-        meghivoService.meghivoMentese(MeghivoFelhasznalasaCommand.builder()
+        meghivoService.meghivoFelhasznalasa(MeghivoFelhasznalasaCommand.builder()
                         .uuid(meghivo.getUuid())
                         .jelszo1("jelszo")
                         .jelszo2("jelszo")
@@ -48,7 +48,7 @@ class MeghivoServiceTest {
 
         var hibaUzenet = "Hiba";
         try {
-            meghivoService.meghivoMentese(MeghivoFelhasznalasaCommand.builder()
+            meghivoService.meghivoFelhasznalasa(MeghivoFelhasznalasaCommand.builder()
                     .uuid(meghivo.getUuid())
                     .jelszo1("jelszo")
                     .jelszo2("jelszo")

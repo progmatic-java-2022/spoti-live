@@ -25,10 +25,11 @@ public class MeghivoService {
         return MeghivoDto.factory(meghivo);
     }
 
-    public void meghivoMentese(MeghivoFelhasznalasaCommand command) {
+    public void meghivoFelhasznalasa(MeghivoFelhasznalasaCommand command) {
         if(!meghivoFelVanHasznalva(command.getUuid())) {
-            var felhasznalo = felhasznaloService.addGuest(UjVendegCommand.builder()
-                    .nev(command.getFelhasznaloNev())
+            var felhasznalo = felhasznaloService.addGuest(MeghivoFelhasznalasaCommand.builder()
+                    .uuid(command.getUuid())
+                    .felhasznaloNev(command.getFelhasznaloNev())
                     .jelszo1(command.getJelszo1())
                     .jelszo2(command.getJelszo2())
                     .build());
