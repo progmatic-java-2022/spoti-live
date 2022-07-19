@@ -13,10 +13,15 @@ public class MeghivoService {
     private MeghivoRepository meghivoRepository;
     @Autowired
     private FelhasznaloService felhasznaloService;
+    @Autowired
+    KreditRepository kreditRepository;
 
 
     public MeghivoDto meghivoLetrehozasa() {
+        Kredit kredit = kreditRepository.save(Kredit.builder().build());
         Meghivo meghivo = meghivoRepository.save(Meghivo.builder().uuid("testUUId").build());
+        meghivo.setKredit(kredit);
+        kredit.setMeghivo(meghivo);
         return MeghivoDto.factory(meghivo);
     }
 
@@ -28,7 +33,8 @@ public class MeghivoService {
                     .jelszo2(command.getJelszo2())
                     .build());
             var meghivo = meghivoRepository.findMeghivoByUuidEquals(command.getUuid());
-
+            meghivo.getKredit().setFelhasznalo(felhasznalo);
+            felhasznalo.setKredit(meghivo.getKredit());
             felhasznalo.setMeghivo(meghivo);
             meghivo.setFelhasznalo(felhasznalo);
 

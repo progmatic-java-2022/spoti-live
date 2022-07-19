@@ -23,6 +23,7 @@ class MeghivoServiceTest {
         var meghivo = meghivoService.meghivoLetrehozasa();
         assertNull(meghivo.getFelhasznalo());
         assertEquals("testUUId", meghivo.getUuid());
+        assertNotNull(meghivo.getKredit().getId());
 
         meghivoService.deleteById(meghivo.getId());
     }
@@ -42,6 +43,9 @@ class MeghivoServiceTest {
         );
         var modositottMeghivo = meghivoService.findMeghivoByUUId(meghivo.getUuid());
         assertEquals("guest12",modositottMeghivo.getFelhasznalo().getNev());
+        assertEquals(1, modositottMeghivo.getKredit().getKreditMennyiseg());
+        assertEquals(1,modositottMeghivo.getFelhasznalo().getKredit().getKreditMennyiseg());
+
         var hibaUzenet = "Hiba";
         try {
             meghivoService.meghivoMentese(MeghivoFelhasznalasaCommand.builder()

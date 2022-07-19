@@ -10,4 +10,5 @@ public class MeghivoFelhasznalasaCommand {
     private String felhasznaloNev;
     private String jelszo1;
     private String jelszo2;
+
 }
