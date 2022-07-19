@@ -3,7 +3,6 @@ package hu.progmatic.spotilive.felhasznalo;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -11,14 +10,16 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Meghivo {
+public class Kredit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String uuid = UUID.randomUUID().toString();
-    @OneToOne
-    private Felhasznalo felhasznalo;
 
-    @OneToOne(mappedBy = "meghivo",cascade = CascadeType.ALL)
-    private Kredit kredit;
+    @Builder.Default
+    private Integer kreditMennyiseg = 1;
+    @OneToOne
+    Meghivo meghivo;
+    @OneToOne
+    @Builder.Default
+    Felhasznalo felhasznalo = null;
 }

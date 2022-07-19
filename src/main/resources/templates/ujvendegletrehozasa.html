@@ -17,24 +17,33 @@
         crossorigin="anonymous"></script>
 
 <h3>Új vendég létrehozása</h3>
-<form th:action="@{/felhasznalo/vendeg}" method="post" th:object="${ujVendegCommand}">
+<form th:action="@{/public/meghivo}" method="post" th:object="${meghivofelhasznalasacommand}">
     <div>
-        <div th:if="${ujVendegError != null}"
-             class="alert alert-danger"
-             th:text="${ujVendegError}">
-            Hibaüzenet
-        </div>
+        <label>
+            <input type="hidden"
+                   class="form-control"
+                   name="uuid"
+                   placeholder="UUId"
+                   th:field="*{uuid}"
+                   th:classappend="${#fields.hasErrors('uuid')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('uuid')}"
+                 th:errors="*{uuid}">
+                Hibaüzenet
+            </div>
+        </label>
+    </div>
         <div>
         <label> Felhasználónév:
             <input type="text"
                    class="form-control"
                    name="nev"
                    placeholder="Felhasználónév"
-                   th:field="*{nev}"
-                   th:classappend="${#fields.hasErrors('nev')} ? 'is-invalid' : 'is-valid'"/>
+                   th:field="*{felhasznaloNev}"
+                   th:classappend="${#fields.hasErrors('felhasznaloNev')} ? 'is-invalid' : 'is-valid'"/>
             <div class="invalid-feedback"
-                 th:if="${#fields.hasErrors('nev')}"
-                 th:errors="*{nev}">
+                 th:if="${#fields.hasErrors('felhasznaloNev')}"
+                 th:errors="*{felhasznaloNev}">
                 Hibaüzenet
             </div>
         </label>

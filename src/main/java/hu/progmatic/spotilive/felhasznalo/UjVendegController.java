@@ -18,26 +18,27 @@ import java.util.List;
 public class UjVendegController {
 
     @Autowired
-    FelhasznaloService felhasznaloService;
+    MeghivoService meghivoService;
 
-    @GetMapping("/felhasznalo/vendeg")
+    @GetMapping("/public/meghivo")
     public String vendeg() {
+
         return "ujvendegletrehozasa";
     }
 
-    @PostMapping("/felhasznalo/vendeg")
+    @PostMapping("/public/meghivo")
     public String add(
-            @ModelAttribute ("ujVendegCommand") @Valid UjVendegCommand command,
+            @ModelAttribute ("meghivofelhasznalasacommand") @Valid MeghivoFelhasznalasaCommand command,
             BindingResult bindingResult,
             Model model) {
        if (!bindingResult.hasErrors()) {
            try {
-               felhasznaloService.addGuest(command);
+               meghivoService.meghivoFelhasznalasa(command);
                return "redirect:/login";
            } catch (FelhasznaloLetrehozasException e) {
                bindingResult.addError(
                        new FieldError(
-                               "ujVendegCommand",
+                               "meghivofelhasznalasacommand",
                                e.getMezoNev(),
                                e.getMessage()
                        ));
@@ -47,8 +48,8 @@ public class UjVendegController {
         return "ujvendegletrehozasa";
     }
 
-    @ModelAttribute("ujVendegCommand")
-    public UjVendegCommand ujVendegCommand() {
-        return new UjVendegCommand();
+    @ModelAttribute("meghivofelhasznalasacommand")
+    public MeghivoFelhasznalasaCommand meghivoFelhasznalasaCommand() {
+        return MeghivoFelhasznalasaCommand.builder().build();
     }
 }
