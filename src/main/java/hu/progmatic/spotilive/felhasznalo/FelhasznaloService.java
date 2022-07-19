@@ -60,9 +60,15 @@ public class FelhasznaloService {
             .role(UserType.GUEST)
             .jelszo(encoder.encode(command.getJelszo1()))
             .build();
-    if (!command.getJelszo1().equals(command.getJelszo2())){
+    if (command.getJelszo1().length() < 5){
       throw new FelhasznaloLetrehozasException(
               "jelszo1",
+              "A jelszónak legalább 5 karakter hosszúnak kell lennie"
+      );
+    }
+    if (!command.getJelszo1().equals(command.getJelszo2())){
+      throw new FelhasznaloLetrehozasException(
+              "jelszo2",
               "A két jelszó nem egyezik"
       );
     }
