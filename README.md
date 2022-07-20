@@ -33,6 +33,7 @@ Futattási követelmények:
 Adatbázis: 
 
 ![img_3.png](img_3.png)
+![img.png](img.png)
 
 
 

@@ -18,16 +18,11 @@ public class KezdolapController {
 
     @RequestMapping("/")
     public String kezdolap() {
-        if (
-                felhasznaloService.hasRole(UserType.Roles.USER_WRITE_ROLE) ||
-                felhasznaloService.hasRole(UserType.Roles.USER_READ_ROLE) ||
-                felhasznaloService.hasRole(UserType.Roles.ZENEKAR_KEZELES_ROLE) ||
-                felhasznaloService.hasRole(UserType.Roles.ESEMENY_KEZELES_ROLE) ||
-                felhasznaloService.hasRole(UserType.Roles.ADMIN_ROLE)) {
-
+        if (felhasznaloService.isGuest()){
+            return "redirect:/guestindex";
+        } else
+        {
             return "index";
-        } else {
-            return "guestindex";
         }
     }
 }

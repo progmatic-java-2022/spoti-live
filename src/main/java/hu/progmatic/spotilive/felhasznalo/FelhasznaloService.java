@@ -127,6 +127,13 @@ public class FelhasznaloService {
     }
     return userPrincipal.getRole().equals(UserType.ADMIN);
   }
+  public boolean isGuest() {
+    MyUserDetails userPrincipal = getMyUserDetails();
+    if (userPrincipal == null) {
+      return false;
+    }
+    return userPrincipal.getRole().equals(UserType.GUEST);
+  }
   public Integer getZenekarId() {
     MyUserDetails userPrincipal = getMyUserDetails();
     if (userPrincipal == null) {

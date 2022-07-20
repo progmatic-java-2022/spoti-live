@@ -79,10 +79,6 @@ EsemenyService {
     }
 
 
-    public int countAllEsemeny() {
-        return (int) esemenyRepository.count();
-    }
-
     public List<EsemenyDto> findAllEsemeny() {
         return esemenyRepository.findAll().stream().map(EsemenyDto::factory).toList();
     }
@@ -179,7 +175,5 @@ EsemenyService {
 
     }
 
-    public boolean vanSajatSzavazat() {
-        return false;
-    }
+
 }

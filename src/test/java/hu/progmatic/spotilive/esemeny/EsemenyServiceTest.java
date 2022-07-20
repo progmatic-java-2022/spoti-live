@@ -2,6 +2,7 @@ package hu.progmatic.spotilive.esemeny;
 
 import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.demo.DemoService;
+import hu.progmatic.spotilive.felhasznalo.Felhasznalo;
 import hu.progmatic.spotilive.felhasznalo.NincsJogosultsagAZenekarhozException;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zene.CreateZeneCommand;
@@ -193,108 +194,7 @@ class EsemenyServiceTest {
 
         }
 
-        @Nested
-        @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
-        class EsemenyZenekkelTest {
-            ZeneDto zene1;
-            ZeneDto zene2;
 
-            @BeforeEach
-            void setUp() {
-                zene1 = zeneService.createZene(CreateZeneCommand
-                        .builder()
-                        .cim("Teszt zene1")
-                        .hosszMp(123)
-                        .eloado("Teszt eloado1")
-                        .zenekarId(demoZenekar1Id)
-                        .build());
-                zene2 = zeneService.createZene(CreateZeneCommand
-                        .builder()
-                        .eloado("Teszt eloado2")
-                        .hosszMp(123)
-                        .cim("Teszt zene2")
-                        .zenekarId(demoZenekar1Id)
-                        .build());
-
-                esemenyService.addSzavazat(SzavazatCommand
-                        .builder()
-                        .zeneId(zene1.getId())
-                        .esemenyId(esemeny1.getId())
-                        .build());
-
-                esemenyService.addSzavazat(SzavazatCommand
-                        .builder()
-                        .esemenyId(esemeny1.getId())
-                        .zeneId(zene2.getId())
-                        .build());
-            }
-
-            @AfterEach
-            void tearDown() {
-                zeneService.deleteZeneById(zene1.getId());
-                zeneService.deleteZeneById(zene2.getId());
-            }
-
-
-            @Nested
-            class ZenekSzavazattalTest {
-                @BeforeEach
-                void setUp() {
-
-                    esemenyService.addSzavazat(SzavazatCommand.builder()
-                            .esemenyId(esemeny1.getId())
-                            .zeneId(zene1.getId())
-                            .build());
-
-                    esemenyService.addSzavazat(SzavazatCommand.builder()
-                            .esemenyId(esemeny1.getId())
-                            .zeneId(zene1.getId())
-                            .build());
-
-                    esemenyService.addSzavazat(SzavazatCommand.builder()
-                            .esemenyId(esemeny1.getId())
-                            .zeneId(zene1.getId())
-                            .build());
-
-                    esemenyService.addSzavazat(SzavazatCommand.builder()
-                            .esemenyId(esemeny1.getId())
-                            .zeneId(zene2.getId())
-                            .build());
-                }
-
-                @Test
-                void zeneListBySzavazat() {
-                    var szavazatok1 = szavazatService.getEsemenyTrackList(esemeny1.getId());
-                    var szavazatok2 = szavazatService.getEsemenyTrackList(esemeny1.getId());
-
-                    assertEquals(4, szavazatok1.stream()
-                            .filter(szavazatTracklistDto -> szavazatTracklistDto.getZeneId().equals(zene1.getId()))
-                            .findFirst()
-                            .orElseThrow()
-                            .getOsszSzavazat());
-                    assertEquals(2, szavazatok2.stream()
-                            .filter(szavazatTracklistDto -> szavazatTracklistDto.getZeneId().equals(zene2.getId()))
-                            .findFirst()
-                            .orElseThrow()
-                            .getOsszSzavazat());
-
-
-                    List<SzavazatTracklistDto> rendezettLista = szavazatService.getEsemenyTrackList(esemeny1.getId());
-                    assertThat(rendezettLista)
-                            .extracting(SzavazatTracklistDto::getSzamCim)
-                            .containsExactly(
-                                    "Teszt zene1",
-                                    "Teszt zene2",
-                                    "1_zenekar_Demo zene cím",
-                                    "1_zenekar_Demo zene cím 2",
-                                    "1_zenekar_Demo zene cím 3",
-                                    "Valami cím");
-
-                }
-
-
-            }
-        }
     }
     @Test
     @WithUserDetails(DemoService.ZENEKAR_1_FELHASZNALO)

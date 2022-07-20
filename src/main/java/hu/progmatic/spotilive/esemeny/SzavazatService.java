@@ -16,15 +16,10 @@ import java.util.List;
 public class SzavazatService {
 
     @Autowired
-    private ZenekarService zenekarService;
-    @Autowired
-    private ZeneService zeneService;
-    @Autowired
     private FelhasznaloService felhasznaloService;
     @Autowired
     private EsemenyService esemenyService;
-    @Autowired
-    private SzavazatRepository szavazatRepository;
+
 
 
 
@@ -42,8 +37,4 @@ public class SzavazatService {
                 .toList();
     }
 
-    public void deleteSzavazatById(Integer id) {
-        var szavazat = szavazatRepository.getReferenceById(id);
-        szavazatRepository.delete(szavazat);
-    }
 }
