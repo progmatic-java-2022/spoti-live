@@ -20,31 +20,41 @@ public class UjVendegController {
     @Autowired
     MeghivoService meghivoService;
 
-    @GetMapping("/public/meghivo")
-    public String vendeg() {
+    @PostMapping("/public/ujmeghivo")
+    public String ujMeghivo() {
+        MeghivoDto meghivo = meghivoService.meghivoLetrehozasa();
+        return "redirect:/public/meghivo/" + meghivo.getUuid();
+    }
 
+    @GetMapping("/public/meghivo/{uuid}")
+    public String vendeg(
+            @PathVariable String uuid,
+            Model model
+    ) {
+        model.addAttribute("meghivofelhasznalasacommand",
+                MeghivoFelhasznalasaCommand.builder().uuid(uuid).build());
         return "ujvendegletrehozasa";
     }
 
     @PostMapping("/public/meghivo")
     public String add(
-            @ModelAttribute ("meghivofelhasznalasacommand") @Valid MeghivoFelhasznalasaCommand command,
+            @ModelAttribute("meghivofelhasznalasacommand") @Valid MeghivoFelhasznalasaCommand command,
             BindingResult bindingResult,
             Model model) {
-       if (!bindingResult.hasErrors()) {
-           try {
-               meghivoService.meghivoFelhasznalasa(command);
-               return "redirect:/login";
-           } catch (FelhasznaloLetrehozasException e) {
-               bindingResult.addError(
-                       new FieldError(
-                               "meghivofelhasznalasacommand",
-                               e.getMezoNev(),
-                               e.getMessage()
-                       ));
-               return "ujvendegletrehozasa";
-           }
-       }
+        if (!bindingResult.hasErrors()) {
+            try {
+                meghivoService.meghivoFelhasznalasa(command);
+                return "redirect:/login";
+            } catch (FelhasznaloLetrehozasException e) {
+                bindingResult.addError(
+                        new FieldError(
+                                "meghivofelhasznalasacommand",
+                                e.getMezoNev(),
+                                e.getMessage()
+                        ));
+                return "ujvendegletrehozasa";
+            }
+        }
         return "ujvendegletrehozasa";
     }
 

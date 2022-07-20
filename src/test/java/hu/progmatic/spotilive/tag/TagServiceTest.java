@@ -139,6 +139,17 @@ class TagServiceTest {
                 .extracting(TagDto::getTagNev)
                 .contains("Teszt tag 2")
                 .doesNotContain("Teszt tag");
+
+        tagService.deleteTagById(mentettTag2.getId());
+
+        TagDto noTorlesTag = tagService.getTagDtoByNev(DemoService.DEMO_TAG);
+        String hiba = "";
+        try {
+            tagService.deleteTagById(noTorlesTag.getId());
+        }catch (TagTorlesException e){
+            hiba = e.getMessage();
+        }
+        assertEquals("A tag nem törölhető, mert a következő zenékhez hozzá van rendelve: 1_zenekar_Demo zene cím, 2_zenekar_Demo zene cím!",hiba);
     }
 
 }

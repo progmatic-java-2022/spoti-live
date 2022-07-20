@@ -275,8 +275,7 @@ class ZeneServiceTest {
     @Test
     void getZeneByTag(){
         var command = FilterByTagCommand.builder()
-                .zenekarId(demoZenekarId)
-                .tagId(demoServiceTestHelper.getDemoTagDto().getId())
+                .tagLista(List.of(demoServiceTestHelper.getDemoTagDto().getTagNev()))
                 .build();
 
         var filterLista = zeneService.getZenekByTagList(command);
