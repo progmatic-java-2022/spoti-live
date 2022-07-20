@@ -22,7 +22,7 @@ class MeghivoServiceTest {
     void MeghivoHozzaadasTest() {
         var meghivo = meghivoService.meghivoLetrehozasa();
         assertNull(meghivo.getFelhasznalo());
-        assertEquals("testUUId", meghivo.getUuid());
+        assertNotNull(meghivo.getUuid());
         assertNotNull(meghivo.getKredit().getId());
 
         meghivoService.deleteById(meghivo.getId());
@@ -33,7 +33,7 @@ class MeghivoServiceTest {
     void FelhasznalasaTest() {
         var meghivo = meghivoService.meghivoLetrehozasa();
         assertNull(meghivo.getFelhasznalo());
-        assertEquals("testUUId", meghivo.getUuid());
+        assertNotNull(meghivo.getUuid());
         meghivoService.meghivoFelhasznalasa(MeghivoFelhasznalasaCommand.builder()
                         .uuid(meghivo.getUuid())
                         .jelszo1("jelszo")
