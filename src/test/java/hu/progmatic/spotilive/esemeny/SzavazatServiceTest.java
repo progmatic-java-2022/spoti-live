@@ -114,6 +114,13 @@ class SzavazatServiceTest {
                     .findFirst()
                     .orElseThrow()
                     .getOsszSzavazat());
+
+            assertEquals(4, szavazatok1.stream()
+                    .filter(szavazatTracklistDto -> szavazatTracklistDto.getZeneId().equals(zene1.getId()))
+                    .findFirst()
+                    .orElseThrow()
+                    .getSzavazatByFelhasznalo());
+
             assertEquals(2, szavazatok2.stream()
                     .filter(szavazatTracklistDto -> szavazatTracklistDto.getZeneId().equals(zene2.getId()))
                     .findFirst()
