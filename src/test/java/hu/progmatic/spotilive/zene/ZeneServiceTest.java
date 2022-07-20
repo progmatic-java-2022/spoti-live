@@ -102,6 +102,15 @@ class ZeneServiceTest {
         assertThat(mentettZene).extracting(ZeneDto::getId).isNotNull();
         assertNotNull(mentettZene.getZenekarId());
         assertEquals(demoZenekarId, mentettZene.getZenekarId());
+
+        String hiba = "";
+        try {
+            zeneService.createZene(zene);
+        }catch (CreateZeneExeption e){
+            hiba = e.getMessage();
+        }
+        assertEquals("Zene már létezik ilyen címmel", hiba);
+
         zeneService.deleteZeneById(mentettZene.getId());
     }
 
