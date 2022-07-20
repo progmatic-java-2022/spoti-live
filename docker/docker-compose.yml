@@ -12,3 +12,10 @@ services:
       MYSQL_PASSWORD: progmatic
     ports:
       - "3307:3306"
+  email_dev:
+    image: maildev/maildev
+    container_name: email_dev
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+    restart: always
