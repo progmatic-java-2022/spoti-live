@@ -22,7 +22,6 @@ public class GuestController {
         return "/guestindex";
     }
 
-
     @ModelAttribute("esemenyekLista")
     public List<EsemenyDto> getAllEsemenyLista() {
         return esemenyService.findAllEsemeny();

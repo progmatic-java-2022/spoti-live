@@ -1,6 +1,8 @@
 package hu.progmatic.spotilive.esemeny;
 
 
+import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
+import hu.progmatic.spotilive.felhasznalo.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,8 @@ public class EsemenyTracklistController {
     EsemenyService esemenyService;
     @Autowired
     private SzavazatService szavazatService;
+    @Autowired
+    private FelhasznaloService felhasznaloService;
 
 
     @GetMapping("/esemeny/zenelista/{esemenyId}")
@@ -59,6 +63,10 @@ public class EsemenyTracklistController {
         return new ArrayList<>();
     }
 
+    @ModelAttribute("esemenyModositasJogVan")
+    public boolean esemenyModositasJogVan(){
+        return felhasznaloService.hasRole(UserType.Roles.ESEMENY_KEZELES_ROLE);
+    }
 
     @ModelAttribute("esemenyDto")
     public EsemenyDto aktualisEsemeny() {
