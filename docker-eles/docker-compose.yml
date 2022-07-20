@@ -12,12 +12,19 @@ services:
       MYSQL_PASSWORD: progmatic
     ports:
       - "3306:3306"
+    volumes:
+      - vol_spoti_live_eles_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    restart: always
   email_dev:
     image: maildev/maildev
     container_name: email_dev
     ports:
-      - "1025:25"
-      - "1080:80"
+      - "1025:1025"
+      - "1080:1080"
     restart: always
   app_eles:
     container_name: spoti-live-eles
@@ -37,3 +44,7 @@ services:
       retries: 3
       start_period: 120s
     restart: always
+volumes:
+  vol_spoti_live_eles_data:
+    external:
+      name: spoti_live_eles_data

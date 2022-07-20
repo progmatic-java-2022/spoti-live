@@ -28,11 +28,10 @@ Futattási követelmények:
 - Java Version : 17
 - Docker (adatbázisok futtatásához)
 - Maven
-- ![img_1.png](img_1.png)
 
 Adatbázis: 
 
-![img_3.png](img_3.png)
+![img_2.png](img_2.png)
 
 
 
