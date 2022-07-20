@@ -109,15 +109,6 @@ public class ZeneService {
         tag.getTagToZeneEntityList().add(tagToZeneEntity);
     }
 
-    public List<TagDto> listAllTagDtoByZeneId(Integer zeneId) {
-        Zene zene = zeneRepository.getReferenceById(zeneId);
-        List<Tag> tagek = zene.getTagToZeneEntityList()
-                .stream()
-                .map(TagToZene::getTag)
-                .toList();
-        return tagek.stream().map(TagDto::factory).toList();
-    }
-
     public void deleteTagFromZene(Integer tagId, Integer zeneId) {
         Zene zene = zeneRepository.getReferenceById(zeneId);
         Tag tag = tagRepository.getReferenceById(tagId);
