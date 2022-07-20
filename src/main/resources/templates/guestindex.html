@@ -32,22 +32,29 @@
         <div class="d-flex"></div>
     </div>
 </nav>
-    <table class="table table-dark table-striped">
-        <thead>
-        <tr>
-            <th scope="col">Esemény neve</th>
-            <th scope="col">Zenekar neve</th>
-            <th scope="col">Időpont</th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="esemeny : ${esemenyekLista}">
-            <td th:text="${esemeny.nev}">Esemény neve</td>
-            <td th:text="${esemeny.zenekarNev}">Zenekar neve</td>
-            <td th:text="${esemeny.idoPont}">Időpont</td>
-        </tr>
-        </tbody>
-    </table>
+<table class="table table-dark table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Esemény neve</th>
+        <th scope="col">Zenekar neve</th>
+        <th scope="col">Időpont</th>
+        <th scope="col"></th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="esemeny : ${esemenyekLista}">
+        <td th:text="${esemeny.nev}">Esemény neve</td>
+        <td th:text="${esemeny.zenekarNev}">Zenekar neve</td>
+        <td th:text="${esemeny.idoPont}">Időpont</td>
+        <td>
+            <div class="col">
+                <form th:action="@{'/esemeny/zenelista/{esemenyId}' (esemenyId=${esemeny.id})}" method="get">
+                    <input type="submit" class="btn btn-success" value="Tracklist">
+                </form>
+            </div>
+        </td>
+    </tbody>
+</table>
 </body>
 </html>

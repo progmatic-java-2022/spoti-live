@@ -17,7 +17,7 @@ public class GuestController {
     private ZenekarService zenekarService;
 
 
-    @GetMapping("/guestind")
+    @GetMapping("/guestindex")
     public String esemenyekGuestOldalBetoltes(Model model) {
         return "/guestindex";
     }
