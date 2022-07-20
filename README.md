@@ -38,7 +38,8 @@ Adatbázis:
 
 Hogyan fordul a program?
 
--
+- Fordításához : ./mvnw clean package
+- Build-eléshez: ./build-eles-sh (ez csak linux-on működöik)
 
 Hogyan kell futattni a programot?
 
@@ -46,8 +47,19 @@ Hogyan kell futattni a programot?
 
 Role-okról
 
-- Jelenleg ezek a role-jaink léteznek:
-![img_4.png](img_4.png)
+- ADMIN : Minden oldalt el lehet vele érni,
+          nincsenek előle olyan rejtett oldalak amiket más role-al lehet látni.
+          Csak az admin role-al rendelkezők tudnak új tageket létrehozni.
+- ZENEKAR : 
+
+- GUEST : Ezzel a role-al csak szavazni lehet bármilyen eseményre,
+          ezeken belül bármilyen tracklistre annyiszor amennyi kreditjük van.
+
+Belepesi Adatok: 
+- ADMIN : felhasznaloNev : admin, jelszo : adminpass
+- GUEST : felhasznaloNev : guest, jelszo : guest
+- ZENEKAR : felhasznaloNev : zenekar, jelszo : zenekar
+
 
 Projekt tagok:
 - Somogyi András : https://www.linkedin.com/in/andr%C3%A1s-somogyi-9b9a87240/
