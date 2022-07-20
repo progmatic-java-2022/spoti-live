@@ -31,6 +31,14 @@ public class ZeneDto {
     private String zenekarNev;
     private Integer zenekarId;
 
+    public boolean hasAnyTag(List<String> tags) {
+        for (var tag : tags) {
+            if (tagStringList.contains(tag)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static ZeneDto factory(Zene zene) {
         return ZeneDto.builder()
