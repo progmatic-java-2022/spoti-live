@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Transactional
 @Service
@@ -19,7 +20,7 @@ public class MeghivoService {
 
     public MeghivoDto meghivoLetrehozasa() {
         Kredit kredit = kreditRepository.save(Kredit.builder().build());
-        Meghivo meghivo = meghivoRepository.save(Meghivo.builder().uuid("testUUId").build());
+        Meghivo meghivo = meghivoRepository.save(Meghivo.builder().uuid(UUID.randomUUID().toString()).build());
         meghivo.setKredit(kredit);
         kredit.setMeghivo(meghivo);
         return MeghivoDto.factory(meghivo);

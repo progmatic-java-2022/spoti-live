@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <!-- Required meta tags -->
@@ -17,7 +17,9 @@
         crossorigin="anonymous"></script>
 
 <h3>Új vendég létrehozása</h3>
-<form th:action="@{/public/meghivo}" method="post" th:object="${meghivofelhasznalasacommand}">
+<form
+        th:action="@{/public/meghivo}" method="post"
+        th:object="${meghivofelhasznalasacommand}">
     <div>
         <label>
             <input type="hidden"
