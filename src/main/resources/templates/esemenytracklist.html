@@ -28,7 +28,7 @@
         <th scope="col">Id</th>
         <th scope="col">Cim</th>
         <th scope="col">Szavazatok</th>
-        <th scope="col">Saját szavazatok</th>
+        <th th:if="${esemenyModositasJogVan}" scope="col">Saját szavazatok</th>
         <th scope="col"></th>
         <th scope="col"></th>
         <th scope="col"></th>
@@ -40,7 +40,7 @@
         <td th:text="${zene.zeneId}">Id</td>
         <td th:text="${zene.szamCim}">Cím</td>
         <td th:text="${zene.osszSzavazat}">Szavazat</td>
-        <td th:text="${zene.szavazatByFelhasznalo}">Szavazat</td>
+        <td th:if="${esemenyModositasJogVan}" th:text="${zene.szavazatByFelhasznalo}">Szavazat</td>
         <td></td>
         <td></td>
         <td>
@@ -49,7 +49,7 @@
                 <form  th:action="@{'/esemeny/{esemenyId}/zenelista/{zeneId}'
                 (zeneId=${zene.zeneId}, esemenyId=${zene.esemenyId})}"
                        method="post">
-                    <input type="submit" class="btn btn-success" value="Like">
+                    <input th:if="${esemenyModositasJogVan}" type="submit" class="btn btn-success" value="Like">
                 </form>
             </div>
         </div>
@@ -57,16 +57,16 @@
         <td>
             <div class="row">
                 <div class="col" th:if="${zene.szavazatByFelhasznalo != 0}">
-                    <form  th:action="@{'/esemeny/delete/{esemenyId}/zenelista/{zeneId}'
+                    <form th:action="@{'/esemeny/delete/{esemenyId}/zenelista/{zeneId}'
                 (zeneId=${zene.zeneId}, esemenyId=${zene.esemenyId})}"
                            method="post">
-                        <input type="submit" class="btn btn-danger" value="Like visszavonása">
+                        <input th:if="${esemenyModositasJogVan}" type="submit" class="btn btn-danger" value="Like visszavonása">
                     </form>
                 </div>
             </div>
             <div class="row">
                 <div class="col" th:if="${zene.szavazatByFelhasznalo == 0}">
-                        <input  type="button" class="btn btn-danger" disabled data-bs-toggle="button" value="Like visszavonása">
+                        <input th:if="${esemenyModositasJogVan}" type="button" class="btn btn-danger" disabled data-bs-toggle="button" value="Like visszavonása">
                 </div>
             </div>
         </td>
