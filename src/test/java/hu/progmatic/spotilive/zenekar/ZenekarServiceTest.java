@@ -40,13 +40,58 @@ class ZenekarServiceTest {
 
     @Test
     @WithMockUser(roles = UserType.Roles.ZENEKAR_KEZELES_ROLE)
-    void createZenekar() {
-        ZenekarDto zenekarDto = ZenekarDto.builder().nev("Teszt Zenekar").email("teszt2@gmail.com").varos("Győr").build();
+    void createZenekarAndExeptionTest() {
+        ZenekarDto zenekarDto = ZenekarDto.builder()
+                .nev("Teszt Zenekar")
+                .email("teszt2@gmail.com")
+                .telefonszam("0630-164-2922")
+                .varos("Győr").build();
+
         ZenekarDto mentettDto = zenekarService.createZenekar(zenekarDto);
 
         assertNotNull(mentettDto.getId());
+        assertEquals("0630-164-2922", mentettDto.getTelefonszam());
         assertEquals("Teszt Zenekar", mentettDto.getNev());
         assertEquals("Győr", mentettDto.getVaros());
+
+        String nevHiba = "";
+        try {
+            zenekarService.createZenekar(zenekarDto);
+        } catch (AddZenekarExeption e) {
+            nevHiba = e.getMessage();
+        }
+        assertEquals("Zenekar már létezik ilyen névvel!", nevHiba);
+
+        ZenekarDto emailMarLetezik = ZenekarDto.builder()
+                .nev("Mas nevu ugyanolyan email")
+                .email("teszt2@gmail.com")
+                .varos("Győr")
+                .build();
+
+        String emailHiba = "";
+        try {
+            zenekarService.createZenekar(emailMarLetezik);
+        } catch (AddZenekarExeption e) {
+            emailHiba = e.getMessage();
+        }
+        assertEquals("Zenekar már létezik ilyen email címmel!", emailHiba);
+
+
+        ZenekarDto telefonMarLetezik = ZenekarDto.builder()
+                .nev("Mas nevu ugyanolyan email")
+                .email("teszt10@gmail.com")
+                .telefonszam("0630-164-2922")
+                .varos("Győr")
+                .build();
+
+        String telefonszamHiba = "";
+        try {
+            zenekarService.createZenekar(telefonMarLetezik);
+        } catch (AddZenekarExeption e){
+            telefonszamHiba = e.getMessage();
+        }
+        assertEquals("Zenekar már létezik ilyen telefonszámmal'", telefonszamHiba);
+
         zenekarService.deleteById(mentettDto.getId());
     }
 
@@ -116,13 +161,13 @@ class ZenekarServiceTest {
                         .cim("Egyes Zene Cime")
                         .eloado("Egyes zene Előadója")
                         .hosszMp(125)
-                                .zenekarId(demoZenekarId)
+                        .zenekarId(demoZenekarId)
                         .build());
                 zene2 = zeneService.createZene(CreateZeneCommand.builder()
                         .cim("Kettes zene Cime")
                         .eloado("Kettes zene Előadója")
                         .hosszMp(124)
-                                .zenekarId(demoZenekarId)
+                        .zenekarId(demoZenekarId)
                         .build());
             }
 
