@@ -44,6 +44,10 @@ Hogyan kell futattni a programot?
 
 -
 
+Role-okról
+
+- Jelenleg ezek a role-jaink léteznek:
+![img_4.png](img_4.png)
 
 Projekt tagok:
 - Somogyi András : https://www.linkedin.com/in/andr%C3%A1s-somogyi-9b9a87240/
