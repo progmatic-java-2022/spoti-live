@@ -26,13 +26,7 @@
                    class="form-control"
                    name="uuid"
                    placeholder="UUId"
-                   th:field="*{uuid}"
-                   th:classappend="${#fields.hasErrors('uuid')} ? 'is-invalid' : 'is-valid'"/>
-            <div class="invalid-feedback"
-                 th:if="${#fields.hasErrors('uuid')}"
-                 th:errors="*{uuid}">
-                Hibaüzenet
-            </div>
+                   th:field="*{uuid}">
         </label>
     </div>
         <div>

@@ -72,7 +72,9 @@
 </form>
 <hr>
     <h3>Új vendég felhasználó létrehozása</h3>
-    <a href="#" th:href="@{/public/meghivo}" class="btn btn-primary">Létrehozás</a>
+    <form th:object="${'meghivofelhasznalasacommand'}" th:action="@{'/public/ujmeghivo'}" method="post">
+        <input type="submit" class="btn btn-primary"  value="Létrehozás"/>
+    </form>
 <hr>
 <h3 th:text="'Bejelentkezett felhasználó id: ' + ${userId}">Felhasználó id: 2</h3>
 </body>
