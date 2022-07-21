@@ -32,6 +32,7 @@ class FelhasznaloServiceTest {
     UjFelhasznaloCommand command = new UjFelhasznaloCommand("ujtesztfelhasznalo", "x", UserType.ADMIN, null);
     felhasznaloService.add(command);
     assertFelhasznaloLetezik("ujtesztfelhasznalo");
+    felhasznaloService.delete(felhasznaloService.findByName(command.getNev()).get().getId());
   }
 
   @Test

@@ -191,6 +191,7 @@ class EsemenyServiceTest {
             assertThat(esemenyZenevel.getSzavazatDtos())
                     .hasSize(1)
                     ;
+            zeneService.deleteZeneById(zene.getId());
 
         }
 

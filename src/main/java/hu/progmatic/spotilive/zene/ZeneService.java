@@ -34,10 +34,10 @@ public class ZeneService {
             throw new CreateZeneExeption("Zene már létezik ilyen címmel");
         }
         Integer zenekarId;
-        if (felhasznaloService.isAdmin()){
-            zenekarId=command.getZenekarId();
-        }else {
-            zenekarId=felhasznaloService.getZenekarId();
+        if (felhasznaloService.isAdmin()) {
+            zenekarId = command.getZenekarId();
+        } else {
+            zenekarId = felhasznaloService.getZenekarId();
         }
 
         Zenekar zenekar = zenekarService.getZenekarEntityById(zenekarId);
@@ -63,7 +63,7 @@ public class ZeneService {
         var felhasznaloZenekarId = felhasznaloService.getZenekarId();
         if (!Objects.equals(zene.getZenekar().getId(), felhasznaloZenekarId)) {
             throw new NincsJogosultsagAZenekarhozException(
-                "Zenekar jogosultsággal nem módosítható más zenéje!"
+                    "Zenekar jogosultsággal nem módosítható más zenéje!"
             );
         }
     }
@@ -109,6 +109,15 @@ public class ZeneService {
         tag.getTagToZeneEntityList().add(tagToZeneEntity);
     }
 
+    public List<TagDto> listAllTagDtoByZeneId(Integer zeneId) {
+        Zene zene = zeneRepository.getReferenceById(zeneId);
+        List<Tag> tagek = zene.getTagToZeneEntityList()
+                .stream()
+                .map(TagToZene::getTag)
+                .toList();
+        return tagek.stream().map(TagDto::factory).toList();
+    }
+
     public void deleteTagFromZene(Integer tagId, Integer zeneId) {
         Zene zene = zeneRepository.getReferenceById(zeneId);
         Tag tag = tagRepository.getReferenceById(tagId);
@@ -126,7 +135,7 @@ public class ZeneService {
         return zeneRepository.getReferenceById(zeneId);
     }
 
-    public ZeneDto getZeneByNev(String nev){
+    public ZeneDto getZeneByNev(String nev) {
         return ZeneDto.factory(zeneRepository.getZeneByCim(nev).orElseThrow());
     }
 
@@ -137,18 +146,19 @@ public class ZeneService {
         Integer zenekarId = felhasznaloService.getZenekarId();
         Zenekar zenekar = zenekarService.getZenekarEntityById(zenekarId);
         return zeneRepository
-            .findAllByZenekar(zenekar)
-            .stream()
-            .map(ZeneDto::factory)
-            .toList();
+                .findAllByZenekar(zenekar)
+                .stream()
+                .map(ZeneDto::factory)
+                .toList();
     }
 
     public List<ZeneDto> getZenekByTagList(FilterByTagCommand command) {
-        var zenekar = zenekarService.getZenekarEntityById(command.zenekarId);
-        var tag = tagRepository.getReferenceById(command.tagId);
-        return zenekar.getZeneLista().stream()
+        var zeneLista = zeneRepository.findAll();
+        var tagLista = command.tagLista;
+        return zeneLista
+                .stream()
                 .map(ZeneDto::factory)
-                .filter(zeneDto -> zeneDto.getTagStringList().contains(tag.getTagNev()))
+                .filter(zene -> zene.hasCheckedTags(tagLista))
                 .toList();
 
 

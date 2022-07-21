@@ -47,18 +47,19 @@ Hogyan kell futattni a programot?
 
 Role-okról
 
-- ADMIN : Minden oldalt el lehet vele érni,
-          nincsenek előle olyan rejtett oldalak amiket más role-al lehet látni.
+- ADMIN: Minden oldalt el lehet vele érni,
+          nincsenek olyan rejtett oldalak amiket más role-al lehet látni.
           Csak az admin role-al rendelkezők tudnak új tageket létrehozni.
-- ZENEKAR : 
 
-- GUEST : Ezzel a role-al csak szavazni lehet bármilyen eseményre,
-          ezeken belül bármilyen tracklistre annyiszor amennyi kreditjük van.
+- ZENEKAR: Zenekar felhasználóval létre tud hozni egy új eseményt,melyhez 
+            hozzá tudja adni a saját lejátszási listáját a saját zenekarjához,
+            melyhez meg tud hívni guesteket.
 
-Belepesi Adatok: 
-- ADMIN : felhasznaloNev : admin, jelszo : adminpass
+- GUEST: Szavazni tud eseményen belüli számokra, míg van felhasználható kreditje.
+
+Belepesi Adatok:
 - GUEST : felhasznaloNev : guest, jelszo : guest
-- ZENEKAR : felhasznaloNev : zenekar, jelszo : zenekar
+- ZENEKAR : felhasznaloNev : zenekar1, jelszo : zenekar
 
 
 Projekt tagok:

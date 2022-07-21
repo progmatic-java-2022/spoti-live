@@ -106,7 +106,7 @@ class ZeneServiceTest {
         String hiba = "";
         try {
             zeneService.createZene(zene);
-        }catch (CreateZeneExeption e){
+        } catch (CreateZeneExeption e) {
             hiba = e.getMessage();
         }
         assertEquals("Zene már létezik ilyen címmel", hiba);
@@ -226,6 +226,8 @@ class ZeneServiceTest {
             zeneService.addTag(testZene.getId(), mentettTag.getId());
             ZeneDto modositottZene = zeneService.getZeneDtoById(testZene.getId());
             assertThat(modositottZene.getTagStringList()).hasSize(1).contains("Teszt tag 1");
+            zeneService.deleteTagFromZene(mentettTag.getId(), modositottZene.getId());
+            tagService.deleteTagById(mentettTag.getId());
         }
 
         @Test
@@ -272,15 +274,15 @@ class ZeneServiceTest {
     void getZeneByNevTest() {
         assertThat(zeneService.getZeneByNev(demozene.getCim())).extracting(ZeneDto::getCim).isEqualTo(demozene.getCim());
     }
+
     @Test
-    void getZeneByTag(){
+    void getZeneByTag() {
         var command = FilterByTagCommand.builder()
-                .zenekarId(demoZenekarId)
-                .tagId(demoServiceTestHelper.getDemoTagDto().getId())
+                .tagLista(List.of(demoServiceTestHelper.getDemoTagDto().getTagNev()))
                 .build();
 
         var filterLista = zeneService.getZenekByTagList(command);
         assertThat(filterLista).extracting(ZeneDto::getCim)
-                .contains("1_zenekar_Demo zene cím");
+                .containsExactlyInAnyOrder("1_zenekar_Demo zene cím", "2_zenekar_Demo zene cím");
     }
 }
