@@ -23,18 +23,34 @@
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div th:classappend="${showModal ? 'show' : ''}" class="modal fade" id="exampleModal" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> Szűrés</h5>
+                <h5>Szűrés</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="form-check form-check-inline" th:each="tag :${osszesTag}">
-                    <input class="form-check-input" type="checkbox" value="option1">
-                    <label class="form-check-label" th:text="${tag.getTagNev()}">1</label>
-                </div>
+                <table th:each="tagTipus : ${tagTipusok}">
+                    <thead>
+                    <tr>
+                        <th th:text="${tagTipus}">tag tipus</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <form>
+                    <tr>
+                        <td>
+                            <div class="form-check form-check-inline" th:each="tag :${osszesTag}" th:if="${tag.getTagKategoria().getTagKategoriaString() == tagTipus}">
+                                <input class="form-check-input" type="checkbox" value="option1">
+                                <label class="form-check-label" th:text="${tag.getTagNev()}">tag név</label>
+                            </div>
+                        </td>
+                    </tr>
+                    </form>
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
                 <input type="submit" class="btn btn-success" value="Mentés"/>
