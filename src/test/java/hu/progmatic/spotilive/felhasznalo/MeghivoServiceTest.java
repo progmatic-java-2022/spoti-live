@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -21,8 +22,10 @@ class MeghivoServiceTest {
     @Test
     void MeghivoHozzaadasTest() {
         var meghivo = meghivoService.meghivoLetrehozasa();
+        var meghivo2 = meghivoService.meghivoLetrehozasa();
         assertNull(meghivo.getFelhasznalo());
         assertNotNull(meghivo.getUuid());
+        assertThat(meghivo.getUuid()).isNotEqualTo(meghivo2.getUuid());
         assertNotNull(meghivo.getKredit().getId());
 
         meghivoService.deleteById(meghivo.getId());
