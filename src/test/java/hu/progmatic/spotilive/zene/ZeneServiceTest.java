@@ -226,6 +226,8 @@ class ZeneServiceTest {
             zeneService.addTag(testZene.getId(), mentettTag.getId());
             ZeneDto modositottZene = zeneService.getZeneDtoById(testZene.getId());
             assertThat(modositottZene.getTagStringList()).hasSize(1).contains("Teszt tag 1");
+            zeneService.deleteTagFromZene(mentettTag.getId(), modositottZene.getId());
+            tagService.deleteTagById(mentettTag.getId());
         }
 
         @Test
