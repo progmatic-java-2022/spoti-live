@@ -2,6 +2,7 @@ package hu.progmatic.spotilive.esemeny;
 
 
 import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
+import hu.progmatic.spotilive.felhasznalo.KreditException;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,11 +39,18 @@ public class EsemenyTracklistController {
             @PathVariable("zeneId") Integer zeneId,
             @PathVariable("esemenyId") Integer esemenyId,
             Model model) {
-        esemenyService.addSzavazat(SzavazatCommand.builder()
-                .esemenyId(esemenyId)
-                .zeneId(zeneId)
-                .build());
-        return "redirect:/esemeny/zenelista/" + esemenyId;
+        try {
+            esemenyService.addSzavazat(SzavazatCommand.builder()
+                    .esemenyId(esemenyId)
+                    .zeneId(zeneId)
+                    .build());
+            return "redirect:/esemeny/zenelista/" + esemenyId;
+        }
+        catch (KreditException e) {
+            model.addAttribute("kreditError", e.getMessage());
+            model.addAttribute("esemenytracklist", szavazatService.getEsemenyTrackList(esemenyId));
+            return "/esemenytracklist";
+        }
     }
 
     @PostMapping("/esemeny/delete/{esemenyId}/zenelista/{zeneId}")
@@ -73,5 +81,12 @@ public class EsemenyTracklistController {
         return EsemenyDto.builder().build();
     }
 
+    @ModelAttribute("kreditek")
+    public String getKreditek() {
+        return esemenyService.getKreditekSzama();}
 
+    @ModelAttribute("kreditError")
+    public String getZeneError() {
+        return null;
+    }
 }

@@ -16,6 +16,8 @@ public class Meghivo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String uuid = UUID.randomUUID().toString();
+    private Integer kreditMennyiseg = 0;
+
     @OneToOne
     private Felhasznalo felhasznalo;
 

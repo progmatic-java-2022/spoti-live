@@ -86,4 +86,12 @@ public class FelhasznaloController {
     return Arrays.stream(UserType.values())
         .map(UserType::name).toList();
   }
+
+  @ModelAttribute("kreditCommand")
+  public KreditCommand kreditCommand() {
+    return KreditCommand.builder().build();
+  }
+
+
+
 }

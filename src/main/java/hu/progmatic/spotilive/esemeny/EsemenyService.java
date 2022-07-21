@@ -1,9 +1,6 @@
 package hu.progmatic.spotilive.esemeny;
 
-import hu.progmatic.spotilive.felhasznalo.Felhasznalo;
-import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
-import hu.progmatic.spotilive.felhasznalo.NincsJogosultsagAZenekarhozException;
-import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.felhasznalo.*;
 import hu.progmatic.spotilive.zene.Zene;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.Zenekar;
@@ -102,11 +99,42 @@ EsemenyService {
     }
 
     public void addSzavazat(SzavazatCommand command) {
-        Szavazat szavazat = getOrCreateSajatSzavazat(command);
-        szavazat.setSzavazat(szavazat.getSzavazat() + 1);
+        if (vanElegKredit()) {
+            Szavazat szavazat = getOrCreateSajatSzavazat(command);
+            szavazat.setSzavazat(szavazat.getSzavazat() + 1);
+            if (felhasznaloService.isGuest()){
+            kreditKezeles(true);}
+        } else {
+            throw new KreditException("Nincs elég kredit! Vonj vissza egy szavazatot, de inkább VÁSÁROLJ!");
+        }
+
     }
 
-    public void deleteSzavazat(SzavazatCommand command){
+    private void kreditKezeles(boolean addSzavazat) {
+        var felhasznaloId = felhasznaloService.getFelhasznaloId();
+        var felhasznalo = felhasznaloService.getById(felhasznaloId);
+        var kredit = felhasznalo.getKredit();
+        if (addSzavazat) {
+            kredit.setKreditMennyiseg(kredit.getKreditMennyiseg() - 1);
+        } else {
+            kredit.setKreditMennyiseg(kredit.getKreditMennyiseg() + 1);
+        }
+    }
+
+
+    private boolean vanElegKredit() {
+        if (felhasznaloService.isGuest()) {
+
+            var felhasznaloId = felhasznaloService.getFelhasznaloId();
+            var felhasznalo = felhasznaloService.getById(felhasznaloId);
+            var kredit = felhasznalo.getKredit();
+            return kredit.getKreditMennyiseg() > 0;
+        } else {
+            return true;
+        }
+    }
+
+    public void deleteSzavazat(SzavazatCommand command) {
         var felhasznaloId = felhasznaloService.getFelhasznaloId();
         var felhasznalo = felhasznaloService.getById(felhasznaloId);
         var esemeny = esemenyRepository.getReferenceById(command.getEsemenyId());
@@ -120,16 +148,18 @@ EsemenyService {
                 )
                 .findFirst()
                 .orElseThrow();
-        if (szavazat.getSzavazat() == 1){
+        if (szavazat.getSzavazat() == 1) {
             zene.getSzavazatok().remove(szavazat);
             felhasznalo.getSzavazatok().remove(szavazat);
             szavazatRepository.delete(szavazat);
-        }
-        else {
+            if (felhasznaloService.isGuest()){
+            kreditKezeles(false);}
+        } else {
             szavazat.setSzavazat(szavazat.getSzavazat() - 1);
+            if (felhasznaloService.isGuest()){
+            kreditKezeles(false);}
         }
     }
-
 
 
     private Szavazat getOrCreateSajatSzavazat(SzavazatCommand command) {
@@ -142,7 +172,7 @@ EsemenyService {
                 .filter(
                         keresettSzavazat ->
                                 keresettSzavazat.getEsemeny().getId().equals(esemeny.getId())
-                                && keresettSzavazat.getZene().getId().equals(zene.getId())
+                                        && keresettSzavazat.getZene().getId().equals(zene.getId())
                 )
                 .findAny()
                 .orElseGet(() -> ujSzavazat(esemeny, zene, felhasznalo));
@@ -172,8 +202,16 @@ EsemenyService {
                 .stream()
                 .map(EsemenyDto::factory)
                 .toList();
-
     }
 
+    public String getKreditekSzama() {
+        if (felhasznaloService.isGuest()) {
+            var felhasznaloId = felhasznaloService.getFelhasznaloId();
+            var felhasznalo = felhasznaloService.getById(felhasznaloId);
+            Integer kreditek = felhasznalo.getKredit().getKreditMennyiseg();
+            return kreditek + "";
+        }
+        return "Csak guestnek kell kredit!";
+    }
 
 }

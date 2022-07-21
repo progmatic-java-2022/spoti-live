@@ -21,20 +21,21 @@ class MeghivoServiceTest {
 
     @Test
     void MeghivoHozzaadasTest() {
-        var meghivo = meghivoService.meghivoLetrehozasa();
-        var meghivo2 = meghivoService.meghivoLetrehozasa();
+        var meghivo = meghivoService.meghivoLetrehozasa(5);
+        var meghivo2 = meghivoService.meghivoLetrehozasa(5);
         assertNull(meghivo.getFelhasznalo());
         assertNotNull(meghivo.getUuid());
         assertThat(meghivo.getUuid()).isNotEqualTo(meghivo2.getUuid());
         assertNotNull(meghivo.getKredit().getId());
 
         meghivoService.deleteById(meghivo.getId());
+        meghivoService.deleteById(meghivo2.getId());
     }
 
 
     @Test
     void FelhasznalasaTest() {
-        var meghivo = meghivoService.meghivoLetrehozasa();
+        var meghivo = meghivoService.meghivoLetrehozasa(5);
         assertNull(meghivo.getFelhasznalo());
         assertNotNull(meghivo.getUuid());
         meghivoService.meghivoFelhasznalasa(MeghivoFelhasznalasaCommand.builder()
@@ -46,8 +47,8 @@ class MeghivoServiceTest {
         );
         var modositottMeghivo = meghivoService.findMeghivoByUUId(meghivo.getUuid());
         assertEquals("guest12",modositottMeghivo.getFelhasznalo().getNev());
-        assertEquals(1, modositottMeghivo.getKredit().getKreditMennyiseg());
-        assertEquals(1,modositottMeghivo.getFelhasznalo().getKredit().getKreditMennyiseg());
+        assertEquals(5, modositottMeghivo.getKredit().getKreditMennyiseg());
+        assertEquals(5,modositottMeghivo.getFelhasznalo().getKredit().getKreditMennyiseg());
 
         var hibaUzenet = "Hiba";
         try {

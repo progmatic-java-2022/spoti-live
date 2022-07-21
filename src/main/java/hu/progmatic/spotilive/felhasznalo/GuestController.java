@@ -26,4 +26,10 @@ public class GuestController {
     public List<EsemenyDto> getAllEsemenyLista() {
         return esemenyService.findAllEsemeny();
     }
+
+    @ModelAttribute("kreditek")
+    public String getKreditek() {
+        return esemenyService.getKreditekSzama();
+    }
+
 }
