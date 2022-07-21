@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface TagRepository extends JpaRepository<Tag,Integer> {
     Optional<Tag> getTagByTagNev(String nev);
+    Tag getTagByTagNevIgnoreCase(String nev);
 }
