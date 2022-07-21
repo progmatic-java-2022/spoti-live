@@ -11,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -160,7 +158,7 @@ public class ZeneService {
         return zeneLista
                 .stream()
                 .map(ZeneDto::factory)
-                .filter(zene -> zene.hasAnyTag(tagLista))
+                .filter(zene -> zene.hasCheckedTags(tagLista))
                 .toList();
 
 
