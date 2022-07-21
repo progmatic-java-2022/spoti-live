@@ -55,10 +55,9 @@ Role-okról
 - GUEST : Ezzel a role-al csak szavazni lehet bármilyen eseményre,
           ezeken belül bármilyen tracklistre annyiszor amennyi kreditjük van.
 
-Belepesi Adatok: 
-- ADMIN : felhasznaloNev : admin, jelszo : adminpass
+Belepesi Adatok:
 - GUEST : felhasznaloNev : guest, jelszo : guest
-- ZENEKAR : felhasznaloNev : zenekar, jelszo : zenekar
+- ZENEKAR : felhasznaloNev : zenekar1, jelszo : zenekar
 
 
 Projekt tagok:
