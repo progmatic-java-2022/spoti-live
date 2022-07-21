@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -82,5 +84,12 @@ public class TagService {
 
     public boolean isTagExistsById(Integer tagId) {
         return tagRepository.existsById(tagId);
+    }
+
+    public Set<String> getAllTagTipus() {
+        return tagRepository.findAll()
+                .stream()
+                .map(tag -> tag.getTagKategoria().getTagKategoriaString())
+                .collect(Collectors.toSet());
     }
 }
