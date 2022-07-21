@@ -20,7 +20,7 @@
         crossorigin="anonymous"></script>
 <h1>Esemenyek</h1>
 
-<nav class="navbar sticky-top navbar-dark bg-dark">
+<nav class="navbar sticky-top navbar-dark bg-dark" style="width: 100%; position: fixed"  >
     <div class="container-fluid">
         <a class="navbar-brand"
            target="content_frame"
@@ -28,7 +28,7 @@
            th:href="@{/felhasznalo}"
            th:text="${'Hello ' + #authentication.getName() + '!'}">Helló ***!</a>
 
-        <li class="nav-item" style="text-align: right">
+        <li class="nav-item" style="text-align: right" >
             <form th:action="@{/logout}" method="post">
                 <input class="btn btn-primary" type="submit" value="Kijelentkezés"/>
             </form>
