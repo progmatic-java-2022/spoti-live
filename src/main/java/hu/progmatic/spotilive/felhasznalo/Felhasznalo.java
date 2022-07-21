@@ -19,6 +19,8 @@ public class Felhasznalo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String uuid;
+
     @Column(nullable = false, unique = true)
     private String nev;
 

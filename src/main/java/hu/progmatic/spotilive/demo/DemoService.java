@@ -5,9 +5,9 @@ import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
 import hu.progmatic.spotilive.felhasznalo.UjFelhasznaloCommand;
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.tag.TagKategoria;
 import hu.progmatic.spotilive.tag.TagService;
-import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.zene.CreateZeneCommand;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.ZenekarDto;
@@ -15,18 +15,11 @@ import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-
-import static hu.progmatic.spotilive.felhasznalo.MyUserDetails.ROLE_PREFIX;
 
 @Transactional
 @Service
@@ -57,47 +50,20 @@ public class DemoService {
   private TagService tagService;
   @Autowired
   private FelhasznaloService felhasznaloService;
-
-
-  private void clearAuthentication() {
-    SecurityContextHolder.getContext().setAuthentication(null);
-  }
-
-  private void configureAuthentication(String... roles) {
-    List<SimpleGrantedAuthority> authorities = Arrays.stream(roles)
-        .map(role -> new SimpleGrantedAuthority(ROLE_PREFIX + role))
-        .toList();
-    Authentication authentication = new UsernamePasswordAuthenticationToken(
-        "user",
-        "credentials",
-        authorities
-    );
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-  }
+  @Autowired
+  private AuthenticationConfiguration authenticationConfiguration;
 
   @EventListener(ContextRefreshedEvent.class)
-  public void init() {
+  public void init() throws Exception {
     if (zenekarService.count() == 0) {
-      configureAuthentication(
-          UserType.Roles.ADMIN_ROLE,
-          UserType.Roles.ZENEKAR_KEZELES_ROLE,
-          UserType.Roles.ESEMENY_KEZELES_ROLE,
-          UserType.Roles.USER_WRITE_ROLE
-      );
-
-      createAlapFelhasznalok();
+      felhasznaloService.createAlapFelhasznalok();
+      var securityContextHandler = new FakeAuthenticationHandler(authenticationConfiguration);
+      securityContextHandler.loginAsUser(ADMIN_FELHASZNALO, "adminpass");
       createTagek();
       createDemoZenekar(PREFIX1, "2222", ZENEKAR_1_FELHASZNALO);
       createDemoZenekar(PREFIX2, "3333", ZENEKAR_2_FELHASZNALO);
-
-      clearAuthentication();
+      securityContextHandler.resetContext();
     }
-  }
-
-  private void createAlapFelhasznalok() {
-    felhasznaloService.add(new UjFelhasznaloCommand(ADMIN_FELHASZNALO, "adminpass", UserType.ADMIN, null));
-    felhasznaloService.add(new UjFelhasznaloCommand("user", "user", UserType.USER, null));
-    felhasznaloService.add(new UjFelhasznaloCommand("guest", "guest", UserType.GUEST, null));
   }
 
   private void createTagek() {
