@@ -56,6 +56,7 @@ public class FelhasznaloService {
       );
     }
     Felhasznalo felhasznalo = Felhasznalo.builder()
+            .uuid(command.getUuid())
             .nev(command.getFelhasznaloNev())
             .role(UserType.GUEST)
             .jelszo(encoder.encode(command.getJelszo1()))
@@ -148,5 +149,9 @@ public class FelhasznaloService {
       return (MyUserDetails) principal;
     }
     return null;
+  }
+
+  public Felhasznalo findByUUid(String uuid) {
+    return felhasznaloRepository.findFelhasznaloByUuidEquals(uuid);
   }
 }
