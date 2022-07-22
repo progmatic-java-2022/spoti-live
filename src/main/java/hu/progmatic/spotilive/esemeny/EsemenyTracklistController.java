@@ -4,6 +4,10 @@ package hu.progmatic.spotilive.esemeny;
 import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
 import hu.progmatic.spotilive.felhasznalo.KreditException;
 import hu.progmatic.spotilive.felhasznalo.UserType;
+import hu.progmatic.spotilive.tag.TagDto;
+import hu.progmatic.spotilive.tag.TagService;
+import hu.progmatic.spotilive.zene.FilterByTagCommand;
+import hu.progmatic.spotilive.zene.ZeneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class EsemenyTracklistController {
@@ -25,6 +30,10 @@ public class EsemenyTracklistController {
     private SzavazatService szavazatService;
     @Autowired
     private FelhasznaloService felhasznaloService;
+    @Autowired
+    private TagService tagService;
+    @Autowired
+    private ZeneService zeneService;
 
 
     @GetMapping("/esemeny/zenelista/{esemenyId}")
@@ -66,7 +75,12 @@ public class EsemenyTracklistController {
         return "redirect:/esemeny/zenelista/" + esemenyId;
     }
 
-
+    @PostMapping("/tracklist/filter")
+    public String elkuld(Model model,
+                         @ModelAttribute("filterCommand") FilterByTagCommand filter) {
+        model.addAttribute("zeneLista",zeneService.getZenekByTagList(filter));
+        return "/esemenytracklist";
+    }
 
     @ModelAttribute("esemenytracklist")
     public List<SzavazatTracklistDto> esemenyZenei() {
@@ -93,5 +107,20 @@ public class EsemenyTracklistController {
     @ModelAttribute("kreditError")
     public String getZeneError() {
         return null;
+    }
+
+    @ModelAttribute("osszesTag")
+    public List<TagDto> osszesTag() {
+        return tagService.getAllTag();
+    }
+
+    @ModelAttribute("tagTipusok")
+    public Set<String> tagTipusok() {
+        return tagService.getAllTagTipus();
+    }
+
+    @ModelAttribute("filterCommand")
+    FilterByTagCommand filterByTagCommand() {
+        return FilterByTagCommand.builder().build();
     }
 }
