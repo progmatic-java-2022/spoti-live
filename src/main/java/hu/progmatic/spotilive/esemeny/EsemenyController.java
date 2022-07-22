@@ -107,4 +107,6 @@ public class EsemenyController {
         return felhasznaloService.isAdmin();
     }
 
+
+
 }

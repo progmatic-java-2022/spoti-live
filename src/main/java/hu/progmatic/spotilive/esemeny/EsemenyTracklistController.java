@@ -109,9 +109,16 @@ public class EsemenyTracklistController {
         return esemenyService.getKreditSzam();}
 
     @ModelAttribute("kreditError")
-    public String getZeneError() {
+    public String getKreditError() {
         return null;
     }
+
+    @ModelAttribute("vanElegKredit")
+    public boolean vanElegKredit(){
+        return esemenyService.vanElegKredit();
+    }
+
+
 
     @ModelAttribute("osszesTag")
     public List<TagDto> osszesTag() {
