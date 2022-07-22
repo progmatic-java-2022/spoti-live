@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +90,14 @@ public class EsemenyTracklistController {
         return esemenyService.getKreditSzam();}
 
     @ModelAttribute("kreditError")
-    public String getZeneError() {
+    public String getKreditError() {
         return null;
     }
+
+    @ModelAttribute("vanElegKredit")
+    public boolean vanElegKredit(){
+        return esemenyService.vanElegKredit();
+    }
+
+
 }
