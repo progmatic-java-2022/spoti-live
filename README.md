@@ -19,7 +19,7 @@ Jövőbeni tervünk, hogy folytatjuk az alkalmazás fejlesztését, egyrészt a 
 
 A Spotilive az alábbi linken kipróbálható:
 
-http://167.71.36.154/login
+http://167.71.36.154
 
 -
 
@@ -28,8 +28,8 @@ Tomi semi-őszínte mosolyának magyarázata az, hogy a html nem akar neki szót
 #backend
 
 Futattási követelmények:
-- Java Version : 17
-- Docker (adatbázisok futtatásához)
+- Java Verzió : 17
+- Docker (adatbázisok, sql szerver futtatásához)
 - Maven
 
 Adatbázis: 
@@ -41,14 +41,16 @@ Adatbázis:
 
 Hogyan fordul a program?
 
-- Fordításához : ./mvnw clean package
-- Build-eléshez: ./build-eles-sh (ez csak linux-on működöik)
+- Fordításához : `./mvnw clean package`
+- Build-eléshez: `./build-eles-sh (ez csak linux-on működöik)`
 
 Hogyan kell futattni a programot?
 
--
+- Idea-val
+- Docker-ben
+- Konzolból (valahogy) 
 
-Felhasznló Típusok
+Felhasználó típusok
 
 - ADMIN: Minden oldalt el lehet vele érni,
           nincsenek olyan rejtett oldalak amiket más role-al lehet látni.
@@ -60,9 +62,9 @@ Felhasznló Típusok
 
 - GUEST: Szavazni tud eseményen belüli számokra, míg van felhasználható kreditje.
 
-Belépési Adatok:
-- GUEST : Felhasznalónév : guest, jelszo : guest
-- ZENEKAR : Felhasznalónév : zenekar1, jelszo : zenekar
+Belepesi Adatok:
+- GUEST : Felhasználónév : guest, jelszó : guest
+- ZENEKAR : Felhasználónév : zenekar1, jelszó : zenekar
 
 
 Projekt tagok:
