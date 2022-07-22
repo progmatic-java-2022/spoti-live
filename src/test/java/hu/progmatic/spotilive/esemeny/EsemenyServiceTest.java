@@ -171,31 +171,6 @@ class EsemenyServiceTest {
                     .hasMessageContaining("Zenekar jogosultsággal nem módosítható más eseménye!");
         }
 
-        @Test
-        void addZeneToEsemenyTest() {
-            var zene = zeneService.createZene(CreateZeneCommand.builder()
-                    .cim("Valami cím")
-                    .eloado("Valami előadó")
-                    .hosszMp(123)
-                    .zenekarId(demoZenekar1Id)
-                    .build());
-
-            esemenyService.addSzavazat(SzavazatCommand.builder()
-                    .esemenyId(esemeny1.getId())
-                    .zeneId(zene.getId())
-                    .build());
-
-            var esemenyZenevel = esemenyService.getEsemenyDtoById(esemeny1.getId());
-            assertEquals("Tódor Születésnapja", esemenyZenevel.getNev());
-
-            assertThat(esemenyZenevel.getSzavazatDtos())
-                    .hasSize(1)
-                    ;
-            zeneService.deleteZeneById(zene.getId());
-
-        }
-
-
     }
     @Test
     @WithUserDetails(DemoService.ZENEKAR_1_FELHASZNALO)
@@ -236,11 +211,4 @@ class EsemenyServiceTest {
                 .hasMessageContaining("Zenekar jogosultsággal nem módosítható más eseménye!");
     }
 
-    @Test
-    void szavazatListTest() {
-        var esemenyId = demoServiceTestHelper.getZenekar1demoEsemenyId();
-        List<SzavazatTracklistDto> list = szavazatService.getEsemenyTrackList(esemenyId);
-        assertThat(list)
-                .hasSize(3);
-    }
 }
