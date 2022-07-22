@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class EmailSenderServiceTest {
 
-  @Value("spring.mail.port")
+  @Value("${spring.mail.port}")
   private Integer emailPort;
 
   @Autowired
