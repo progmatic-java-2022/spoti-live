@@ -33,7 +33,8 @@ public class TagService {
     }
 
     public void editTagById(TagEditCommand command) {
-        if(tagRepository.getTagByTagNev(command.getTagNev()).isPresent()){
+        if(tagRepository.getTagByTagNev(command.getTagNev()).isPresent() &&
+                !command.getTagId().equals(tagRepository.getTagByTagNevIgnoreCase(command.getTagNev()).getId())){
             throw new CreateTagExeption("Tag már létezik ilyen névvel!");
         }
         Tag tagEntity = tagRepository.getReferenceById(command.getTagId());
@@ -52,14 +53,14 @@ public class TagService {
                             .map(TagToZene::getZene)
                             .map(Zene::getCim)
                             .toList();
-                    String zenek = "";
+                    StringBuilder zenek = new StringBuilder();
                     boolean isElso = true;
                     for (String zene : liszt){
                         if (isElso){
-                            zenek += zene;
+                            zenek.append(zene);
                             isElso = false;
                         }else {
-                        zenek += ", " + zene;
+                        zenek.append(", ").append(zene);
                         }
                     }
 

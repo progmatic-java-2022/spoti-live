@@ -18,7 +18,10 @@ Jövőbeni tervünk, hogy folytatjuk az alkalmazás fejlesztését, egyrészt a 
 és azért is, hogy felidézzük a bootcamp szuper emlékeit.
 
 A Spotilive az alábbi linken kipróbálható:
-- link
+
+http://167.71.36.154/login
+
+-
 
 ![img.png](img.png)
 Tomi semi-őszínte mosolyának magyarázata az, hogy a html nem akar neki szót fogadni, pedig a service és controller rétegek jól működnek.

@@ -66,7 +66,7 @@
             </div>
             <div class="row">
                 <div class="col" th:if="${zene.szavazatByFelhasznalo == 0}">
-                        <input type="button" class="btn btn-danger" disabled data-bs-toggle="button" value="Like visszavonása">
+                    <button type="button" class="btn btn-outline-danger" disabled>Like visszavonása</button>
                 </div>
             </div>
         </td>
@@ -74,7 +74,13 @@
     </tr>
     </tbody>
 </table>
+<div th:if="${kreditError != null}" th:text="${kreditError}" class="alert alert-danger" >
+<!--        th:if="${kreditError != null}"-->
+<!--     class="alert alert-danger"-->
 
+    Hibaüzenet
+</div>
+<h1 th:if="${kreditError == null}" th:text="'Kreditek száma: ' + ${kreditek}"></h1>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (() => {

@@ -18,11 +18,12 @@ public class MeghivoService {
     KreditRepository kreditRepository;
 
 
-    public MeghivoDto meghivoLetrehozasa() {
+    public MeghivoDto meghivoLetrehozasa(Integer kreditMennyiseg) {
         Kredit kredit = kreditRepository.save(Kredit.builder().build());
         Meghivo meghivo = meghivoRepository.save(Meghivo.builder().uuid(UUID.randomUUID().toString()).build());
         meghivo.setKredit(kredit);
         kredit.setMeghivo(meghivo);
+        kredit.setKreditMennyiseg(kreditMennyiseg);
         return MeghivoDto.factory(meghivo);
     }
 

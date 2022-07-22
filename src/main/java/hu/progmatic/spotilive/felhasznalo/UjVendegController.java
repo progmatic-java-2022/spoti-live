@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.felhasznalo;
 
+import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.qrkod.QRCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,17 +21,19 @@ public class UjVendegController {
 
     @Autowired
     MeghivoService meghivoService;
+    @Autowired
+    private EsemenyService esemenyService;
 
 
     @PostMapping("/public/ujmeghivo")
-    public String ujMeghivo(Model model) {
-        MeghivoDto meghivo = meghivoService.meghivoLetrehozasa();
+    public String ujMeghivo(Model model, @ModelAttribute KreditCommand kreditCommand) {
+        MeghivoDto meghivo = meghivoService.meghivoLetrehozasa(kreditCommand.getKreditekSzama());
         model.addAttribute("meghivoUUID", meghivo.getUuid());
         return "/qrkod";
     }
 
     @GetMapping("/public/meghivo/{uuid}")
-    public String meghivoFelhasznalas(
+    public String vendeg(
             @PathVariable String uuid,
             Model model
     ) {
@@ -38,6 +41,7 @@ public class UjVendegController {
                 MeghivoFelhasznalasaCommand.builder().uuid(uuid).build());
         return "ujvendegletrehozasa";
     }
+
     @GetMapping("/qrkod")
     public String qrCodePage() {
         return "qrkod";
@@ -73,13 +77,18 @@ public class UjVendegController {
         return "ujvendegletrehozasa";
     }
 
-    @ModelAttribute("meghivofelhasznalasacommand")
-    public MeghivoFelhasznalasaCommand meghivoFelhasznalasaCommand() {
-        return MeghivoFelhasznalasaCommand.builder().build();
+    @ModelAttribute("kreditCommand")
+    public KreditCommand kreditCommand() {
+        return KreditCommand.builder().build();
     }
+
     @ModelAttribute("meghivoUUID")
-    public String getMeghivoLink(){
+    public String getMeghivoLink() {
         return null;
     }
+
+    @ModelAttribute("kreditek")
+    public String getKreditek() {
+        return esemenyService.getKreditekSzama();}
 
 }
