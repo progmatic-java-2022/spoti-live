@@ -28,8 +28,8 @@ Tomi semi-őszínte mosolyának magyarázata az, hogy a html nem akar neki szót
 #backend
 
 Futattási követelmények:
-- Java Version : 17
-- Docker (adatbázisok futtatásához)
+- Java Verzió : 17
+- Docker (adatbázisok, sql szerver futtatásához)
 - Maven
 
 Adatbázis: 
@@ -46,9 +46,11 @@ Hogyan fordul a program?
 
 Hogyan kell futattni a programot?
 
--
+-Futtatni lehet a programot :
+- ./mwnw spring-boot:run
+- IDEA-ból
 
-Felhasznló Típusok
+Felhasználó típusok
 
 - ADMIN: Minden oldalt el lehet vele érni,
           nincsenek olyan rejtett oldalak amiket más role-al lehet látni.

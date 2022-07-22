@@ -78,7 +78,7 @@ spring:
     open-in-view: true
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
 server:
   port: 80
   tomcat:
