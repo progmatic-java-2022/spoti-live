@@ -67,7 +67,7 @@
     </div>
 </div>
 
-<table class="table table-success table-striped">
+<table class="table table-dark table-striped">
     <thead>
     <tr>
         <th th:if="${adminModositasJogVan}" scope="col">Zenekar</th>
@@ -114,7 +114,7 @@
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body" th:each="kategoria : ${zeneTagSzerkeztes.tagByKategoria}">
-                                    <table class="table table-success table-striped">
+                                    <table class="table table-dark table-striped">
                                         <thead class="table-dark">
                                         <tr>
                                             <th scope="col" th:text="${kategoria.getKey().getTagKategoriaString()}">

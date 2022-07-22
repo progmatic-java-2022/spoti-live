@@ -18,7 +18,7 @@
 
 <h1 th:text="${adminCim}">Hello</h1>
 <ul>
-    <table class="table table-success table-striped">
+    <table class="table table-dark table-striped">
         <thead>
         <tr>
             <th scope="col">Nev</th>
@@ -55,7 +55,6 @@
         </tr>
         </tbody>
     </table>
-    <hr>
     <h3 th:if="${zenekarPeldany.getId() == null}">Új Zenekar létrehozása</h3>
     <h3 th:if="${zenekarPeldany.getId() != null}">Zenekar szerkesztése</h3>
     <form
