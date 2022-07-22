@@ -112,6 +112,13 @@ public class ZeneController {
         model.addAttribute("zeneModositas", zeneKarbantartasService.getZeneDtoById(id));
         return "/zenekarbantartas";
     }
+    @PostMapping("/zenecontrol/filter")
+    public String elkuld(Model model,
+                         @ModelAttribute("filterCommand") FilterByTagCommand filter) {
+        model.addAttribute("showModal", true);
+        model.addAttribute("zeneLista",zeneKarbantartasService.getZenekByTagList(filter));
+        return "zenekarbantartas";
+    }
 
     @ModelAttribute("zenePeldany")
     public ZeneDto getZenePeldany() {
@@ -176,6 +183,11 @@ public class ZeneController {
     @ModelAttribute("tagTipusok")
     public Set<String> tagTipusok() {
         return tagService.getAllTagTipus();
+    }
+
+    @ModelAttribute("filterCommand")
+    FilterByTagCommand filterByTagCommand() {
+        return FilterByTagCommand.builder().build();
     }
 
 }
