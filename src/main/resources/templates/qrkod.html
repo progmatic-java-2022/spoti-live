@@ -20,7 +20,9 @@
 <hr>
 <img src="../../img/boat.jpg" height="600"
      th:src="@{'/qrcode/image/{uuid}'(uuid=${meghivoUUID})}">
-<h5 th:text="'http://localhost:8082/public/meghivo/' + ${meghivoUUID}">link</h5>
-
+<div class="row">
+<a th:href="'http://localhost:8082/public/meghivo/' + ${meghivoUUID}">Új Felhasználó meghívó</a>
+  <h5 th:text="'http://localhost:8082/public/meghivo/' + ${meghivoUUID}">link</h5>
+</div>
 </body>
 </html>

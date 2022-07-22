@@ -13,6 +13,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static hu.progmatic.spotilive.demo.DemoService.ADMIN_FELHASZNALO;
+
 @Service
 @Log
 @Transactional
@@ -56,6 +58,7 @@ public class FelhasznaloService {
       );
     }
     Felhasznalo felhasznalo = Felhasznalo.builder()
+            .uuid(command.getUuid())
             .nev(command.getFelhasznaloNev())
             .role(UserType.GUEST)
             .jelszo(encoder.encode(command.getJelszo1()))
@@ -148,5 +151,17 @@ public class FelhasznaloService {
       return (MyUserDetails) principal;
     }
     return null;
+  }
+
+  public Felhasznalo findByUUid(String uuid) {
+    return felhasznaloRepository.findFelhasznaloByUuidEquals(uuid);
+  }
+
+  public void createAlapFelhasznalok() {
+    if (felhasznaloRepository.count() == 0) {
+      add(new UjFelhasznaloCommand(ADMIN_FELHASZNALO, "adminpass", UserType.ADMIN, null));
+      add(new UjFelhasznaloCommand("user", "user", UserType.USER, null));
+      add(new UjFelhasznaloCommand("guest", "guest", UserType.GUEST, null));
+    }
   }
 }
