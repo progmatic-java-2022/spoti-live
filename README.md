@@ -48,7 +48,7 @@ Hogyan kell futattni a programot?
 
 -
 
-Role-okról
+Felhasznló Típusok
 
 - ADMIN: Minden oldalt el lehet vele érni,
           nincsenek olyan rejtett oldalak amiket más role-al lehet látni.
@@ -60,9 +60,9 @@ Role-okról
 
 - GUEST: Szavazni tud eseményen belüli számokra, míg van felhasználható kreditje.
 
-Belepesi Adatok:
-- GUEST : felhasznaloNev : guest, jelszo : guest
-- ZENEKAR : felhasznaloNev : zenekar1, jelszo : zenekar
+Belépési Adatok:
+- GUEST : Felhasznalónév : guest, jelszo : guest
+- ZENEKAR : Felhasznalónév : zenekar1, jelszo : zenekar
 
 
 Projekt tagok:
