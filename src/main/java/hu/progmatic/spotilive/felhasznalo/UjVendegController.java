@@ -49,7 +49,7 @@ public class UjVendegController {
 
     @GetMapping("/qrcode/image/{uuid}")
     public void getQrCodeImage(@PathVariable String uuid, HttpServletResponse response) throws IOException {
-        var url = "http://localhost:8082/public/meghivo/" + uuid;
+        var url = "http://167.71.36.154/public/meghivo/" + uuid;
         response.setContentType("image/png");
         byte[] qrCodeImage = QRCodeGenerator.getQRCodeImage(url, 600, 600);
         response.getOutputStream().write(qrCodeImage);
