@@ -1,10 +1,12 @@
 package hu.progmatic.spotilive.felhasznalo;
 
+import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithUserDetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,21 +35,22 @@ class MeghivoServiceTest {
 
 
     @Test
+    @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
     void FelhasznalasaTest() {
         var meghivo = meghivoService.meghivoLetrehozasa();
         assertNull(meghivo.getFelhasznalo());
         assertNotNull(meghivo.getUuid());
         meghivoService.meghivoFelhasznalasa(MeghivoFelhasznalasaCommand.builder()
-                        .uuid(meghivo.getUuid())
-                        .jelszo1("jelszo")
-                        .jelszo2("jelszo")
-                        .felhasznaloNev("guest12")
+                .uuid(meghivo.getUuid())
+                .jelszo1("jelszo")
+                .jelszo2("jelszo")
+                .felhasznaloNev("guest12")
                 .build()
         );
         var modositottMeghivo = meghivoService.findMeghivoByUUId(meghivo.getUuid());
-        assertEquals("guest12",modositottMeghivo.getFelhasznalo().getNev());
+        assertEquals("guest12", modositottMeghivo.getFelhasznalo().getNev());
         assertEquals(1, modositottMeghivo.getKredit().getKreditMennyiseg());
-        assertEquals(1,modositottMeghivo.getFelhasznalo().getKredit().getKreditMennyiseg());
+        assertEquals(1, modositottMeghivo.getFelhasznalo().getKredit().getKreditMennyiseg());
 
         var hibaUzenet = "Hiba";
         try {
@@ -61,8 +64,9 @@ class MeghivoServiceTest {
         } catch (Exception e) {
             hibaUzenet = e.getMessage();
         }
-        assertEquals("Ezt már elhasználták!",hibaUzenet);
-        meghivoService.deleteById(meghivo.getId());
-    }
+        assertEquals("Ezt már elhasználták!", hibaUzenet);
 
+        var kiolvasottFelhasznalo = meghivoService.findMeghivoByUUId(meghivo.getUuid());
+        felhasznaloService.delete(kiolvasottFelhasznalo.getFelhasznalo().getId());
+    }
 }
