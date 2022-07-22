@@ -18,13 +18,14 @@
 
 <h1>Számok</h1>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<div style="padding-bottom: 1%">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
     Szűrés tagek szerint
 </button>
-
+</div>
 <!-- Modal -->
-<div th:classappend="${showModal ? 'show' : ''}" class="modal fade" id="exampleModal" tabindex="-1"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="filterModal" tabindex="-1"
+     aria-labelledby="filterModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

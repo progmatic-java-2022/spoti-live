@@ -115,7 +115,6 @@ public class ZeneController {
     @PostMapping("/zenecontrol/filter")
     public String elkuld(Model model,
                          @ModelAttribute("filterCommand") FilterByTagCommand filter) {
-        model.addAttribute("showModal", true);
         model.addAttribute("zeneLista",zeneKarbantartasService.getZenekByTagList(filter));
         return "zenekarbantartas";
     }
