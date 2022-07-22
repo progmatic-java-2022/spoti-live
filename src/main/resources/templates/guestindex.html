@@ -51,7 +51,7 @@
     <tr th:each="esemeny : ${esemenyekLista}">
         <td th:text="${esemeny.nev}">Esemény neve</td>
         <td th:text="${esemeny.zenekarNev}">Zenekar neve</td>
-        <td th:text="${esemeny.idoPont}">Időpont</td>
+        <td th:text="${esemeny.idoPunt}">Időpont</td>
         <td>
             <div class="col">
                 <form th:action="@{'/esemeny/zenelista/{esemenyId}' (esemenyId=${esemeny.id})}" method="get">
