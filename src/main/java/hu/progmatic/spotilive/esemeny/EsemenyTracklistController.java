@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +67,7 @@ public class EsemenyTracklistController {
     }
 
 
+
     @ModelAttribute("esemenytracklist")
     public List<SzavazatTracklistDto> esemenyZenei() {
         return new ArrayList<>();
@@ -84,6 +86,9 @@ public class EsemenyTracklistController {
     @ModelAttribute("kreditek")
     public String getKreditek() {
         return esemenyService.getKreditekSzama();}
+ @ModelAttribute("kreditekSzamaInt")
+    public Integer getKreditSzam() {
+        return esemenyService.getKreditSzam();}
 
     @ModelAttribute("kreditError")
     public String getZeneError() {

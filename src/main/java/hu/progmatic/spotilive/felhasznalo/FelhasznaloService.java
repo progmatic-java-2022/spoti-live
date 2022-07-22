@@ -153,10 +153,6 @@ public class FelhasznaloService {
     return null;
   }
 
-  public Felhasznalo findByUUid(String uuid) {
-    return felhasznaloRepository.findFelhasznaloByUuidEquals(uuid);
-  }
-
   public void createAlapFelhasznalok() {
     if (felhasznaloRepository.count() == 0) {
       add(new UjFelhasznaloCommand(ADMIN_FELHASZNALO, "adminpass", UserType.ADMIN, null));
