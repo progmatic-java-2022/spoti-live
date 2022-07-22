@@ -38,8 +38,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="#" th:action="@{/tracklist/filter}" th:object="${filterCommand}"
-                      method="POST">
+                <form action="#" th:action="@{'/esemeny/zenelista/{esemenyId}' (esemenyId=${esemenyId})}" th:object="${filterCommand}"
+                      method="get">
                     <table th:each="tagTipus : ${tagTipusok}">
                         <thead>
                         <tr>
