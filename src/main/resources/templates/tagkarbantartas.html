@@ -78,11 +78,20 @@
             </label>
         </div>
         <div class="col">
-            <select th:field="*{tagKategoria}" class="form-select" >
-                <option value="valassz">Válassz Kategóriát</option>
-                <option th:each="tagkategoria : ${tagkategoriak}" th:value="${tagkategoria}"
-                        th:text="${tagkategoria.getTagKategoriaString()}" value="1">Kategoria</option>
-            </select>
+            <label>
+                <select
+                        th:field="*{tagKategoria}" class="form-select"
+                        th:classappend="${#fields.hasErrors('tagKategoria')} ? 'is-invalid' : 'is-valid'">
+                    <option value="">Válassz Kategóriát</option>
+                    <option th:each="tagkategoria : ${tagkategoriak}" th:value="${tagkategoria}"
+                            th:text="${tagkategoria.getTagKategoriaString()}" value="1">Kategoria</option>
+                </select>
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('tagKategoria')}"
+                     th:errors="*{tagKategoria}">
+                    Hibaüzenet
+                </div>
+            </label>
         </div>
         <div class="col">
             <input th:if="${tagPeldany.getId() == null}" class="btn btn-primary" type="submit" value="Hozzáad"/>
@@ -115,7 +124,7 @@
         </div>
         <div class="col">
             <select th:field="*{tagKategoria}" class="form-select" >
-                <option value="valassz">Válassz Kategóriát</option>
+                <option value=""></option>
                 <option th:each="tagkategoria : ${tagkategoriak}" th:value="${tagkategoria}"
                         th:text="${tagkategoria.getTagKategoriaString()}" value="1">Kategoria</option>
             </select>

@@ -102,8 +102,9 @@ EsemenyService {
         if (vanElegKredit()) {
             Szavazat szavazat = getOrCreateSajatSzavazat(command);
             szavazat.setSzavazat(szavazat.getSzavazat() + 1);
-            if (felhasznaloService.isGuest()){
-            kreditKezeles(true);}
+            if (felhasznaloService.isGuest()) {
+                kreditKezeles(true);
+            }
         } else {
             throw new KreditException("Nincs elég kredit! Vonj vissza egy szavazatot, de inkább VÁSÁROLJ!");
         }
@@ -122,7 +123,7 @@ EsemenyService {
     }
 
 
-    private boolean vanElegKredit() {
+    public boolean vanElegKredit() {
         if (felhasznaloService.isGuest()) {
 
             var felhasznaloId = felhasznaloService.getFelhasznaloId();
@@ -152,12 +153,14 @@ EsemenyService {
             zene.getSzavazatok().remove(szavazat);
             felhasznalo.getSzavazatok().remove(szavazat);
             szavazatRepository.delete(szavazat);
-            if (felhasznaloService.isGuest()){
-            kreditKezeles(false);}
+            if (felhasznaloService.isGuest()) {
+                kreditKezeles(false);
+            }
         } else {
             szavazat.setSzavazat(szavazat.getSzavazat() - 1);
-            if (felhasznaloService.isGuest()){
-            kreditKezeles(false);}
+            if (felhasznaloService.isGuest()) {
+                kreditKezeles(false);
+            }
         }
     }
 
@@ -214,4 +217,13 @@ EsemenyService {
         return "Csak guestnek kell kredit!";
     }
 
+    public Integer getKreditSzam() {
+        if (felhasznaloService.isGuest()) {
+            var felhasznaloId = felhasznaloService.getFelhasznaloId();
+            var felhasznalo = felhasznaloService.getById(felhasznaloId);
+            Integer kreditek = felhasznalo.getKredit().getKreditMennyiseg();
+            return kreditek;
+        }
+        return 0;
+    }
 }
