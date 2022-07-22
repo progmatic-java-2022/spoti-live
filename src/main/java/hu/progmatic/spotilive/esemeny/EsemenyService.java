@@ -123,7 +123,7 @@ EsemenyService {
     }
 
 
-    private boolean vanElegKredit() {
+    public boolean vanElegKredit() {
         if (felhasznaloService.isGuest()) {
 
             var felhasznaloId = felhasznaloService.getFelhasznaloId();
