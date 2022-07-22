@@ -19,7 +19,7 @@ Jövőbeni tervünk, hogy folytatjuk az alkalmazás fejlesztését, egyrészt a 
 
 A Spotilive az alábbi linken kipróbálható:
 
-http://167.71.36.154
+http://167.71.36.154/login
 
 -
 
@@ -41,14 +41,14 @@ Adatbázis:
 
 Hogyan fordul a program?
 
-- Fordításához : `./mvnw clean package`
-- Build-eléshez: `./build-eles-sh (ez csak linux-on működöik)`
+- Fordításához : ./mvnw clean package
+- Build-eléshez: ./build-eles-sh (ez csak linux-on működöik)
 
 Hogyan kell futattni a programot?
 
-- Idea-val
-- Docker-ben
-- Konzolból (valahogy) 
+-Futtatni lehet a programot :
+- ./mwnw spring-boot:run
+- IDEA-ból
 
 Felhasználó típusok
 
@@ -62,9 +62,9 @@ Felhasználó típusok
 
 - GUEST: Szavazni tud eseményen belüli számokra, míg van felhasználható kreditje.
 
-Belepesi Adatok:
-- GUEST : Felhasználónév : guest, jelszó : guest
-- ZENEKAR : Felhasználónév : zenekar1, jelszó : zenekar
+Belépési Adatok:
+- GUEST : Felhasznalónév : guest, jelszo : guest
+- ZENEKAR : Felhasznalónév : zenekar1, jelszo : zenekar
 
 
 Projekt tagok:
