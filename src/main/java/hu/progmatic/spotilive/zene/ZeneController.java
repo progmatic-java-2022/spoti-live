@@ -112,9 +112,10 @@ public class ZeneController {
         model.addAttribute("zeneModositas", zeneKarbantartasService.getZeneDtoById(id));
         return "/zenekarbantartas";
     }
-    @PostMapping("/multiselect/post")
+    @PostMapping("/zenecontrol/filter")
     public String elkuld(Model model,
                          @ModelAttribute("filterCommand") FilterByTagCommand filter) {
+        model.addAttribute("showModal", true);
         model.addAttribute("zeneLista",zeneKarbantartasService.getZenekByTagList(filter));
         return "zenekarbantartas";
     }
