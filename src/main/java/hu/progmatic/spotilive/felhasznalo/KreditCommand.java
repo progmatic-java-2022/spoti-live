@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class KreditCommand {
 
-    private Integer kreditekSzama;
+    @Builder.Default
+    private Integer kreditekSzama = 0;
 }
