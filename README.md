@@ -29,7 +29,7 @@ Tomi semi-őszínte mosolyának magyarázata az, hogy a html nem akar neki szót
 
 Futattási követelmények:
 - Java Version : 17
-- Docker (adatbázisok futtatásához)
+- Docker
 - Maven
 
 Adatbázis: 
@@ -46,7 +46,9 @@ Hogyan fordul a program?
 
 Hogyan kell futattni a programot?
 
--
+Futtatni lehet a programot :
+- ./mwnw spring-boot:run
+- IDEA-ból
 
 Felhasznló Típusok
 
