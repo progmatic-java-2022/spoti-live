@@ -20,9 +20,6 @@ public class SzavazatService {
     @Autowired
     private EsemenyService esemenyService;
 
-
-
-
     public List<SzavazatTracklistDto> getEsemenyTrackList(Integer esemenyId) {
         var esemeny = esemenyService.getEsemenyById(esemenyId);
         var zenekar = esemeny.getZenekar();
