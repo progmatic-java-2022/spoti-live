@@ -131,7 +131,7 @@ class ZenekarServiceTest {
         }
 
         @Test
-        void editTest() {
+        void editAndExeptionTest() {
             ZenekarDto dto = ZenekarDto.builder()
                     .id(testZenekar.getId())
                     .nev("Edited name")

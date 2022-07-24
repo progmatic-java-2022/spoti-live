@@ -66,7 +66,12 @@ public class ZenekarAdminController {
     public String editZenekar(Model model, @PathVariable("id") Integer id, @ModelAttribute("zenekarPeldany") @Valid ZenekarDto dto,
                               BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            zenekarService.editZenekar(dto);
+            try {
+                zenekarService.editZenekar(dto);
+            }catch (AddZenekarExeption e){
+                model.addAttribute("ujZenekarError", e.getMessage());
+                return "zenekar_admin";
+            }
             return "redirect:/zenekarKarbantartas";
         }
         return "zenekar_admin";
