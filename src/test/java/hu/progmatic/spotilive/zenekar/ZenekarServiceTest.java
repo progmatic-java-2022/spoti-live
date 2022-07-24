@@ -137,10 +137,72 @@ class ZenekarServiceTest {
                     .nev("Edited name")
                     .email("teszt5@gmail.com")
                     .varos("Budapest volt")
+                    .telefonszam("0630-111-1111")
                     .build();
             var modositott = zenekarService.editZenekar(dto);
             assertEquals("Edited name", modositott.getNev());
             assertEquals("Budapest volt", modositott.getVaros());
+            assertEquals("0630-111-1111", modositott.getTelefonszam());
+
+            var zenekarEx = zenekarService.createZenekar(
+                    ZenekarDto.builder()
+                            .nev("Exeption")
+                            .email("exeption@gmail.com")
+                            .varos("Exeption city")
+                            .telefonszam("0630-666-9999")
+                            .build());
+
+            ZenekarDto nevEx = ZenekarDto.builder()
+                    .id(testZenekar.getId())
+                    .nev("Exeption")
+                    .email("teszt5@gmail.com")
+                    .varos("Budapest volt")
+                    .telefonszam("0630-111-1111")
+                    .build();
+
+            ZenekarDto emailEx = ZenekarDto.builder()
+                    .id(testZenekar.getId())
+                    .nev("Edited name")
+                    .email("exeption@gmail.com")
+                    .varos("Budapest volt")
+                    .telefonszam("0630-111-1111")
+                    .build();
+
+            ZenekarDto telefonszamEx = ZenekarDto.builder()
+                    .id(testZenekar.getId())
+                    .nev("Edited name")
+                    .email("teszt5@gmail.com")
+                    .varos("Budapest volt")
+                    .telefonszam("0630-666-9999")
+                    .build();
+
+            String nevE = "";
+            try {
+                zenekarService.editZenekar(nevEx);
+            }catch (AddZenekarExeption e){
+                nevE = e.getMessage();
+            }
+            assertEquals("Zenekar már létezik ilyen névvel!", nevE);
+
+            String emailE = "";
+            try {
+                zenekarService.editZenekar(emailEx);
+            }catch (AddZenekarExeption e){
+                emailE = e.getMessage();
+            }
+            assertEquals("Zenekar már létezik ilyen email címmel!", emailE);
+
+            String telefonszamE = "";
+            try {
+                zenekarService.editZenekar(telefonszamEx);
+            }catch (AddZenekarExeption e){
+                telefonszamE = e.getMessage();
+            }
+            assertEquals("Zenekar már létezik ilyen telefonszámmal'", telefonszamE);
+
+            zenekarService.deleteById(zenekarEx.getId());
+
+
 
         }
 
