@@ -39,19 +39,18 @@ public class EsemenyTracklistController {
     public String esemenyTracklistBeltoltese(
             Model model, @PathVariable("esemenyId") Integer esemenyId,
             @RequestParam("tagLista") Optional<List<String >> filter) {
-        model.addAttribute("esemenytracklist", szavazatService.getEsemenyTrackList(
-                FilterByTagCommand.builder()
-                        .esemenyId(esemenyId)
-                        .tagLista(filterByTagCommand().getTagLista())
-                        .build()));
-        model.addAttribute("esemenyDto", esemenyService.getEsemenyDtoById(esemenyId));
+      FilterByTagCommand filterByTagCommand = FilterByTagCommand.builder()
+          .esemenyId(esemenyId)
+          .tagLista(filter.orElse(List.of()))
+          .build();
 
-        FilterByTagCommand filterByTagCommand = FilterByTagCommand.builder()
-                .tagLista(filter.orElse(List.of()))
-                .build();
-        model.addAttribute("filterCommand", filterByTagCommand);
+      List<SzavazatTracklistDto> esemenyTrackList = szavazatService.getEsemenyTrackList(filterByTagCommand);
 
-        return "/esemenytracklist";
+      model.addAttribute("esemenytracklist", esemenyTrackList);
+      model.addAttribute("esemenyDto", esemenyService.getEsemenyDtoById(esemenyId));
+      model.addAttribute("filterCommand", filterByTagCommand);
+
+      return "/esemenytracklist";
     }
 
     @PostMapping("/esemeny/{esemenyId}/zenelista/{zeneId}")

@@ -22,14 +22,6 @@ public class SzavazatService {
     @Autowired
     private EsemenyService esemenyService;
 
-    public List<SzavazatTracklistDto> getEsemenyTrackList(Integer esemenyId) {
-        var esemeny = esemenyService.getEsemenyById(esemenyId);
-    @Autowired
-    private ZeneService zeneService;
-    @Autowired
-    private ZenekarService zenekarService;
-
-
     public List<SzavazatTracklistDto> getEsemenyTrackList(FilterByTagCommand command) {
         var esemeny = esemenyService.getEsemenyById(command.getEsemenyId());
         var zenekar = esemeny.getZenekar();
@@ -44,6 +36,5 @@ public class SzavazatService {
                 .sorted((o1, o2) -> o2.getOsszSzavazat() - o1.getOsszSzavazat())
                 .toList();
     }
-
 
 }

@@ -25,7 +25,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@WithMockUser(roles = UserType.Roles.ESEMENY_KEZELES_ROLE)
 class EsemenyServiceTest {
     @Autowired
     private EsemenyService esemenyService;
@@ -218,13 +217,5 @@ class EsemenyServiceTest {
         )
                 .isInstanceOf(NincsJogosultsagAZenekarhozException.class)
                 .hasMessageContaining("Zenekar jogosultsággal nem módosítható más eseménye!");
-    }
-
-    @Test
-    void szavazatListTest() {
-        var esemenyId = demoServiceTestHelper.getZenekar1demoEsemenyId();
-        List<SzavazatTracklistDto> list = szavazatService.getEsemenyTrackList(command);
-        assertThat(list)
-                .hasSize(3);
     }
 }
