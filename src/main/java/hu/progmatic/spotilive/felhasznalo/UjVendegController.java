@@ -95,9 +95,5 @@ public class UjVendegController {
     public String getKreditek() {
         return esemenyService.getKreditekSzama();}
 
-    @ModelAttribute("meghivoFelhasznalvaError")
-    public String meghivoFelhasznalvaError() {
-        return null;
-    }
 
 }
