@@ -70,8 +70,6 @@ public class DemoService {
       createDemoZenekar(PREFIX2, "3333", ZENEKAR_2_FELHASZNALO);
       securityContextHandler.resetContext();
     }
-
-    emailSenderService.emailKuldes("csakos05@gmail.com","subject","body");
   }
 
 
