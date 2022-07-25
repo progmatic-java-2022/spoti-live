@@ -53,8 +53,14 @@ public class FelhasznaloService {
   public Felhasznalo addGuest(MeghivoFelhasznalasaCommand command) {
     if (felhasznaloRepository.findByNev(command.getFelhasznaloNev()).isPresent()) {
       throw new FelhasznaloLetrehozasException(
-              "nev",
+              "felhasznaloNev",
               "Ilyen névvel már létezik felhasználó!"
+      );
+    }
+    if (command.getFelhasznaloNev().isEmpty()) {
+      throw new FelhasznaloLetrehozasException(
+              "felhasznaloNev",
+              "Felhasználónév megadása kötelező!"
       );
     }
     Felhasznalo felhasznalo = Felhasznalo.builder()
