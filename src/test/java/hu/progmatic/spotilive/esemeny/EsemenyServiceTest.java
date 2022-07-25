@@ -6,6 +6,7 @@ import hu.progmatic.spotilive.felhasznalo.Felhasznalo;
 import hu.progmatic.spotilive.felhasznalo.NincsJogosultsagAZenekarhozException;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zene.CreateZeneCommand;
+import hu.progmatic.spotilive.zene.FilterByTagCommand;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
@@ -43,9 +44,17 @@ class EsemenyServiceTest {
     @Autowired
     private SzavazatService szavazatService;
 
+    private  FilterByTagCommand command;
+
     @BeforeEach
     void setUp() {
         demoZenekar1Id = demoServiceTestHelper.getdemoZeneKar1Id();
+        command = FilterByTagCommand
+                .builder()
+                .tagLista(List.of())
+                .esemenyId(demoServiceTestHelper.getZenekar1demoEsemenyId())
+                .build();
+
     }
 
     @Test
@@ -239,7 +248,7 @@ class EsemenyServiceTest {
     @Test
     void szavazatListTest() {
         var esemenyId = demoServiceTestHelper.getZenekar1demoEsemenyId();
-        List<SzavazatTracklistDto> list = szavazatService.getEsemenyTrackList(esemenyId);
+        List<SzavazatTracklistDto> list = szavazatService.getEsemenyTrackList(command);
         assertThat(list)
                 .hasSize(3);
     }

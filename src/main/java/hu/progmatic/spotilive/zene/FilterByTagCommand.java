@@ -8,5 +8,6 @@ import java.util.List;
 @Data
 @Builder
 public class FilterByTagCommand {
+    Integer esemenyId;
     List<String> tagLista;
 }

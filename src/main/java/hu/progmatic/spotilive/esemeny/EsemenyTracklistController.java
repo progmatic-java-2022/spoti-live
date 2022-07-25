@@ -39,12 +39,18 @@ public class EsemenyTracklistController {
     public String esemenyTracklistBeltoltese(
             Model model, @PathVariable("esemenyId") Integer esemenyId,
             @RequestParam("tagLista") Optional<List<String >> filter) {
-        model.addAttribute("esemenytracklist", szavazatService.getEsemenyTrackList(esemenyId));
+        model.addAttribute("esemenytracklist", szavazatService.getEsemenyTrackList(
+                FilterByTagCommand.builder()
+                        .esemenyId(esemenyId)
+                        .tagLista(filterByTagCommand().getTagLista())
+                        .build()));
         model.addAttribute("esemenyDto", esemenyService.getEsemenyDtoById(esemenyId));
+
         FilterByTagCommand filterByTagCommand = FilterByTagCommand.builder()
                 .tagLista(filter.orElse(List.of()))
                 .build();
         model.addAttribute("filterCommand", filterByTagCommand);
+
         return "/esemenytracklist";
     }
 
@@ -62,7 +68,7 @@ public class EsemenyTracklistController {
         }
         catch (KreditException e) {
             model.addAttribute("kreditError", e.getMessage());
-            model.addAttribute("esemenytracklist", szavazatService.getEsemenyTrackList(esemenyId));
+            model.addAttribute("esemenytracklist", szavazatService.getEsemenyTrackList(FilterByTagCommand.builder().build()));
             return "/esemenytracklist";
         }
     }

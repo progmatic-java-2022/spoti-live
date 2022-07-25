@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Entity
@@ -39,5 +40,16 @@ public class Zene {
     @ManyToOne
     @NotNull
     private Zenekar zenekar;
+
+    public boolean hasCheckedTags(List<String> tags) {
+        if (tags.isEmpty()) {
+            return true;
+        }
+        return new HashSet<>(
+          tagToZeneEntityList.stream()
+                  .map(tag -> tag.getTag().getTagNev())
+                  .toList()
+        ).containsAll(tags);
+    }
 
 }

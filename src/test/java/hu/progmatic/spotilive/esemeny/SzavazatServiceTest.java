@@ -3,6 +3,7 @@ package hu.progmatic.spotilive.esemeny;
 import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.zene.CreateZeneCommand;
+import hu.progmatic.spotilive.zene.FilterByTagCommand;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
@@ -27,6 +28,8 @@ class SzavazatServiceTest {
     @Autowired
     private DemoServiceTestHelper demoServiceTestHelper;
     private Integer demoZenekar1Id;
+
+
     @Autowired
     private SzavazatService szavazatService;
     ZeneDto zene1;
@@ -34,6 +37,8 @@ class SzavazatServiceTest {
     EsemenyDto esemeny1;
     EsemenyDto esemeny2;
 
+    private FilterByTagCommand command1;
+    private FilterByTagCommand command2;
     @Nested
     @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
     class EsemenyZenekkelTest {
@@ -76,6 +81,7 @@ class SzavazatServiceTest {
                     .esemenyId(esemeny1.getId())
                     .zeneId(zene2.getId())
                     .build());
+
             esemenyService.addSzavazat(SzavazatCommand.builder()
                     .esemenyId(esemeny1.getId())
                     .zeneId(zene1.getId())
@@ -95,6 +101,29 @@ class SzavazatServiceTest {
                     .esemenyId(esemeny1.getId())
                     .zeneId(zene2.getId())
                     .build());
+
+            esemenyService.addSzavazat(SzavazatCommand.builder()
+                    .esemenyId(esemeny2.getId())
+                    .zeneId(zene2.getId())
+                    .build());
+            esemenyService.addSzavazat(SzavazatCommand.builder()
+                    .esemenyId(esemeny2.getId())
+                    .zeneId(zene2.getId())
+                    .build());
+
+            command1 = FilterByTagCommand
+                    .builder()
+                    .tagLista(List.of())
+                    .esemenyId(esemeny1.getId())
+                    .build();
+
+            command2 = FilterByTagCommand
+                    .builder()
+                    .tagLista(List.of())
+                    .esemenyId(esemeny2.getId())
+                    .build();
+
+
         }
 
         @AfterEach
@@ -104,10 +133,14 @@ class SzavazatServiceTest {
             esemenyService.deleteEsemeny(esemeny1.getId());
             esemenyService.deleteEsemeny(esemeny2.getId());
         }
+
         @Test
         void zeneListBySzavazat() {
-            var szavazatok1 = szavazatService.getEsemenyTrackList(esemeny1.getId());
-            var szavazatok2 = szavazatService.getEsemenyTrackList(esemeny1.getId());
+
+
+            var szavazatok1 = szavazatService.getEsemenyTrackList(command1);
+
+            var szavazatok2 = szavazatService.getEsemenyTrackList(command2);
 
             assertEquals(4, szavazatok1.stream()
                     .filter(szavazatTracklistDto -> szavazatTracklistDto.getZeneId().equals(zene1.getId()))
@@ -128,7 +161,7 @@ class SzavazatServiceTest {
                     .getOsszSzavazat());
 
 
-            List<SzavazatTracklistDto> rendezettLista = szavazatService.getEsemenyTrackList(esemeny1.getId());
+            List<SzavazatTracklistDto> rendezettLista = szavazatService.getEsemenyTrackList(command1);
             assertThat(rendezettLista)
                     .extracting(SzavazatTracklistDto::getSzamCim)
                     .containsExactly(
@@ -148,7 +181,7 @@ class SzavazatServiceTest {
                     .zeneId(zene1.getId())
                     .build());
 
-            var szavazatok1 = szavazatService.getEsemenyTrackList(esemeny1.getId());
+            var szavazatok1 = szavazatService.getEsemenyTrackList(command1);
 
             assertEquals(3, szavazatok1.stream()
                     .filter(szavazatTracklistDto -> szavazatTracklistDto.getZeneId().equals(zene1.getId()))
@@ -167,7 +200,7 @@ class SzavazatServiceTest {
                             .zeneId(zene1.getId())
                             .build()
             );
-            List<SzavazatTracklistDto> tracklist = szavazatService.getEsemenyTrackList(esemeny1.getId());
+            List<SzavazatTracklistDto> tracklist = szavazatService.getEsemenyTrackList(command1);
 
             assertEquals(5, tracklist.stream()
                     .filter(szavazatTracklistDto -> szavazatTracklistDto.getZeneId().equals(zene1.getId()))
