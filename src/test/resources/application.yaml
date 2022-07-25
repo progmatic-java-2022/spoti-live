@@ -14,6 +14,11 @@ spring:
   output:
     ansi:
       enabled: always
+  mail:
+    host: localhost
+    port: 1026
+    username: hello
+    password: hello
 logging:
   level:
     web: DEBUG

@@ -32,10 +32,6 @@ public class ZeneDto {
     private String zenekarNev;
     private Integer zenekarId;
 
-    public boolean hasCheckedTags(List<String> tags) {
-        return new HashSet<>(tagStringList).containsAll(tags);
-    }
-
     public static ZeneDto factory(Zene zene) {
         return ZeneDto.builder()
                 .cim(zene.getCim())

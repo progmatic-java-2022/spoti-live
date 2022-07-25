@@ -6,6 +6,7 @@ import hu.progmatic.spotilive.felhasznalo.Felhasznalo;
 import hu.progmatic.spotilive.felhasznalo.NincsJogosultsagAZenekarhozException;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zene.CreateZeneCommand;
+import hu.progmatic.spotilive.zene.FilterByTagCommand;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
@@ -24,7 +25,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@WithMockUser(roles = UserType.Roles.ESEMENY_KEZELES_ROLE)
 class EsemenyServiceTest {
     @Autowired
     private EsemenyService esemenyService;
@@ -43,9 +43,17 @@ class EsemenyServiceTest {
     @Autowired
     private SzavazatService szavazatService;
 
+    private  FilterByTagCommand command;
+
     @BeforeEach
     void setUp() {
         demoZenekar1Id = demoServiceTestHelper.getdemoZeneKar1Id();
+        command = FilterByTagCommand
+                .builder()
+                .tagLista(List.of())
+                .esemenyId(demoServiceTestHelper.getZenekar1demoEsemenyId())
+                .build();
+
     }
 
     @Test
@@ -171,31 +179,6 @@ class EsemenyServiceTest {
                     .hasMessageContaining("Zenekar jogosultsággal nem módosítható más eseménye!");
         }
 
-        @Test
-        void addZeneToEsemenyTest() {
-            var zene = zeneService.createZene(CreateZeneCommand.builder()
-                    .cim("Valami cím")
-                    .eloado("Valami előadó")
-                    .hosszMp(123)
-                    .zenekarId(demoZenekar1Id)
-                    .build());
-
-            esemenyService.addSzavazat(SzavazatCommand.builder()
-                    .esemenyId(esemeny1.getId())
-                    .zeneId(zene.getId())
-                    .build());
-
-            var esemenyZenevel = esemenyService.getEsemenyDtoById(esemeny1.getId());
-            assertEquals("Tódor Születésnapja", esemenyZenevel.getNev());
-
-            assertThat(esemenyZenevel.getSzavazatDtos())
-                    .hasSize(1)
-                    ;
-            zeneService.deleteZeneById(zene.getId());
-
-        }
-
-
     }
     @Test
     @WithUserDetails(DemoService.ZENEKAR_1_FELHASZNALO)
@@ -234,13 +217,5 @@ class EsemenyServiceTest {
         )
                 .isInstanceOf(NincsJogosultsagAZenekarhozException.class)
                 .hasMessageContaining("Zenekar jogosultsággal nem módosítható más eseménye!");
-    }
-
-    @Test
-    void szavazatListTest() {
-        var esemenyId = demoServiceTestHelper.getZenekar1demoEsemenyId();
-        List<SzavazatTracklistDto> list = szavazatService.getEsemenyTrackList(esemenyId);
-        assertThat(list)
-                .hasSize(3);
     }
 }

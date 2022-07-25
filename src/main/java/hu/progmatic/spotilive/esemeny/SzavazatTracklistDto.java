@@ -42,5 +42,4 @@ public class SzavazatTracklistDto {
                 .mapToInt(Szavazat::getSzavazat)
                 .sum();
     }
-
 }

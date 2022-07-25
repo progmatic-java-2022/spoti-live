@@ -7,18 +7,17 @@ import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.tag.TagService;
 import hu.progmatic.spotilive.zene.FilterByTagCommand;
+import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -38,10 +37,20 @@ public class EsemenyTracklistController {
 
     @GetMapping("/esemeny/zenelista/{esemenyId}")
     public String esemenyTracklistBeltoltese(
-            Model model, @PathVariable("esemenyId") Integer esemenyId) {
-        model.addAttribute("esemenytracklist", szavazatService.getEsemenyTrackList(esemenyId));
-        model.addAttribute("esemenyDto", esemenyService.getEsemenyDtoById(esemenyId));
-        return "/esemenytracklist";
+            Model model, @PathVariable("esemenyId") Integer esemenyId,
+            @RequestParam("tagLista") Optional<List<String >> filter) {
+      FilterByTagCommand filterByTagCommand = FilterByTagCommand.builder()
+          .esemenyId(esemenyId)
+          .tagLista(filter.orElse(List.of()))
+          .build();
+
+      List<SzavazatTracklistDto> esemenyTrackList = szavazatService.getEsemenyTrackList(filterByTagCommand);
+
+      model.addAttribute("esemenytracklist", esemenyTrackList);
+      model.addAttribute("esemenyDto", esemenyService.getEsemenyDtoById(esemenyId));
+      model.addAttribute("filterCommand", filterByTagCommand);
+
+      return "/esemenytracklist";
     }
 
     @PostMapping("/esemeny/{esemenyId}/zenelista/{zeneId}")
@@ -58,7 +67,7 @@ public class EsemenyTracklistController {
         }
         catch (KreditException e) {
             model.addAttribute("kreditError", e.getMessage());
-            model.addAttribute("esemenytracklist", szavazatService.getEsemenyTrackList(esemenyId));
+            model.addAttribute("esemenytracklist", szavazatService.getEsemenyTrackList(FilterByTagCommand.builder().build()));
             return "/esemenytracklist";
         }
     }
@@ -78,7 +87,7 @@ public class EsemenyTracklistController {
     @PostMapping("/tracklist/filter")
     public String elkuld(Model model,
                          @ModelAttribute("filterCommand") FilterByTagCommand filter) {
-        model.addAttribute("zeneLista",zeneService.getZenekByTagList(filter));
+        model.addAttribute("esemenytracklist",zeneService.getZenekByTagList(filter));
         return "/esemenytracklist";
     }
 

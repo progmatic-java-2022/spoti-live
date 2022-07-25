@@ -93,10 +93,6 @@ public class ZeneService {
         return ZeneDto.factory(zene);
     }
 
-    public int count() {
-        return (int) zeneRepository.count();
-    }
-
     public void addTag(Integer zeneId, Integer tagId) {
         Zene zene = zeneRepository.getReferenceById(zeneId);
         Tag tag = tagRepository.getReferenceById(tagId);
@@ -107,15 +103,6 @@ public class ZeneService {
                 .build();
         zene.getTagToZeneEntityList().add(tagToZeneEntity);
         tag.getTagToZeneEntityList().add(tagToZeneEntity);
-    }
-
-    public List<TagDto> listAllTagDtoByZeneId(Integer zeneId) {
-        Zene zene = zeneRepository.getReferenceById(zeneId);
-        List<Tag> tagek = zene.getTagToZeneEntityList()
-                .stream()
-                .map(TagToZene::getTag)
-                .toList();
-        return tagek.stream().map(TagDto::factory).toList();
     }
 
     public void deleteTagFromZene(Integer tagId, Integer zeneId) {
@@ -157,8 +144,8 @@ public class ZeneService {
         var tagLista = command.tagLista;
         return zeneLista
                 .stream()
-                .map(ZeneDto::factory)
                 .filter(zene -> zene.hasCheckedTags(tagLista))
+                .map(ZeneDto::factory)
                 .toList();
 
 

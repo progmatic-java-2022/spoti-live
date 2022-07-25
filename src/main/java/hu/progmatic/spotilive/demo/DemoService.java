@@ -3,6 +3,7 @@ package hu.progmatic.spotilive.demo;
 import hu.progmatic.spotilive.email.EmailSenderService;
 import hu.progmatic.spotilive.esemeny.CreateEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
+import hu.progmatic.spotilive.esemeny.SzavazatCommand;
 import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
 import hu.progmatic.spotilive.felhasznalo.UjFelhasznaloCommand;
 import hu.progmatic.spotilive.felhasznalo.UserType;
@@ -145,6 +146,21 @@ public class DemoService {
 
     zeneService.addTag(demoZene.getId(), tagService.getTagDtoByNev(DEMO_TAG).getId());
     zeneService.addTag(demoZene.getId(), tagService.getTagDtoByNev(DEMO_HANGULAT_TAG).getId());
+
+    esemenyService.addSzavazat(SzavazatCommand.builder()
+            .esemenyId(demoEsemeny.getId())
+            .zeneId(demoZene.getId())
+            .build());
+
+    esemenyService.addSzavazat(SzavazatCommand.builder()
+            .esemenyId(demoEsemeny.getId())
+            .zeneId(demoZene.getId())
+            .build());
+
+    esemenyService.addSzavazat(SzavazatCommand.builder()
+            .esemenyId(demoEsemeny.getId())
+            .zeneId(demoZene3.getId())
+            .build());
 
   }
 }
