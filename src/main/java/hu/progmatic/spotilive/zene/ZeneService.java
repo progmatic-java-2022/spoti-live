@@ -26,6 +26,7 @@ public class ZeneService {
     @Autowired
     ZenekarService zenekarService;
 
+
     @Autowired
     private FelhasznaloService felhasznaloService;
 
@@ -52,6 +53,14 @@ public class ZeneService {
 
     public void deleteZeneById(Integer id) {
         exceptionDobasHaNincsJogosultsagAZenehez(id);
+        var zeneTagek = zeneRepository.getReferenceById(id)
+                .getTagToZeneEntityList()
+                .stream()
+                .map(tagToZene -> tagToZene.getTag().getId())
+                .toList();
+        for (var tag : zeneTagek) {
+            deleteTagFromZene(tag, id);
+        }
         zeneRepository.deleteById(id);
     }
 
@@ -115,7 +124,6 @@ public class ZeneService {
                 .orElseThrow();
         zene.getTagToZeneEntityList().remove(tagToZene);
         tag.getTagToZeneEntityList().remove(tagToZene);
-
     }
 
     public Zene getZeneById(Integer zeneId) {
@@ -147,7 +155,6 @@ public class ZeneService {
                 .filter(zene -> zene.hasCheckedTags(tagLista))
                 .map(ZeneDto::factory)
                 .toList();
-
 
 
     }
