@@ -29,7 +29,7 @@ class EmailSenderServiceTest {
       assertThat(emails).hasSize(1);
       var email = emails.get(0);
       assertThat(email.getHeaderValue("Subject")).isEqualTo("Test");
-      assertThat(email.getBody()).isEqualTo("Test Body");
+      assertThat(email.getBody()).contains("Test Body");
       assertThat(email.getHeaderValue("To")).isEqualTo("to@here.com");
     }
 
