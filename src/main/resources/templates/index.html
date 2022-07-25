@@ -17,14 +17,13 @@
         crossorigin="anonymous"></script>
 
 
-<nav class="navbar navbar-expand  bg-dark sticky-top">
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg sticky-top">
     <div class="container-fluid">
-        <a class="nav-link"
-           th:text="${'Hello ' + #authentication.getName() + '!'}"
-           href="#">
-            Helló ***</a>
+        <div class="navbar-brand"
+           th:text="${'Hello ' + #authentication.getName() + '!'}">
+            Helló ***</div>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link"
                        href="esemenyek.html"
