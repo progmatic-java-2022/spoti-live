@@ -32,7 +32,11 @@ public class KezdolapController {
     }
     @ModelAttribute("zenekarFelhasznalo")
     public boolean zenekarFelhasznalo(){
-        return felhasznaloService.hasRole(UserType.Roles.ESEMENY_KEZELES_ROLE);
+        return felhasznaloService.hasRole(UserType.Roles.ZENE_KEZELES_ROLE);
+    }
+    @ModelAttribute("zenekarUjFelhasznalo")
+    public boolean zenekarUjFelhasznalo(){
+        return felhasznaloService.hasRole(UserType.Roles.NEWGUEST_CREATE_ROLE);
     }
     @ModelAttribute("adminFelhasznalo")
     public boolean adminFelhasznalo(){

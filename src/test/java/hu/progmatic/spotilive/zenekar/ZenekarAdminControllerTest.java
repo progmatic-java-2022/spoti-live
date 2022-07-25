@@ -32,9 +32,9 @@ class ZenekarAdminControllerTest {
 
 
     @Test
-    @WithMockUser
+    @WithMockUser(UserType.Roles.ZENEKAR_KEZELES_ROLE)
     void oldalbetolteseTest() throws Exception {
-        oldalBetolteseSzovegLatszik("Demo zenekar");
+        oldalBetolteseSzovegLatszik("Demo leírás");
     }
 
     private void oldalBetolteseSzovegLatszik(String szoveg) throws Exception {

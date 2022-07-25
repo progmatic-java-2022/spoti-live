@@ -4,6 +4,7 @@ import hu.progmatic.spotilive.esemeny.CreateEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.esemeny.SzavazatCommand;
 import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
+import hu.progmatic.spotilive.felhasznalo.MeghivoFelhasznalasaCommand;
 import hu.progmatic.spotilive.felhasznalo.UjFelhasznaloCommand;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.tag.TagDto;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Transactional
 @Service
@@ -56,8 +58,17 @@ public class DemoService {
 
   @EventListener(ContextRefreshedEvent.class)
   public void init() throws Exception {
+    var meghivo = MeghivoFelhasznalasaCommand.builder()
+            .felhasznaloNev("guest")
+            .jelszo1("guest")
+            .jelszo2("guest")
+            .kreditMennyiseg(10)
+            .uuid(UUID.randomUUID().toString())
+            .build();
+
     if (zenekarService.count() == 0) {
       felhasznaloService.createAlapFelhasznalok();
+      felhasznaloService.addGuest(meghivo);
       var securityContextHandler = new FakeAuthenticationHandler(authenticationConfiguration);
       securityContextHandler.loginAsUser(ADMIN_FELHASZNALO, "adminpass");
       createTagek();

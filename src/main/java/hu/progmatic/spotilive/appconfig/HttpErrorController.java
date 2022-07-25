@@ -24,6 +24,8 @@ public class HttpErrorController implements ErrorController {
 
       if (statusCode == HttpStatus.NOT_FOUND.value()) {
         setTitle(model, "A kért oldal nem található");
+      } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
+        setTitle(model, "A kért oldalhoz nincsen jogosultsága");
       } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
         setTitle(model, "A kérés feldolgozása közben váratlan hiba történt");
       }
