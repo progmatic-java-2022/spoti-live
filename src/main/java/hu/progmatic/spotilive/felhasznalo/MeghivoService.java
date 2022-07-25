@@ -65,6 +65,9 @@ public class MeghivoService {
 
 
     public void emailKuldes(EmailCommand emailCommand) {
-        emailSenderService.emailKuldes(emailCommand.getEmailcim(),emailCommand.getSubject(),"http://localhost:8082/public/meghivo/" + emailCommand.getMeghivoUuid());
+        emailSenderService.emailKuldes(
+                emailCommand.getEmailcim(),
+                emailCommand.getSubject(),
+                emailCommand.getMeghivoUuid());
     }
 }
