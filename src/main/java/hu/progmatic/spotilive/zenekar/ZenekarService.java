@@ -14,10 +14,8 @@ import java.util.List;
 @Service
 public class ZenekarService {
 
-    public static final String TEST_ZENEKAR = "Teszt zenekar 1";
     @Autowired
     private ZenekarRepository zenekarRepository;
-
 
     @RolesAllowed(UserType.Roles.ZENEKAR_KEZELES_ROLE)
     public ZenekarDto createZenekar(ZenekarDto zenekarDto) {
@@ -52,7 +50,7 @@ public class ZenekarService {
     }
 
     public ZenekarDto getByName(String nev) {
-        return ZenekarDto.factory(zenekarRepository.getZenekarByNevContainingIgnoreCase(nev));
+        return ZenekarDto.factory(zenekarRepository.getZenekarByNev(nev));
     }
 
     public ZenekarDto getById(Integer id) {
@@ -60,11 +58,24 @@ public class ZenekarService {
     }
 
     public ZenekarDto editZenekar(ZenekarDto dto) {
+        if (zenekarRepository.findByNev(dto.getNev()).isPresent() &&
+        !zenekarRepository.getZenekarByNev(dto.getNev()).getId().equals(dto.getId())) {
+            throw new AddZenekarExeption("Zenekar már létezik ilyen névvel!");
+        }
+        if (zenekarRepository.findByEmail(dto.getEmail()).isPresent() &&
+        !zenekarRepository.getZenekarByEmail(dto.getEmail()).getId().equals(dto.getId())) {
+            throw new AddZenekarExeption("Zenekar már létezik ilyen email címmel!");
+        }
+        if (dto.getTelefonszam() != null && zenekarRepository.findByTelefonszam(dto.getTelefonszam()).isPresent() &&
+        !zenekarRepository.getZenekarByTelefonszam(dto.getTelefonszam()).getId().equals(dto.getId())) {
+            throw new AddZenekarExeption("Zenekar már létezik ilyen telefonszámmal'");
+        }
         Zenekar zenekar = zenekarRepository.getReferenceById(dto.getId());
         zenekar.setNev(dto.getNev());
         zenekar.setEmail(dto.getEmail());
         zenekar.setLeiras(dto.getLeiras());
         zenekar.setVaros(dto.getVaros());
+        zenekar.setTelefonszam(dto.getTelefonszam());
         return ZenekarDto.factory(zenekar);
     }
 

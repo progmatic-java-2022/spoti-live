@@ -26,7 +26,7 @@
 <!-- Modal -->
 <div class="modal fade" id="filterModal" tabindex="-1"
      aria-labelledby="filterModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5>Szűrés</h5>
@@ -35,7 +35,7 @@
             <div class="modal-body">
                 <form action="#" th:action="@{/zenecontrol/filter}" th:object="${filterCommand}"
                       method="POST">
-                    <table th:each="tagTipus : ${tagTipusok}">
+                    <table style="width: 100%" th:each="tagTipus : ${tagTipusok}">
                         <thead>
                         <tr>
                             <th th:text="${tagTipus}">tag tipus</th>
@@ -43,10 +43,9 @@
                         </thead>
 
                         <tbody>
-
+                        <td>
                         <div class="container">
-
-                            <select class="form-control selectpicker" id="multiple-hobbies" th:field="*{tagLista}"
+                            <select class="form-control selectpicker"  data-width="100%" id="multiple-hobbies" th:field="*{tagLista}"
                                     multiple="multiple">
 
                                 <option th:each="tag :${osszesTag}"
@@ -54,6 +53,7 @@
                                         th:value="${tag.tagNev}" th:text="${tag.tagNev}">
                             </select>
                         </div>
+                        </td>
                         </tbody>
                     </table>
                     <div class="modal-footer">
@@ -67,7 +67,7 @@
     </div>
 </div>
 
-<table class="table table-success table-striped">
+<table class="table table-dark table-striped">
     <thead>
     <tr>
         <th th:if="${adminModositasJogVan}" scope="col">Zenekar</th>
@@ -114,7 +114,7 @@
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body" th:each="kategoria : ${zeneTagSzerkeztes.tagByKategoria}">
-                                    <table class="table table-success table-striped">
+                                    <table class="table table-dark table-striped">
                                         <thead class="table-dark">
                                         <tr>
                                             <th scope="col" th:text="${kategoria.getKey().getTagKategoriaString()}">

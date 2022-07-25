@@ -32,14 +32,14 @@ public class Felhasznalo {
     @ManyToOne
     private Zenekar zenekar;
 
-    @OneToMany(mappedBy = "felhasznalo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "felhasznalo", orphanRemoval = true)
     @Builder.Default
     private List<Szavazat> szavazatok = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "felhasznalo")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "felhasznalo", orphanRemoval = true)
     @Builder.Default
     private Meghivo meghivo = null;
-    @OneToOne(mappedBy = "felhasznalo", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "felhasznalo", cascade = CascadeType.ALL, orphanRemoval = true)
     private Kredit kredit;
 
 }

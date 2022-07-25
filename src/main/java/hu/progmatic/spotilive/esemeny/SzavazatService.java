@@ -21,6 +21,9 @@ public class SzavazatService {
     private FelhasznaloService felhasznaloService;
     @Autowired
     private EsemenyService esemenyService;
+
+    public List<SzavazatTracklistDto> getEsemenyTrackList(Integer esemenyId) {
+        var esemeny = esemenyService.getEsemenyById(esemenyId);
     @Autowired
     private ZeneService zeneService;
     @Autowired
