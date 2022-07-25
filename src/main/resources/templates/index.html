@@ -48,7 +48,7 @@
                        th:href="@{/tag}"
                        target="content_frame">Tag karbantartas</a>
                 </li>
-                <li class="nav-item" th:if="${adminFelhasznalo}">
+                <li class="nav-item" th:if="${adminFelhasznalo} or ${zenekarUjFelhasznalo}">
                     <a class="nav-link"
                        href="felhasznalo.html"
                        th:href="@{/felhasznalo}"
