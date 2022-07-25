@@ -11,4 +11,5 @@ public class KreditCommand {
 
     @Builder.Default
     private Integer kreditekSzama = 0;
+    private String emailCim;
 }

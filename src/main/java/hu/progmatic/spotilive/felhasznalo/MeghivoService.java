@@ -1,5 +1,7 @@
 package hu.progmatic.spotilive.felhasznalo;
 
+import hu.progmatic.spotilive.email.EmailCommand;
+import hu.progmatic.spotilive.email.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ public class MeghivoService {
     private FelhasznaloService felhasznaloService;
     @Autowired
     KreditRepository kreditRepository;
+
+    @Autowired
+    private EmailSenderService emailSenderService;
 
 
     public MeghivoDto meghivoLetrehozasa(Integer kreditMennyiseg) {
@@ -56,5 +61,10 @@ public class MeghivoService {
 
     public void deleteById(Integer id) {
         meghivoRepository.deleteById(id);
+    }
+
+
+    public void emailKuldes(EmailCommand emailCommand) {
+        emailSenderService.emailKuldes(emailCommand.getEmailcim(),emailCommand.getSubject(),"http://localhost:8082/public/meghivo/" + emailCommand.getMeghivoUuid());
     }
 }

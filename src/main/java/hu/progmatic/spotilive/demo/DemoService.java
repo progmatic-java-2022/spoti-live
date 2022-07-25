@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.demo;
 
+import hu.progmatic.spotilive.email.EmailSenderService;
 import hu.progmatic.spotilive.esemeny.CreateEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
@@ -53,6 +54,10 @@ public class DemoService {
   @Autowired
   private AuthenticationConfiguration authenticationConfiguration;
 
+  @Autowired
+  private EmailSenderService emailSenderService;
+
+
   @EventListener(ContextRefreshedEvent.class)
   public void init() throws Exception {
     if (zenekarService.count() == 0) {
@@ -64,7 +69,11 @@ public class DemoService {
       createDemoZenekar(PREFIX2, "3333", ZENEKAR_2_FELHASZNALO);
       securityContextHandler.resetContext();
     }
+
+    emailSenderService.emailKuldes("csakos05@gmail.com","subject","body");
   }
+
+
 
   private void createTagek() {
     tagService.createTag(TagDto.builder()

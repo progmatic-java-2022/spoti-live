@@ -1,5 +1,7 @@
 package hu.progmatic.spotilive.felhasznalo;
 
+import hu.progmatic.spotilive.email.EmailCommand;
+import hu.progmatic.spotilive.email.EmailSenderService;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.qrkod.QRCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,16 @@ public class UjVendegController {
     public String ujMeghivo(Model model, @ModelAttribute KreditCommand kreditCommand) {
         MeghivoDto meghivo = meghivoService.meghivoLetrehozasa(kreditCommand.getKreditekSzama());
         model.addAttribute("meghivoUUID", meghivo.getUuid());
+
+        if (!kreditCommand.getEmailCim().equals("")) {
+            meghivoService.emailKuldes(EmailCommand.builder()
+                    .meghivoUuid(meghivo.getUuid())
+                    .emailcim(kreditCommand.getEmailCim())
+                    .build());
+            return "/qrkod";
+        }
         return "/qrkod";
+
     }
 
     @GetMapping("/public/meghivo/{uuid}")

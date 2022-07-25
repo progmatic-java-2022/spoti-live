@@ -22,10 +22,10 @@ import javax.mail.internet.MimeMessage;
                 MimeMessage mimeMessage = mailSender.createMimeMessage();
                 MimeMessageHelper helper =
                         new MimeMessageHelper(mimeMessage, "utf-8");
-                helper.setText(body, true);
+                helper.setText(emailBodyBuilder(to,body), true);
                 helper.setTo(to);
                 helper.setSubject(subject);
-                helper.setFrom("carnivora.project@gmail.com");
+                helper.setFrom("spotilive@gmail.com");
                 mailSender.send(mimeMessage);
             } catch (Exception e) {
                 log.warn("Email küldési hiba! " + e.getMessage());
@@ -35,11 +35,11 @@ import javax.mail.internet.MimeMessage;
 
         public static String emailBodyBuilder(String felhasznalo, String link) {
             String body = "";
-            body += String.format("<p>Kedves %s!</p>", felhasznalo);
+            body += String.format("<p>Kedves %s!</p>", felhasznalo.split("@")[0]);
             body += "<p>Az alábbi linken tudod megerősíteni a regisztrációt.</p>";
-            body += String.format("<a href=\"%s\">Megerősítő link</a>", link);
+            body += String.format("<a href=\"%s\">Meghívó regisztrációs linkje</a>", link);
             body += "<p>Üdvözlettel:<br>";
-            body += "Carnivora csapat</p>";
+            body += "Spotilive csapat</p>";
             return body;
         }
 }
