@@ -35,10 +35,14 @@ public class UjVendegController {
     @GetMapping("/public/meghivo/{uuid}")
     public String vendeg(
             @PathVariable String uuid,
-            Model model
+            Model model,
+            @ModelAttribute KreditCommand kreditCommand
     ) {
+        MeghivoDto meghivo = meghivoService.meghivoLetrehozasa(kreditCommand.getKreditekSzama());
         model.addAttribute("meghivofelhasznalasacommand",
                 MeghivoFelhasznalasaCommand.builder().uuid(uuid).build());
+        model.addAttribute("meghivoUUID", meghivo.getUuid());
+        model.addAttribute("meghivofelhasznalva", meghivoService.meghivoFelVanHasznalva(uuid));
         return "ujvendegletrehozasa";
     }
 
@@ -90,5 +94,6 @@ public class UjVendegController {
     @ModelAttribute("kreditek")
     public String getKreditek() {
         return esemenyService.getKreditekSzama();}
+
 
 }

@@ -16,8 +16,8 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 
-<h3>Új vendég létrehozása</h3>
-<form
+<h3 th:if="${meghivofelhasznalva}">Ezt a meghívót már felhasználták.</h3>
+<form th:if="${!meghivofelhasznalva}"
         th:action="@{/public/meghivo}" method="post"
         th:object="${meghivofelhasznalasacommand}">
     <div>
@@ -74,7 +74,7 @@
         </label>
         </div>
         <div>
-        <input class="btn btn-primary" type="submit" value="Mentés"/>
+        <input class="btn btn-success" type="submit" value="Mentés"/>
         </div>
     </div>
 </form>
