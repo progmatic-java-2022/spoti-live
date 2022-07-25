@@ -5,6 +5,7 @@ import hu.progmatic.spotilive.zene.Zene;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -22,6 +23,7 @@ public class Szavazat {
     private Zene zene;
     @Builder.Default
     private Integer szavazat = 0;
+    @NotNull
     @ManyToOne
     private Felhasznalo felhasznalo;
 

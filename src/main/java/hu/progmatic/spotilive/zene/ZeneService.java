@@ -144,8 +144,8 @@ public class ZeneService {
         var tagLista = command.tagLista;
         return zeneLista
                 .stream()
-                .map(ZeneDto::factory)
                 .filter(zene -> zene.hasCheckedTags(tagLista))
+                .map(ZeneDto::factory)
                 .toList();
 
 

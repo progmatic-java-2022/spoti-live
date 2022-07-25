@@ -6,6 +6,7 @@ import hu.progmatic.spotilive.felhasznalo.Felhasznalo;
 import hu.progmatic.spotilive.felhasznalo.NincsJogosultsagAZenekarhozException;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zene.CreateZeneCommand;
+import hu.progmatic.spotilive.zene.FilterByTagCommand;
 import hu.progmatic.spotilive.zene.ZeneDto;
 import hu.progmatic.spotilive.zene.ZeneService;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
@@ -24,7 +25,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@WithMockUser(roles = UserType.Roles.ESEMENY_KEZELES_ROLE)
 class EsemenyServiceTest {
     @Autowired
     private EsemenyService esemenyService;
@@ -43,9 +43,17 @@ class EsemenyServiceTest {
     @Autowired
     private SzavazatService szavazatService;
 
+    private  FilterByTagCommand command;
+
     @BeforeEach
     void setUp() {
         demoZenekar1Id = demoServiceTestHelper.getdemoZeneKar1Id();
+        command = FilterByTagCommand
+                .builder()
+                .tagLista(List.of())
+                .esemenyId(demoServiceTestHelper.getZenekar1demoEsemenyId())
+                .build();
+
     }
 
     @Test
@@ -210,5 +218,4 @@ class EsemenyServiceTest {
                 .isInstanceOf(NincsJogosultsagAZenekarhozException.class)
                 .hasMessageContaining("Zenekar jogosultsággal nem módosítható más eseménye!");
     }
-
 }
