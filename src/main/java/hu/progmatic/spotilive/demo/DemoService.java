@@ -25,14 +25,15 @@ import java.util.UUID;
 @Transactional
 @Service
 public class DemoService {
+    public static final String GUEST_FElHASZNALO = "guest";
 
     public static final String ADMIN_FELHASZNALO = "admin";
     public static final String ZENEKAR_1_FELHASZNALO = "zenekar1";
     public static final String ZENEKAR_2_FELHASZNALO = "zenekar2";
 
+
     public static final String DEMO_ZENEKAR = "Demo zenekar";
     public static final String DEMO_ESEMENY = "Demo esemény";
-
     public static final String DEMO_TAG = "Demo tag";
     public static final String DEMO_HANGULAT_TAG = "Hangulat tag";
     public static final String DEMO_ZENE = "Demo zene cím";
@@ -68,7 +69,7 @@ public class DemoService {
                     .jelszo2("guest")
                     .uuid(meghivo.getUuid())
                     .kreditMennyiseg(meghivo.getKredit().getKreditMennyiseg())
-                            .felhasznaloNev("guest")
+                            .felhasznaloNev(GUEST_FElHASZNALO)
                     .build());
             var securityContextHandler = new FakeAuthenticationHandler(authenticationConfiguration);
             securityContextHandler.loginAsUser(ADMIN_FELHASZNALO, "adminpass");

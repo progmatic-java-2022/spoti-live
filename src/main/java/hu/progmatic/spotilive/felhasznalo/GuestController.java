@@ -13,9 +13,6 @@ import java.util.List;
 public class GuestController {
     @Autowired
     EsemenyService esemenyService;
-    @Autowired
-    private ZenekarService zenekarService;
-
 
     @GetMapping("/guestindex")
     public String esemenyekGuestOldalBetoltes(Model model) {
