@@ -43,7 +43,7 @@ public class DemoService {
     public static final String PREFIX1 = "1_zenekar_";
     public static final String PREFIX2 = "2_zenekar_";
     @Autowired
-    ZenekarService zenekarService;
+    private ZenekarService zenekarService;
     @Autowired
     private EsemenyService esemenyService;
     @Autowired
