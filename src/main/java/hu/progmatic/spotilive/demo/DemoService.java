@@ -45,8 +45,6 @@ public class DemoService {
     private EsemenyService esemenyService;
     @Autowired
     private ZeneService zeneService;
-
-
     @Autowired
     private TagService tagService;
     @Autowired
@@ -58,8 +56,17 @@ public class DemoService {
 
     @EventListener(ContextRefreshedEvent.class)
     public void init() throws Exception {
+        var meghivo = meghivoService.meghivoLetrehozasa(10);
+
         if (zenekarService.count() == 0) {
             felhasznaloService.createAlapFelhasznalok();
+            meghivoService.meghivoFelhasznalasa(MeghivoFelhasznalasaCommand.builder()
+                    .jelszo1("guest")
+                    .jelszo2("guest")
+                    .uuid(meghivo.getUuid())
+                    .kreditMennyiseg(meghivo.getKredit().getKreditMennyiseg())
+                            .felhasznaloNev("guest")
+                    .build());
             var securityContextHandler = new FakeAuthenticationHandler(authenticationConfiguration);
             securityContextHandler.loginAsUser(ADMIN_FELHASZNALO, "adminpass");
             createTagek();
