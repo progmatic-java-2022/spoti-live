@@ -15,9 +15,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-<ul>
-    <table class="table table-dark table-striped">
-        <thead>
+    <table class="table table-dark table-striped" style="width: 100%">
+        <thead style="width: 100%">
         <tr>
             <th scope="col">Nev</th>
             <th scope="col">Email</th>
@@ -28,7 +27,7 @@
             <th scope="col"></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody style="width: 100%">
         <tr th:each="zenekar : ${zenekarLista}">
             <td th:text = "${zenekar.nev}">Nev</td>
             <td th:text = "${zenekar.email}">Email</td>
@@ -49,7 +48,7 @@
                     </div>
                 </div>
             </td>
-
+            <td></td>
         </tr>
         </tbody>
     </table>
@@ -142,7 +141,6 @@
         </div>
     </form>
 
-</ul>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (() => {
