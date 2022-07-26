@@ -59,18 +59,6 @@ public class DemoService {
   private EmailSenderService emailSenderService;
 
 
-  @EventListener(ContextRefreshedEvent.class)
-  public void init() throws Exception {
-    if (zenekarService.count() == 0) {
-      felhasznaloService.createAlapFelhasznalok();
-      var securityContextHandler = new FakeAuthenticationHandler(authenticationConfiguration);
-      securityContextHandler.loginAsUser(ADMIN_FELHASZNALO, "adminpass");
-      createTagek();
-      createDemoZenekar(PREFIX1, "2222", ZENEKAR_1_FELHASZNALO);
-      createDemoZenekar(PREFIX2, "3333", ZENEKAR_2_FELHASZNALO);
-      securityContextHandler.resetContext();
-    }
-  }
     @EventListener(ContextRefreshedEvent.class)
     public void init() throws Exception {
         var meghivo = meghivoService.meghivoLetrehozasa(10);

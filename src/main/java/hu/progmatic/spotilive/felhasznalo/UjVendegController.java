@@ -59,7 +59,7 @@ public class UjVendegController {
     public String vendeg(
             @PathVariable String uuid,
             Model model,
-            @ModelAttribute KreditCommand kreditCommand
+            @ModelAttribute MeghivoKredittelCommand kreditCommand
     ) {
         MeghivoDto meghivo = meghivoService.meghivoLetrehozasa(kreditCommand.getKreditekSzama());
         model.addAttribute("meghivofelhasznalasacommand",
