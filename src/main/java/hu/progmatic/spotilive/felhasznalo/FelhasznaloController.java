@@ -86,6 +86,10 @@ public class FelhasznaloController {
     return Arrays.stream(UserType.values())
         .map(UserType::name).toList();
   }
+  @ModelAttribute("isAdmin")
+  public boolean isAdmin() {
+    return felhasznaloService.isAdmin();
+  }
 
   @ModelAttribute("meghivoKredittelCommand")
   public MeghivoKredittelCommand kreditCommand() {

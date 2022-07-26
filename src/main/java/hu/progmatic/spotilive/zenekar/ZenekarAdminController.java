@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.zenekar;
 
+import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ public class ZenekarAdminController {
 
     @Autowired
     private ZenekarService zenekarService;
+    @Autowired
+    private FelhasznaloService felhasznaloService;
+
 
     @GetMapping("/zenekarKarbantartas")
     public String oldalbetoltes() {
@@ -95,5 +99,10 @@ public class ZenekarAdminController {
     @ModelAttribute("ujZenekarError")
     public String zenekarError() {
         return null;
+    }
+
+    @ModelAttribute("isAdmin")
+    public boolean isAdmin(){
+        return felhasznaloService.isAdmin();
     }
 }

@@ -123,7 +123,10 @@ public class EsemenyTracklistController {
         return esemenyService.vanElegKredit();
     }
 
-
+    @ModelAttribute("isAdmin")
+    public boolean isAdmin(){
+        return felhasznaloService.isAdmin();
+    }
 
     @ModelAttribute("osszesTag")
     public List<TagDto> osszesTag() {
