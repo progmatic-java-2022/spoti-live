@@ -1,9 +1,14 @@
 package hu.progmatic.spotilive.felhasznalo;
 
+import hu.progmatic.spotilive.email.EmailCommand;
+import hu.progmatic.spotilive.email.EmailException;
+import hu.progmatic.spotilive.email.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Transactional
@@ -17,6 +22,9 @@ public class MeghivoService {
     @Autowired
     KreditRepository kreditRepository;
 
+    @Autowired
+    private EmailSenderService emailSenderService;
+
 
     public MeghivoDto meghivoLetrehozasa(Integer kreditMennyiseg) {
         Kredit kredit = kreditRepository.save(Kredit.builder().build());
@@ -28,7 +36,7 @@ public class MeghivoService {
     }
 
     public void meghivoFelhasznalasa(MeghivoFelhasznalasaCommand command) {
-        if(!meghivoFelVanHasznalva(command.getUuid())) {
+        if (!meghivoFelVanHasznalva(command.getUuid())) {
             var felhasznalo = felhasznaloService.addGuest(MeghivoFelhasznalasaCommand.builder()
                     .uuid(command.getUuid())
                     .felhasznaloNev(command.getFelhasznaloNev())
@@ -56,5 +64,33 @@ public class MeghivoService {
 
     public void deleteById(Integer id) {
         meghivoRepository.deleteById(id);
+    }
+
+
+
+    public List<MeghivoKikuldeseEredmenyDto> meghivokKikuldeseEmailben(MeghivoKredittelCommand meghivoKredittelCommand) {
+        String[] mailTomb = meghivoKredittelCommand.getEmailCim().split("[\\s,;]+");
+        List<MeghivoKikuldeseEredmenyDto> eredmenyDtoList = new ArrayList<>();
+        for (String mailCim : mailTomb){
+            var meghivo = meghivoLetrehozasa(meghivoKredittelCommand.getKreditekSzama());
+
+            var emailCommand = EmailCommand.builder()
+                    .emailcim(mailCim)
+                    .meghivoUuid(meghivo.getUuid())
+                    .build();
+            var eredmeny = MeghivoKikuldeseEredmenyDto.builder()
+                    .emailCim(mailCim)
+                    .kreditekSzama(meghivoKredittelCommand.getKreditekSzama())
+                    .sikeresKuldes(true)
+                    .build();
+            try{
+                emailSenderService.emailKuldes(emailCommand);
+            } catch (EmailException emailException){
+                eredmeny.setSikeresKuldes(false);
+            }
+
+           eredmenyDtoList.add(eredmeny);
+        }
+    return eredmenyDtoList;
     }
 }

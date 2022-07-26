@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.demo;
 
+import hu.progmatic.spotilive.email.EmailSenderService;
 import hu.progmatic.spotilive.esemeny.CreateEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.esemeny.SzavazatCommand;
@@ -56,6 +57,10 @@ public class DemoService {
     private AuthenticationConfiguration authenticationConfiguration;
     @Autowired
     private MeghivoService meghivoService;
+
+  @Autowired
+  private EmailSenderService emailSenderService;
+
 
     @EventListener(ContextRefreshedEvent.class)
     public void init() throws Exception {
