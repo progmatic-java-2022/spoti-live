@@ -68,22 +68,54 @@
                 <option th:each="roleOption : ${allRole}" th:value="${roleOption}" th:text="${roleOption}"></option>
             </select>
         </label>
-        <input class="btn btn-success" type="submit" value="Hozzáad"/>
+        <input class="btn btn-primary" type="submit" value="Hozzáad"/>
     </div>
 </form>
 <hr>
-<h3>Új vendég felhasználó létrehozása</h3>
-<form th:action="@{'/public/ujmeghivo'}" method="post" th:object="${kreditCommand}">
-    <label>
-        <input type="number"
-               class="form-control"
-               name="kreditek"
-               placeholder="Kreditek"
+    <h3>Új vendég felhasználó létrehozása</h3>
+    <form th:action="@{'/public/ujmeghivo'}" method="post" th:object="${meghivoKredittelCommand}">
+        <label>
+            <input type="number"
+                   class="form-control"
+                   name="kreditek"
+                   placeholder="Kreditek"
+                   th:field="*{kreditekSzama}"
+                   th:classappend="${#fields.hasErrors('kreditekSzama')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('kreditekSzama')}"
+                 th:errors="*{kreditekSzama}">
+                Hibaüzenet
+            </div>
 
-               th:field="*{kreditekSzama}"/>
-    </label>
-    <input type="submit" class="btn btn-success" value="Létrehozás"/>
-</form>
+        </label>
+        <label>
+            <textarea class="form-control"
+                      placeholder="e-mail"
+                      th:field="*{emailCim}"
+                      >
+            </textarea>
+<!--            <input type="text"-->
+<!--                   class="form-control"-->
+<!--                   name="e-mail"-->
+<!--                   placeholder="e-mail"-->
+
+<!--                   th:field="*{emailCim}"/>-->
+
+        </label>
+        <input type="submit" class="btn btn-primary"  value="Létrehozás"/>
+    </form>
+
 <hr>
+<!--<form th:action="@{'/public/meghivo/{kredit}'(kredit=${meghivofelhasznalasacommand.kreditMennyiseg})}" th:object="${meghivofelhasznalasacommand}">-->
+<!--    <label>-->
+<!--        <input type="number"-->
+<!--               class="form-control"-->
+<!--               name="kreditmennyiseg"-->
+<!--               placeholder="Kreditek"-->
+<!--               th:field="*{kreditMennyiseg}"/>-->
+<!--    </label>-->
+<!--    <input type="submit" class="btn btn-danger" value="Létrehozás próba"/>-->
+<!--</form>-->
+<h3 th:text="'Bejelentkezett felhasználó id: ' + ${userId}">Felhasználó id: 2</h3>
 </body>
 </html>

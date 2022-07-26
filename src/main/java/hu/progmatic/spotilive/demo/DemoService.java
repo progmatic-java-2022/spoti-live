@@ -1,5 +1,6 @@
 package hu.progmatic.spotilive.demo;
 
+import hu.progmatic.spotilive.email.EmailSenderService;
 import hu.progmatic.spotilive.esemeny.CreateEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.esemeny.SzavazatCommand;
@@ -31,7 +32,10 @@ public class DemoService {
 
     public static final String DEMO_ZENEKAR = "Demo zenekar";
     public static final String DEMO_ESEMENY = "Demo esemény";
-
+    public static final String DEMO_ESEMENY2 = "Demo esemény 2";
+    public static final String DEMO_ESEMENY3 = "Demo esemény 3";
+    public static final String DEMO_ESEMENY4 = "Demo esemény 4";
+    public static final String DEMO_ESEMENY5 = "Demo esemény 5";
     public static final String DEMO_TAG = "Demo tag";
     public static final String DEMO_HANGULAT_TAG = "Hangulat tag";
     public static final String DEMO_ZENE = "Demo zene cím";
@@ -40,7 +44,7 @@ public class DemoService {
     public static final String PREFIX1 = "1_zenekar_";
     public static final String PREFIX2 = "2_zenekar_";
     @Autowired
-    ZenekarService zenekarService;
+    private ZenekarService zenekarService;
     @Autowired
     private EsemenyService esemenyService;
     @Autowired
@@ -53,6 +57,10 @@ public class DemoService {
     private AuthenticationConfiguration authenticationConfiguration;
     @Autowired
     private MeghivoService meghivoService;
+
+  @Autowired
+  private EmailSenderService emailSenderService;
+
 
     @EventListener(ContextRefreshedEvent.class)
     public void init() throws Exception {
@@ -122,6 +130,29 @@ public class DemoService {
                 .zenekarId(demoZenekar.getId())
                 .build());
 
+        var demoEsemeny2 = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
+                .nev(prefix + DEMO_ESEMENY2)
+                .idoPont(LocalDateTime.parse("2022-02-03T10:10"))
+                .zenekarId(demoZenekar.getId())
+                .build());
+
+        var demoEsemeny3 = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
+                .nev(prefix + DEMO_ESEMENY3)
+                .idoPont(LocalDateTime.parse("2022-08-04T10:10"))
+                .zenekarId(demoZenekar.getId())
+                .build());
+
+        var demoEsemeny4 = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
+                .nev(prefix + DEMO_ESEMENY4)
+                .idoPont(LocalDateTime.parse("2022-08-05T10:10"))
+                .zenekarId(demoZenekar.getId())
+                .build());
+
+        var demoEsemeny5 = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
+                .nev(prefix + DEMO_ESEMENY5)
+                .idoPont(LocalDateTime.parse("2022-08-09T10:10"))
+                .zenekarId(demoZenekar.getId())
+                .build());
 
         var demoZene = zeneService.createZene(CreateZeneCommand.builder()
                 .cim(prefix + DEMO_ZENE)
