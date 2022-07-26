@@ -92,11 +92,6 @@ public class ZenekarAdminController {
         return ZenekarDto.builder().build();
     }
 
-    @ModelAttribute("adminCim")
-    public String adminCim() {
-        return "Hello Admin";
-    }
-
     @ModelAttribute("ujZenekarError")
     public String zenekarError() {
         return null;

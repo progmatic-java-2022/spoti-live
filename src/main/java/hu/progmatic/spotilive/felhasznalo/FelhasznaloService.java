@@ -12,6 +12,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static hu.progmatic.spotilive.demo.DemoService.ADMIN_FELHASZNALO;
 
@@ -53,8 +54,14 @@ public class FelhasznaloService {
   public Felhasznalo addGuest(MeghivoFelhasznalasaCommand command) {
     if (felhasznaloRepository.findByNev(command.getFelhasznaloNev()).isPresent()) {
       throw new FelhasznaloLetrehozasException(
-              "nev",
+              "felhasznaloNev",
               "Ilyen névvel már létezik felhasználó!"
+      );
+    }
+    if (command.getFelhasznaloNev().isEmpty()) {
+      throw new FelhasznaloLetrehozasException(
+              "felhasznaloNev",
+              "Felhasználónév megadása kötelező!"
       );
     }
     Felhasznalo felhasznalo = Felhasznalo.builder()
@@ -157,7 +164,6 @@ public class FelhasznaloService {
     if (felhasznaloRepository.count() == 0) {
       add(new UjFelhasznaloCommand(ADMIN_FELHASZNALO, "adminpass", UserType.ADMIN, null));
       add(new UjFelhasznaloCommand("user", "user", UserType.USER, null));
-      add(new UjFelhasznaloCommand("guest", "guest", UserType.GUEST, null));
     }
   }
 }

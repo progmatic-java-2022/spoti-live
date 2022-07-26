@@ -17,7 +17,7 @@ public class TagDto {
     private Integer id;
     @NotBlank(message = "Nem lehet üres!")
     private String tagNev;
-    @NotNull(message = "Műfaj megadása kötelező!")
+    @NotNull(message = "Kategória megadása kötelező!")
     private TagKategoria tagKategoria;
     private List<ZeneDto> zeneDtoList;
 

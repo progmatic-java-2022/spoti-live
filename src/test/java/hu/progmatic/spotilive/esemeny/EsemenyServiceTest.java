@@ -3,6 +3,7 @@ package hu.progmatic.spotilive.esemeny;
 import hu.progmatic.spotilive.DemoServiceTestHelper;
 import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.felhasznalo.Felhasznalo;
+import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
 import hu.progmatic.spotilive.felhasznalo.NincsJogosultsagAZenekarhozException;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import hu.progmatic.spotilive.zene.CreateZeneCommand;
@@ -218,4 +219,5 @@ class EsemenyServiceTest {
                 .isInstanceOf(NincsJogosultsagAZenekarhozException.class)
                 .hasMessageContaining("Zenekar jogosultsággal nem módosítható más eseménye!");
     }
+
 }

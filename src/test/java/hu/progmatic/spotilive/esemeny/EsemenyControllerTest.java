@@ -90,7 +90,7 @@ class EsemenyControllerTest {
             .testRequest(mockMvc)
             .getRequest("/esemeny")
             .expectStatusIsOk()
-            .expectContentContainsString("Esemenyek")
+            .expectContentContainsString("Események")
             .expectContentContainsString("Új esemény hozzáadása");
   }
 
@@ -102,7 +102,7 @@ class EsemenyControllerTest {
             .testRequest(mockMvc)
             .getRequest("/esemeny")
             .expectStatusIsOk()
-            .expectContentContainsString("Esemenyek")
+            .expectContentContainsString("Események")
             .expectContentNotContainsString("Új esemény hozzáadása");
   }
 
@@ -210,7 +210,7 @@ class EsemenyControllerTest {
             .getRequest("/esemeny")
             .expectStatusIsOk()
             .printRequest()
-            .expectContentContainsString("Esemenyek")
+            .expectContentContainsString("Események")
             .expectContentNotContainsString("módosít");
   }
 
@@ -223,7 +223,7 @@ class EsemenyControllerTest {
             .postRequest("/esemeny")
             .expectStatusIsOk()
             .printRequest()
-            .expectContentContainsString("Esemenyek")
+            .expectContentContainsString("Események")
             .expectContentNotContainsString("törlés");
 
   }

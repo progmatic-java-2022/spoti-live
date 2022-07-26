@@ -28,6 +28,4 @@ public class Tag {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "tag")
     private List<TagToZene> tagToZeneEntityList = new ArrayList<>();
 
-
-
 }

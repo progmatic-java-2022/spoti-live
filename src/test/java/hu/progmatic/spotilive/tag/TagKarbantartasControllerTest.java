@@ -29,7 +29,7 @@ class TagKarbantartasControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @WithMockUser
+    @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
     void oldalbetolteseTest() throws Exception {
         oldalBetolteseSzovegLatszik("Új Tag létrehozása");
     }
@@ -43,7 +43,7 @@ class TagKarbantartasControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = UserType.Roles.ESEMENY_KEZELES_ROLE)
+    @WithMockUser(roles = UserType.Roles.TAG_KARBANTARTAS_ROLE)
     void tagTorleseTest() throws Exception {
         var tag = tagService.createTag(TagDto.builder()
                 .tagNev("Proba tag")
