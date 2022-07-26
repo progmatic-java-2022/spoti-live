@@ -1,6 +1,7 @@
 package hu.progmatic.spotilive.zenekar;
 
 import hu.progmatic.spotilive.MockMvcTestHelper;
+import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.esemeny.EsemenyDto;
 import hu.progmatic.spotilive.felhasznalo.UserType;
 import org.junit.jupiter.api.Disabled;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -32,7 +34,7 @@ class ZenekarAdminControllerTest {
 
 
     @Test
-    @WithMockUser(UserType.Roles.ZENEKAR_KEZELES_ROLE)
+    @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
     void oldalbetolteseTest() throws Exception {
         oldalBetolteseSzovegLatszik("Demo leírás");
     }

@@ -82,7 +82,6 @@ public class FelhasznaloService {
               "A két jelszó nem egyezik"
       );
     }
-    felhasznalo.setKredit(Kredit.builder().felhasznalo(felhasznalo).kreditMennyiseg(command.getKreditMennyiseg()).build());
     return felhasznaloRepository.save(felhasznalo);
   }
 
@@ -165,6 +164,7 @@ public class FelhasznaloService {
     if (felhasznaloRepository.count() == 0) {
       add(new UjFelhasznaloCommand(ADMIN_FELHASZNALO, "adminpass", UserType.ADMIN, null));
       add(new UjFelhasznaloCommand("user", "user", UserType.USER, null));
+      add(new UjFelhasznaloCommand("guest", "guest", UserType.GUEST, null));
     }
   }
 }

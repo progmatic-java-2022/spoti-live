@@ -29,7 +29,7 @@ class TagKarbantartasControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @WithMockUser(UserType.Roles.TAG_KARBANTARTAS_ROLE)
+    @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
     void oldalbetolteseTest() throws Exception {
         oldalBetolteseSzovegLatszik("Új Tag létrehozása");
     }
