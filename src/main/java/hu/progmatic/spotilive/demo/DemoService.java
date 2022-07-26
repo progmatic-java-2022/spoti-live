@@ -32,10 +32,7 @@ public class DemoService {
 
     public static final String DEMO_ZENEKAR = "Demo zenekar";
     public static final String DEMO_ESEMENY = "Demo esemény";
-    public static final String DEMO_ESEMENY2 = "Demo esemény 2";
-    public static final String DEMO_ESEMENY3 = "Demo esemény 3";
-    public static final String DEMO_ESEMENY4 = "Demo esemény 4";
-    public static final String DEMO_ESEMENY5 = "Demo esemény 5";
+
     public static final String DEMO_TAG = "Demo tag";
     public static final String DEMO_HANGULAT_TAG = "Hangulat tag";
     public static final String DEMO_ZENE = "Demo zene cím";
@@ -58,8 +55,6 @@ public class DemoService {
     @Autowired
     private MeghivoService meghivoService;
 
-  @Autowired
-  private EmailSenderService emailSenderService;
 
 
     @EventListener(ContextRefreshedEvent.class)
@@ -127,30 +122,6 @@ public class DemoService {
         var demoEsemeny = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
                 .nev(prefix + DEMO_ESEMENY)
                 .idoPont(LocalDateTime.parse("2000-02-02T10:10"))
-                .zenekarId(demoZenekar.getId())
-                .build());
-
-        var demoEsemeny2 = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
-                .nev(prefix + DEMO_ESEMENY2)
-                .idoPont(LocalDateTime.parse("2022-02-03T10:10"))
-                .zenekarId(demoZenekar.getId())
-                .build());
-
-        var demoEsemeny3 = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
-                .nev(prefix + DEMO_ESEMENY3)
-                .idoPont(LocalDateTime.parse("2022-08-04T10:10"))
-                .zenekarId(demoZenekar.getId())
-                .build());
-
-        var demoEsemeny4 = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
-                .nev(prefix + DEMO_ESEMENY4)
-                .idoPont(LocalDateTime.parse("2022-08-05T10:10"))
-                .zenekarId(demoZenekar.getId())
-                .build());
-
-        var demoEsemeny5 = esemenyService.createEsemeny(CreateEsemenyCommand.builder()
-                .nev(prefix + DEMO_ESEMENY5)
-                .idoPont(LocalDateTime.parse("2022-08-09T10:10"))
                 .zenekarId(demoZenekar.getId())
                 .build());
 
