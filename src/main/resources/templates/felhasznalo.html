@@ -72,25 +72,38 @@
 </form>
 <hr>
     <h3>Új vendég felhasználó létrehozása</h3>
-    <form th:action="@{'/public/ujmeghivo'}" method="post" th:object="${kreditCommand}">
+    <form th:action="@{'/public/ujmeghivo'}" method="post" th:object="${meghivoKredittelCommand}">
         <label>
             <input type="number"
                    class="form-control"
                    name="kreditek"
                    placeholder="Kreditek"
+                   th:field="*{kreditekSzama}"
+                   th:classappend="${#fields.hasErrors('kreditekSzama')} ? 'is-invalid' : 'is-valid'"/>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('kreditekSzama')}"
+                 th:errors="*{kreditekSzama}">
+                Hibaüzenet
+            </div>
 
-                   th:field="*{kreditekSzama}"/>
         </label>
         <label>
-            <input type="text"
-                   class="form-control"
-                   name="e-mail"
-                   placeholder="e-mail"
+            <textarea class="form-control"
+                      placeholder="e-mail"
+                      th:field="*{emailCim}"
+                      >
+            </textarea>
+<!--            <input type="text"-->
+<!--                   class="form-control"-->
+<!--                   name="e-mail"-->
+<!--                   placeholder="e-mail"-->
 
-                   th:field="*{emailCim}"/>
+<!--                   th:field="*{emailCim}"/>-->
+
         </label>
         <input type="submit" class="btn btn-primary"  value="Létrehozás"/>
     </form>
+
 <hr>
 <!--<form th:action="@{'/public/meghivo/{kredit}'(kredit=${meghivofelhasznalasacommand.kreditMennyiseg})}" th:object="${meghivofelhasznalasacommand}">-->
 <!--    <label>-->

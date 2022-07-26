@@ -23,7 +23,7 @@ class EmailSenderServiceTest {
   void emailKuldes() throws IOException {
     try (SimpleSmtpServer dumbster = SimpleSmtpServer.start(emailPort)) {
 
-      emailSenderService.emailKuldes("to@here.com", "Test", "Test Body");
+      emailSenderService.emailKuldes(EmailCommand.builder().emailcim("to@here.com").subject("Test").meghivoUuid("Test Body").build());
 
       var emails = dumbster.getReceivedEmails();
       assertThat(emails).hasSize(1);

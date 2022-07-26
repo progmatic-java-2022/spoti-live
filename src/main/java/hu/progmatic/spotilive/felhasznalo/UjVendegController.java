@@ -1,7 +1,6 @@
 package hu.progmatic.spotilive.felhasznalo;
 
 import hu.progmatic.spotilive.email.EmailCommand;
-import hu.progmatic.spotilive.email.EmailSenderService;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.qrkod.QRCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UjVendegController {
@@ -28,19 +29,30 @@ public class UjVendegController {
 
 
     @PostMapping("/public/ujmeghivo")
-    public String ujMeghivo(Model model, @ModelAttribute KreditCommand kreditCommand) {
-        MeghivoDto meghivo = meghivoService.meghivoLetrehozasa(kreditCommand.getKreditekSzama());
-        model.addAttribute("meghivoUUID", meghivo.getUuid());
-
-        if (!kreditCommand.getEmailCim().equals("")) {
-            meghivoService.emailKuldes(EmailCommand.builder()
-                    .meghivoUuid(meghivo.getUuid())
-                    .emailcim(kreditCommand.getEmailCim())
-                    .build());
-            return "/qrkod";
+    public String ujMeghivo(@ModelAttribute @Valid MeghivoKredittelCommand meghivoKredittelCommand,
+                            BindingResult bindingResult,
+                            Model model) {
+        if (meghivoKredittelCommand.getEmailCim().isBlank()) {
+            MeghivoDto meghivo = meghivoService.meghivoLetrehozasa(meghivoKredittelCommand.getKreditekSzama());
+            model.addAttribute("meghivoUUID", meghivo.getUuid());
+            if (!bindingResult.hasErrors()) {
+                return "/qrkod";
+            }
+        } else {
+            var meghivoKikuldeseEredmenyDto = meghivoService.meghivokKikuldeseEmailben(meghivoKredittelCommand);
+            model.addAttribute("kikuldottMeghivokLista", meghivoKikuldeseEredmenyDto);
+//            model.addAttribute("kikuldottMeghivokLista", meghivoKikuldeseEredmenyDto.getKikuldottMeghivok());
+//            meghivoService.meghivokKikuldeseEmailben(meghivoKredittelCommand);
+            return "/sikeresemail";
         }
-        return "/qrkod";
+        return "/felhasznalo";
+    }
 
+    @GetMapping("/sikeresemail")
+    public String sikeresEmail(
+            Model model
+    ) {
+        return "sikeresemail";
     }
 
     @GetMapping("/public/meghivo/{uuid}")
@@ -89,8 +101,8 @@ public class UjVendegController {
     }
 
     @ModelAttribute("kreditCommand")
-    public KreditCommand kreditCommand() {
-        return KreditCommand.builder().build();
+    public MeghivoKredittelCommand kreditCommand() {
+        return MeghivoKredittelCommand.builder().build();
     }
 
     @ModelAttribute("meghivoUUID")
@@ -100,6 +112,12 @@ public class UjVendegController {
 
     @ModelAttribute("kreditek")
     public String getKreditek() {
-        return esemenyService.getKreditekSzama();}
+        return esemenyService.getKreditekSzama();
+    }
+
+    @ModelAttribute("kikuldottMeghivokLista")
+    public List<MeghivoKikuldeseEredmenyDto> emailEredmenyList() {
+        return new ArrayList<>();
+    }
 
 }
