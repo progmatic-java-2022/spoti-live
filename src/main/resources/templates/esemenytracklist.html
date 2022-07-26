@@ -144,13 +144,11 @@
     </tr>
     </tbody>
 </table>
-<div th:if="${kreditError != null}" th:text="${kreditError}" class="alert alert-danger">
-    <!--        th:if="${kreditError != null}"-->
-    <!--     class="alert alert-danger"-->
+<div th:if="${!vanElegKredit}" th:text="${kreditError}" class="alert alert-danger">
 
     Hibaüzenet
 </div>
-<h1 th:if="${kreditError == null}" th:text="'Kreditek száma: ' + ${kreditek}"></h1>
+<h1 th:if="${vanElegKredit}" th:text="'Kreditek száma: ' + ${kreditek}"></h1>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (() => {

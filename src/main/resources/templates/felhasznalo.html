@@ -75,18 +75,25 @@
     <h3>Új vendég felhasználó létrehozása</h3>
     <form th:action="@{'/public/ujmeghivo'}" method="post" th:object="${meghivoKredittelCommand}">
         <label>
-            <input type="number"
-                   class="form-control"
-                   name="kreditek"
-                   placeholder="Kreditek"
-                   th:field="*{kreditekSzama}"
-                   th:classappend="${#fields.hasErrors('kreditekSzama')} ? 'is-invalid' : 'is-valid'"/>
-            <div class="invalid-feedback"
-                 th:if="${#fields.hasErrors('kreditekSzama')}"
-                 th:errors="*{kreditekSzama}">
-                Hibaüzenet
-            </div>
+<!--            Ezt itt hagyom mert hátha nem tetszik a csúszkamasszázs-->
+<!--            <input type="number"-->
+<!--                   class="form-control"-->
+<!--                   name="kreditek"-->
+<!--                   placeholder="Kreditek"-->
+<!--                   th:field="*{kreditekSzama}"-->
+<!--                   th:classappend="${#fields.hasErrors('kreditekSzama')} ? 'is-invalid' : 'is-valid'"/>-->
+<!--            <div class="invalid-feedback"-->
+<!--                 th:if="${#fields.hasErrors('kreditekSzama')}"-->
+<!--                 th:errors="*{kreditekSzama}">-->
+<!--                Hibaüzenet-->
+<!--            </div>-->
 
+            <label for="customRange2" class="form-label">Kreditek</label>
+            <input type="range" class="form-range" name="kreditek"
+                   placeholder="Kreditek"
+                   oninput="num.value = this.value"
+                   th:field="*{kreditekSzama}" min="0" max="30" id="customRange2">
+            <output id="num">0</output>
         </label>
         <label>
             <textarea class="form-control"

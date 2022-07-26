@@ -66,7 +66,6 @@ public class EsemenyTracklistController {
             return "redirect:/esemeny/zenelista/" + esemenyId;
         }
         catch (KreditException e) {
-            model.addAttribute("kreditError", e.getMessage());
             model.addAttribute("esemenytracklist", szavazatService.getEsemenyTrackList(FilterByTagCommand.builder().build()));
             return "/esemenytracklist";
         }
@@ -115,7 +114,7 @@ public class EsemenyTracklistController {
 
     @ModelAttribute("kreditError")
     public String getKreditError() {
-        return null;
+        return "Nincs elég kredit!";
     }
 
     @ModelAttribute("vanElegKredit")
