@@ -91,7 +91,7 @@
 <table class="table table-dark table-striped">
     <thead>
     <tr>
-        <th scope="col">Id</th>
+        <th th:if="${isAdmin}" scope="col">Id</th>
         <th scope="col">Cim</th>
         <th scope="col">Szavazatok</th>
         <th scope="col">Saját szavazatok</th>
@@ -103,7 +103,7 @@
     </thead>
     <tbody>
     <tr th:each="zene : ${esemenytracklist}">
-        <td th:text="${zene.zeneId}">Id</td>
+        <td th:if="${isAdmin}" th:text="${zene.zeneId}">Id</td>
         <td th:text="${zene.szamCim}">Cím</td>
         <td th:text="${zene.osszSzavazat}">Szavazat</td>
         <td th:text="${zene.szavazatByFelhasznalo}">Szavazat</td>
