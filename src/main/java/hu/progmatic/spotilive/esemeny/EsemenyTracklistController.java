@@ -114,7 +114,7 @@ public class EsemenyTracklistController {
 
     @ModelAttribute("kreditError")
     public String getKreditError() {
-        return "Nincs elég kredit!";
+        return "Nincs elég kredit! Ha akarod visszavonhatod a szavazatod.";
     }
 
     @ModelAttribute("vanElegKredit")

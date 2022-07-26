@@ -19,6 +19,12 @@
     <h1> Tracklist</h1>
     <h2 th:text="${esemenyDto.nev}"> Esemény neve</h2>
     <h2 th:text="${esemenyDto.idoPunt}"> Esemény időpontja</h2>
+    <h1 th:if="${vanElegKredit}" th:text="'Kreditek száma: ' + ${kreditek}"></h1>
+    <div th:if="${!vanElegKredit}" th:text="${kreditError}" class="alert alert-danger">
+
+        Hibaüzenet
+    </div>
+
 </div>
 <!-- Button trigger modal -->
 <table style="width: 80%">
@@ -190,11 +196,7 @@
 <!--    </tr>-->
 <!--    </tbody>-->
 <!--</table>-->
-<div th:if="${!vanElegKredit}" th:text="${kreditError}" class="alert alert-danger">
 
-    Hibaüzenet
-</div>
-<h1 th:if="${vanElegKredit}" th:text="'Kreditek száma: ' + ${kreditek}"></h1>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (() => {
