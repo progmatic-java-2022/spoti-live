@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,7 +44,11 @@ public class TagService {
     }
 
     public List<TagDto> getAllTag() {
-        return tagRepository.findAll().stream().map(TagDto::factory).toList();
+        return tagRepository.findAll()
+                .stream()
+                .map(TagDto::factory)
+                .sorted(Comparator.comparing(tagDto -> tagDto.getTagKategoria().getTagKategoriaString()))
+                .toList();
     }
 
     public void deleteTagById(Integer id) {
