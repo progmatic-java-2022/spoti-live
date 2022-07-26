@@ -147,5 +147,38 @@ class ZeneControllerTest {
                 .expectContentNotContainsString("Jokis zene");
     }
 
+    @Test
+    @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
+    void editZeneTest() throws Exception{
+        var zene = demoServiceTestHelper.getDemoZenekar1ZeneDto();
 
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .postRequestBuilder("/zenekarbantartas/zene/" + zene.getId())
+                .addFormParameter("id" ,"" + zene.getId())
+                .addFormParameter("cim", "ControllerTeszt")
+                .addFormParameter("eloado", "Modositott")
+                .addFormParameter("hosszMp", "300")
+                .buildRequest()
+                .expectRedirectedToUrlPattern("/zene?**");
+
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .getRequest("/zene")
+                .expectStatusIsOk()
+                .expectContentContainsString("ControllerTeszt")
+                .expectContentContainsString("Modositott")
+                .expectContentContainsString("300");
+
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .postRequestBuilder("/zenekarbantartas/zene/" + zene.getId())
+                .addFormParameter("id" ,"" + zene.getId())
+                .addFormParameter("cim", zene.getCim())
+                .addFormParameter("eloado", zene.getEloado())
+                .addFormParameter("hosszMp", "" + zene.getHosszMp())
+                .buildRequest()
+                .expectRedirectedToUrlPattern("/zene?**");
+
+    }
 }
