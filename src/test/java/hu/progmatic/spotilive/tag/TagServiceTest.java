@@ -94,7 +94,7 @@ class TagServiceTest {
     }
 
     @Test
-    void listAllTagTest() {
+    void listAllTagAndExeptionTest() {
         TagDto dto = TagDto.builder()
                 .tagNev("Teszt tag")
                 .tagKategoria(TagKategoria.MUFAJ)
@@ -107,6 +107,14 @@ class TagServiceTest {
 
         createTag(dto);
         createTag(dto2);
+
+        String hiba = "";
+        try {
+            tagService.createTag(dto2);
+        }catch (CreateTagExeption e){
+            hiba = e.getMessage();
+        }
+        assertEquals("Tag már létezik ilyen névvel!", hiba);
 
         assertThat(tagService.getAllTag())
                 .extracting(TagDto::getTagNev)

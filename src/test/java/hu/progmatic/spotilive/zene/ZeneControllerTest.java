@@ -15,41 +15,42 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 class ZeneControllerTest {
-  @Autowired
-  private MockMvc mockMvc;
-  @Autowired
-  private DemoServiceTestHelper demoServiceTestHelper;
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private DemoServiceTestHelper demoServiceTestHelper;
 
-  @Test
-  @WithUserDetails(DemoService.ZENEKAR_1_FELHASZNALO)
-  void csakSajatZenekJelennekMegZenekar1() throws Exception {
-    MockMvcTestHelper
-        .testRequest(mockMvc)
-        .getRequest("/zene")
-        .expectStatusIsOk()
-        .expectContentContainsString(demoServiceTestHelper.getDemoZenekar1ZeneDto().getCim())
-        .expectContentNotContainsString(demoServiceTestHelper.getDemoZenekar2ZeneDto().getCim());
-  }
+    @Test
+    @WithUserDetails(DemoService.ZENEKAR_1_FELHASZNALO)
+    void csakSajatZenekJelennekMegZenekar1() throws Exception {
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .getRequest("/zene")
+                .expectStatusIsOk()
+                .expectContentContainsString(demoServiceTestHelper.getDemoZenekar1ZeneDto().getCim())
+                .expectContentNotContainsString(demoServiceTestHelper.getDemoZenekar2ZeneDto().getCim());
+    }
 
-  @Test
-  @WithUserDetails(DemoService.ZENEKAR_2_FELHASZNALO)
-  void csakSajatZenekJelennekMegZenekar2() throws Exception {
-    MockMvcTestHelper
-        .testRequest(mockMvc)
-        .getRequest("/zene")
-        .expectStatusIsOk()
-        .expectContentNotContainsString(demoServiceTestHelper.getDemoZenekar1ZeneDto().getCim())
-        .expectContentContainsString(demoServiceTestHelper.getDemoZenekar2ZeneDto().getCim());
-  }
+    @Test
+    @WithUserDetails(DemoService.ZENEKAR_2_FELHASZNALO)
+    void csakSajatZenekJelennekMegZenekar2() throws Exception {
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .getRequest("/zene")
+                .expectStatusIsOk()
+                .expectContentNotContainsString(demoServiceTestHelper.getDemoZenekar1ZeneDto().getCim())
+                .expectContentContainsString(demoServiceTestHelper.getDemoZenekar2ZeneDto().getCim());
+    }
 
-  @Test
-  @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
-  void csakSajatZenekJelennekMegAdmin() throws Exception {
-    MockMvcTestHelper
-        .testRequest(mockMvc)
-        .getRequest("/zene")
-        .expectStatusIsOk()
-        .expectContentContainsString(demoServiceTestHelper.getDemoZenekar1ZeneDto().getCim())
-        .expectContentContainsString(demoServiceTestHelper.getDemoZenekar2ZeneDto().getCim());
-  }
+    @Test
+    @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
+    void csakSajatZenekJelennekMegAdmin() throws Exception {
+        MockMvcTestHelper
+                .testRequest(mockMvc)
+                .getRequest("/zene")
+                .expectStatusIsOk()
+                .expectContentContainsString(demoServiceTestHelper.getDemoZenekar1ZeneDto().getCim())
+                .expectContentContainsString(demoServiceTestHelper.getDemoZenekar2ZeneDto().getCim());
+    }
+
 }
