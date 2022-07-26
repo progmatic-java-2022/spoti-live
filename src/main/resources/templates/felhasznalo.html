@@ -19,7 +19,7 @@
 <table class="table table-dark table-striped" th:if="${hasUserReadRole}">
     <thead>
     <tr>
-        <th scope="col">Id</th>
+        <th th:if="${isAdmin}" scope="col">Id</th>
         <th scope="col">Felhasználónév</th>
         <th scope="col">Role</th>
         <th scope="col"></th>
@@ -27,7 +27,7 @@
     </thead>
     <tbody>
     <tr th:each="felhasznalo : ${allFelhasznalo}">
-        <th scope="row" th:text="${felhasznalo.id}">1</th>
+        <th scope="row" th:if="${isAdmin}" th:text="${felhasznalo.id}">1</th>
         <td th:text="${felhasznalo.nev}">Minta név</td>
         <td th:text="${felhasznalo.role}">ADMIN</td>
         <td>
