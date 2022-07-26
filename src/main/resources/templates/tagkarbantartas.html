@@ -16,16 +16,16 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 
-<ul>
     <table class="table table-dark table-striped">
-        <thead>
+        <thead style="width: 100%">
         <tr>
             <th scope="col">Tag nev</th>
             <th scope="col">Tag kategória</th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody style="width: 100%">
         <tr th:each="tag : ${tagek}">
             <td th:text="${tag.tagNev}">Nev</td>
             <td th:text="${tag.tagKategoria.getTagKategoriaString()}">Eloado</td>
@@ -42,7 +42,7 @@
                         </form>
                     </div>
                 </div>
-            </td>
+            <td></td>
         </tr>
         </tbody>
     </table>
@@ -133,7 +133,6 @@
             <input th:if="${tagPeldany.getId() != null}" class="btn btn-success" type="submit" value="Módosít"/>
         </div>
     </form>
-</ul>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (() => {
