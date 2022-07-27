@@ -29,21 +29,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class EsemenyServiceTest {
     @Autowired
     private EsemenyService esemenyService;
-
-    @Autowired
-    private ZenekarService zenekarService;
-
-
-
-
     @Autowired
     private DemoServiceTestHelper demoServiceTestHelper;
     private Integer demoZenekar1Id;
-    @Autowired
-    private ZeneService zeneService;
-    @Autowired
-    private SzavazatService szavazatService;
-
     private  FilterByTagCommand command;
 
     @BeforeEach

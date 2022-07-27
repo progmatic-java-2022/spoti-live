@@ -1,11 +1,13 @@
 package hu.progmatic.spotilive.felhasznalo;
 
 import hu.progmatic.spotilive.demo.DemoService;
+import hu.progmatic.spotilive.demo.FakeAuthenticationHandler;
 import hu.progmatic.spotilive.zenekar.ZenekarService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.test.context.support.WithUserDetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,10 +21,11 @@ class MeghivoServiceTest {
     private MeghivoService meghivoService;
     @Autowired
     private FelhasznaloService felhasznaloService;
-
+    @Autowired
+    private AuthenticationConfiguration authenticationConfiguration;
 
     @Test
-    void MeghivoHozzaadasTest() {
+    void meghivoHozzaadasTest() {
         var meghivo = meghivoService.meghivoLetrehozasa(5);
         var meghivo2 = meghivoService.meghivoLetrehozasa(5);
         assertNull(meghivo.getFelhasznalo());
@@ -37,7 +40,8 @@ class MeghivoServiceTest {
 
     @Test
     @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
-    void FelhasznalasaTest() {
+    void felhasznalasaTest() throws Exception {
+        var fakeAuth =new FakeAuthenticationHandler(authenticationConfiguration);
         var meghivo = meghivoService.meghivoLetrehozasa(5);
         assertNull(meghivo.getFelhasznalo());
         assertNotNull(meghivo.getUuid());
@@ -70,6 +74,8 @@ class MeghivoServiceTest {
         assertEquals("Ezt már elhasználták!", hibaUzenet);
 
         var kiolvasottFelhasznalo = meghivoService.findMeghivoByUUId(meghivo.getUuid());
+
+        fakeAuth.loginAsUser(DemoService.ADMIN_FELHASZNALO,"adminpass");
         felhasznaloService.delete(kiolvasottFelhasznalo.getFelhasznalo().getId());
     }
 }

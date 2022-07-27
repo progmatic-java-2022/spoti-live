@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -136,7 +137,10 @@ public class ZeneService {
 
     public List<ZeneDto> findAllModosithatoDto() {
         if (felhasznaloService.isAdmin()) {
-            return findAllDto();
+            return findAllDto()
+                    .stream()
+                    .sorted(Comparator.comparing(ZeneDto::getZenekarNev))
+                    .toList();
         }
         Integer zenekarId = felhasznaloService.getZenekarId();
         Zenekar zenekar = zenekarService.getZenekarEntityById(zenekarId);
@@ -144,6 +148,7 @@ public class ZeneService {
                 .findAllByZenekar(zenekar)
                 .stream()
                 .map(ZeneDto::factory)
+                .sorted(Comparator.comparing(ZeneDto::getCim))
                 .toList();
     }
 

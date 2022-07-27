@@ -3,6 +3,8 @@ package hu.progmatic.spotilive;
 import hu.progmatic.spotilive.demo.DemoService;
 import hu.progmatic.spotilive.esemeny.EsemenyDto;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
+import hu.progmatic.spotilive.felhasznalo.Felhasznalo;
+import hu.progmatic.spotilive.felhasznalo.FelhasznaloService;
 import hu.progmatic.spotilive.tag.TagDto;
 import hu.progmatic.spotilive.tag.TagService;
 import hu.progmatic.spotilive.zene.ZeneDto;
@@ -25,7 +27,6 @@ public class DemoServiceTestHelper {
     TagService tagservice;
     @Autowired
     private EsemenyService esemenyService;
-
 
     public Integer getdemoZeneKar1Id() {
         return getDemoZenekar1().getId();
@@ -60,4 +61,5 @@ public class DemoServiceTestHelper {
     public EsemenyDto getZenekar2DemoEsemeny() {
         return esemenyService.getByName(DemoService.PREFIX2 + DemoService.DEMO_ESEMENY);
     }
+
 }

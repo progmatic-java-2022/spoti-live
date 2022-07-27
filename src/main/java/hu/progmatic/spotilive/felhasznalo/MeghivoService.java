@@ -1,9 +1,11 @@
 package hu.progmatic.spotilive.felhasznalo;
 
+import hu.progmatic.spotilive.demo.FakeAuthenticationHandler;
 import hu.progmatic.spotilive.email.EmailCommand;
 import hu.progmatic.spotilive.email.EmailException;
 import hu.progmatic.spotilive.email.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
@@ -25,6 +27,8 @@ public class MeghivoService {
 
     @Autowired
     private EmailSenderService emailSenderService;
+    @Autowired
+    private AuthenticationConfiguration authenticationConfiguration;
 
 
     public MeghivoDto meghivoLetrehozasa(Integer kreditMennyiseg) {
@@ -49,6 +53,14 @@ public class MeghivoService {
             felhasznalo.setKredit(meghivo.getKredit());
             felhasznalo.setMeghivo(meghivo);
             meghivo.setFelhasznalo(felhasznalo);
+
+            try {
+                new FakeAuthenticationHandler(authenticationConfiguration)
+                        .loginAsUser(command.getFelhasznaloNev(),
+                                command.getJelszo1());
+            } catch (Exception e) {
+                throw new RuntimeException("Sikertelen bejelentkezés.");
+            }
 
         } else {
             throw new RuntimeException("Ezt már elhasználták!");

@@ -11,7 +11,7 @@
 
     <title>Esemenyek</title>
 </head>
-<body>
+<body style="margin: 2% 7%">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
@@ -27,21 +27,27 @@
 
 </div>
 <!-- Button trigger modal -->
-<table style="width: 80%">
+<table style="width: 100%">
 
     <tbody>
     <tr>
         <td style="text-align: left">
-            <div style="text-align: center">
+            <div style="text-align: left">
                 <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                         data-bs-target="#filterModal">
                     Szűrés tagek szerint
                 </button>
             </div>
         </td>
-        <td>
-            <div style="text-align: center">
-                <form th:action="@{'/guestindex'}" method="get">
+        <td style="text-align: right">
+            <div style="text-align: right">
+                <form th:if="${isAdmin} or ${isZenekar}" th:action="@{'/esemeny'}" method="get">
+                    <input style="text-align: right" type="submit" class="btn btn-primary"
+                           value="Vissza az eseményekre">
+                </form>
+            </div>
+            <div style="text-align: right">
+                <form th:if="${isOnlyGuest}" th:action="@{'/guestindex'}" method="get">
                     <input style="text-align: right" type="submit" class="btn btn-primary"
                            value="Vissza az eseményekre">
                 </form>
@@ -57,32 +63,46 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5>Szűrés</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <table style="width: 100%">
+                    <tr>
+                        <td>
+                            <h5>Szűrés</h5>
+                        </td>
+                        <td style="text-align: right">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h7>Kijelölés megszüntetése CTRL + click</h7>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div class="modal-body">
                 <form action="#" th:action="@{'/esemeny/zenelista/{esemenyId}' (esemenyId=${esemenyId})}"
                       th:object="${filterCommand}"
                       method="get">
-                    <table th:each="tagTipus : ${tagTipusok}">
+                    <table style="width: 100%" th:each="tagTipus : ${tagTipusok}">
                         <thead>
                         <tr>
                             <th th:text="${tagTipus}">tag tipus</th>
                         </tr>
                         </thead>
-
                         <tbody>
+                        <td>
+                            <div class="container">
 
-                        <div class="container">
+                                <select class="form-control selectpicker" data-width="100%" id="multiple-hobbies"
+                                        th:field="*{tagLista}"
+                                        multiple="multiple">
 
-                            <select class="form-control selectpicker" id="multiple-hobbies" th:field="*{tagLista}"
-                                    multiple="multiple">
-
-                                <option th:each="tag :${osszesTag}"
-                                        th:if="${tag.getTagKategoria().getTagKategoriaString() == tagTipus}"
-                                        th:value="${tag.tagNev}" th:text="${tag.tagNev}">
-                            </select>
-                        </div>
+                                    <option th:each="tag :${osszesTag}"
+                                            th:if="${tag.getTagKategoria().getTagKategoriaString() == tagTipus}"
+                                            th:value="${tag.tagNev}" th:text="${tag.tagNev}">
+                                </select>
+                            </div>
+                        </td>
                         </tbody>
                     </table>
                     <div class="modal-footer">
@@ -97,14 +117,14 @@
 </div>
 
 
-<div class="container text-center">
+<div class="container text-center" style="min-width: 350px; margin-top: 5%">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-        <div class="card mb-3" style="padding: 1%" th:each="zene : ${esemenytracklist}">
+        <div class="card mb-3" style="padding: 1%; min-width: 350px" th:each="zene : ${esemenytracklist}" >
             <h5 class="card-header bg-dark border-success text-success" th:text="${zene.szamCim}">Cím</h5>
             <div class="card-body">
                 <h5 class="card-title" th:text="'Szavazatok: '+${zene.osszSzavazat}">Szavazat</h5>
                 <p class="card-text" th:text="'Saját szavazatok: '+${zene.szavazatByFelhasznalo}">Saját szavazat</p>
-                <table style="margin-left: 11.5%; width: 80%">
+                <table style="margin-left: 11%">
                     <tbody>
                     <tr>
                         <td style="text-align: right">

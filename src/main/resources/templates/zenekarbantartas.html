@@ -26,13 +26,7 @@
     <tbody>
         <td><h1>Zenék</h1></td>
         <!-- Button trigger modal -->
-        <td style="text-align: right">
-            <div style="padding-bottom: 1%">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
-                    Szűrés tagek szerint
-                </button>
-            </div>
-        </td>
+        <td></td>
     </tbody>
 </table>
 <!-- Modal -->
@@ -40,10 +34,21 @@
      aria-labelledby="filterModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5>Szűrés</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                        <h5>Szűrés</h5>
+                    </td>
+                    <td style="text-align: right">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h7>Kijelölés megszüntetése CTRL + click</h7>
+                    </td>
+                </tr>
+            </table>
             <div class="modal-body">
                 <form action="#" th:action="@{/zenecontrol/filter}" th:object="${filterCommand}"
                       method="POST">
@@ -70,8 +75,9 @@
                         </tbody>
                     </table>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-success" value="Mentés"/>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
+                        <form th:action="@{'/zene'}">
+                        <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
+                        </form>
                     </div>
                 </form>
             </div>
@@ -89,6 +95,7 @@
         <th scope="col">HosszMp</th>
         <th scope="col">Tagek</th>
         <th scope="col"></th>
+        <th scope="col"></th>
     </tr>
     </thead>
 
@@ -98,7 +105,8 @@
         <td th:text="${zene.cim}">Nev</td>
         <td th:text="${zene.eloado}">Eloado</td>
         <td th:text="${zene.hosszMp}">Hossz</td>
-        <td th:text="${zene.tagStringList}">taglista valahogy</td>
+        <td th:if="${zene.tagStringList.size()} != 0" th:text="${zene.tagStringList}">taglista valahogy</td>
+        <td th:if="${zene.tagStringList.size()} == 0" th:text="'Nincs tag'">taglista valahogy</td>
         <td>
             <div class="row">
                 <div class="col">
@@ -123,8 +131,10 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Tagek</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    <form th:action="@{'/zene'}">
+                                    <button type="submit" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
+                                    </form>
                                 </div>
                                 <div class="modal-body" th:each="kategoria : ${zeneTagSzerkeztes.tagByKategoria}">
                                     <table class="table table-dark table-striped">
@@ -175,9 +185,9 @@
                                     </table>
                                 </div>
                                 <div class="modal-footer">
-                                    <input type="submit" class="btn btn-success" value="Mentés"/>
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Bezárás
-                                    </button>
+                                    <form th:action="@{'/zene'}">
+                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -257,6 +267,14 @@
             </div>
         </label>
     </div>
+    <div class="col">
+        <div style="padding-bottom: 1%">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
+                Szűrés tagek szerint
+            </button>
+        </div>
+    </div>
+
 </form>
 
 <!-- Módisítás-->

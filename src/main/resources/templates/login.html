@@ -18,7 +18,7 @@
     <div th:if="${param.logout}" class="alert alert-info">
         Kijelentkeztél
     </div>
-    <form th:action="@{/login}" method="post">
+    <form th:action="@{/login}" method="post" target="_top">
         <div><label> Felhasználónév: <input type="text"  class="form-control"name="username"/> </label></div>
         <div><label> Jelszó: <input type="password" class="form-control" name="password"/> </label></div>
         <div><input class="btn btn-primary" type="submit" value="Bejelentkezés "/></div>

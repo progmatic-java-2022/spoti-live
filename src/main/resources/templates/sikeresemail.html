@@ -12,10 +12,24 @@
     <title>Email küldées</title>
 </head>
 <body>
+<table style="width: 100%">
+    <thead>
+    <tr>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <td style="text-align: left">
+        <h1>Kiküldött email-ek</h1>
+    </td>
+    <td style="text-align: right">
+        <form th:action="@{'/felhasznalo'}" method="get">
+            <input type="submit" class="btn btn-primary" value="Vissza az eseményekre">
+        </form>
+    </td>
+    </tbody>
+</table>
 
-<p>
-<h1>Kiküldött email-ek</h1>
-</p>
 <table class="table table-dark table-striped">
     <thead>
     <tr>
