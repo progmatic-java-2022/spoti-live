@@ -137,10 +137,17 @@ public class FelhasznaloService {
     }
     return userPrincipal.getRole().equals(UserType.ADMIN);
   }
+  public boolean isZenekar() {
+    MyUserDetails userPrincipal = getMyUserDetails();
+    if (userPrincipal == null) {
+      return hasRole(UserType.Roles.ZENE_KEZELES_ROLE);
+    }
+    return userPrincipal.getRole().equals(UserType.ZENEKAR);
+  }
   public boolean isGuest() {
     MyUserDetails userPrincipal = getMyUserDetails();
     if (userPrincipal == null) {
-      return false;
+      return hasRole(UserType.Roles.GUEST_READ_ROLE);
     }
     return userPrincipal.getRole().equals(UserType.GUEST);
   }
