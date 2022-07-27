@@ -83,25 +83,26 @@
                 <form action="#" th:action="@{'/esemeny/zenelista/{esemenyId}' (esemenyId=${esemenyId})}"
                       th:object="${filterCommand}"
                       method="get">
-                    <table th:each="tagTipus : ${tagTipusok}">
+                    <table style="width: 100%" th:each="tagTipus : ${tagTipusok}">
                         <thead>
                         <tr>
                             <th th:text="${tagTipus}">tag tipus</th>
                         </tr>
                         </thead>
-
                         <tbody>
+                        <td>
+                            <div class="container">
 
-                        <div class="container">
+                                <select class="form-control selectpicker" data-width="100%" id="multiple-hobbies"
+                                        th:field="*{tagLista}"
+                                        multiple="multiple">
 
-                            <select class="form-control selectpicker" id="multiple-hobbies" th:field="*{tagLista}"
-                                    multiple="multiple">
-
-                                <option th:each="tag :${osszesTag}"
-                                        th:if="${tag.getTagKategoria().getTagKategoriaString() == tagTipus}"
-                                        th:value="${tag.tagNev}" th:text="${tag.tagNev}">
-                            </select>
-                        </div>
+                                    <option th:each="tag :${osszesTag}"
+                                            th:if="${tag.getTagKategoria().getTagKategoriaString() == tagTipus}"
+                                            th:value="${tag.tagNev}" th:text="${tag.tagNev}">
+                                </select>
+                            </div>
+                        </td>
                         </tbody>
                     </table>
                     <div class="modal-footer">
