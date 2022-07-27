@@ -55,7 +55,6 @@ public class DemoService {
     private MeghivoService meghivoService;
     @EventListener(ContextRefreshedEvent.class)
     public void init() throws Exception {
-
         if (zenekarService.count() == 0) {
             felhasznaloService.createAlapFelhasznalok();
             createVendegFlehasznalo();
