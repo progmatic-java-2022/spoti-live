@@ -29,5 +29,4 @@ public class QRCodeGenerator {
             throw new RuntimeException("Hiba a QR kód generálás közben!");
         }
     }
-
 }
