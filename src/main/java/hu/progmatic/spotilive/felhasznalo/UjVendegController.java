@@ -90,7 +90,7 @@ public class UjVendegController {
         if (!bindingResult.hasErrors()) {
             try {
                 meghivoService.meghivoFelhasznalasa(command);
-                return "redirect:/login";
+                return "redirect:/";
             } catch (FelhasznaloLetrehozasException e) {
                 bindingResult.addError(
                         new FieldError(
