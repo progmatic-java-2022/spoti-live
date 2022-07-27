@@ -79,6 +79,22 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: false
+  mail:
+    host: email_dev
+    port: 1025
+    username: hello
+    password: hello
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
 server:
   port: 80
   tomcat:
