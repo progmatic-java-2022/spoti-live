@@ -124,5 +124,10 @@ public class UjVendegController {
         return new ArrayList<>();
     }
 
+    @ModelAttribute("meghivofelhasznalva")
+    public boolean meghivofelhasznalva(){
+        return false;
+    }
+
 
 }
