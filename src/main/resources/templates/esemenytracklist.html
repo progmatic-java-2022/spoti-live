@@ -63,8 +63,21 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5>Szűrés</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <table style="width: 100%">
+                    <tr>
+                        <td>
+                            <h5>Szűrés</h5>
+                        </td>
+                        <td style="text-align: right">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h7>Kijelölés megszüntetése CTRL + click</h7>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div class="modal-body">
                 <form action="#" th:action="@{'/esemeny/zenelista/{esemenyId}' (esemenyId=${esemenyId})}"
