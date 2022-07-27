@@ -90,7 +90,7 @@ public class UjVendegController {
         if (!bindingResult.hasErrors()) {
             try {
                 meghivoService.meghivoFelhasznalasa(command);
-                return "redirect:/login";
+                return "redirect:/";
             } catch (FelhasznaloLetrehozasException e) {
                 bindingResult.addError(
                         new FieldError(
@@ -122,6 +122,11 @@ public class UjVendegController {
     @ModelAttribute("kikuldottMeghivokLista")
     public List<MeghivoKikuldeseEredmenyDto> emailEredmenyList() {
         return new ArrayList<>();
+    }
+
+    @ModelAttribute("meghivofelhasznalva")
+    public boolean meghivofelhasznalva(){
+        return false;
     }
 
 

@@ -5,7 +5,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-class FakeAuthenticationHandler {
+public class FakeAuthenticationHandler {
     private final SecurityContext originalContext;
 
     private final AuthenticationConfiguration authenticationConfiguration;
@@ -25,6 +25,7 @@ class FakeAuthenticationHandler {
         var newContext = SecurityContextHolder.createEmptyContext();
         newContext.setAuthentication(authentication);
         SecurityContextHolder.setContext(newContext);
+
     }
 
     public void resetContext() {
