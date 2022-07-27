@@ -25,7 +25,7 @@ public class QRCodeGenerator {
 
             MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream, con);
             return pngOutputStream.toByteArray();
-        } catch (WriterException|IOException e) {
+        } catch (WriterException|IOException|IllegalArgumentException e) {
             throw new RuntimeException("Hiba a QR kód generálás közben!");
         }
     }
