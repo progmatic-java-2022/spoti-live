@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import javax.mail.internet.MimeMessage;
+import javax.validation.Valid;
 import java.util.Locale;
 
 
@@ -18,7 +20,7 @@ import java.util.Locale;
         @Autowired
         private JavaMailSender mailSender;
 
-        public void emailKuldes(EmailCommand emailCommand) {
+        public void emailKuldes(@Valid EmailCommand emailCommand) {
             try {
                 MimeMessage mimeMessage = mailSender.createMimeMessage();
                 MimeMessageHelper helper =
@@ -30,7 +32,7 @@ import java.util.Locale;
                 mailSender.send(mimeMessage);
             } catch (Exception e) {
                 log.warn("Email küldési hiba! " + e.getMessage());
-                throw new EmailException("Email küldési hiba!");
+                throw new EmailException("Email küldési hiba! Hibaüzenet: " + e.getMessage());
             }
         }
 

@@ -130,4 +130,8 @@ public class UjVendegController {
     }
 
 
+    @ModelAttribute("isSikeres")
+    public Boolean isSikeres() {
+        return null;
+    }
 }
