@@ -1,6 +1,5 @@
 package hu.progmatic.spotilive.demo;
 
-import hu.progmatic.spotilive.email.EmailSenderService;
 import hu.progmatic.spotilive.esemeny.CreateEsemenyCommand;
 import hu.progmatic.spotilive.esemeny.EsemenyService;
 import hu.progmatic.spotilive.esemeny.SzavazatCommand;
@@ -20,19 +19,19 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Transactional
 @Service
 public class DemoService {
+    public static final String GUEST_FELHASZNALO = "guest";
 
     public static final String ADMIN_FELHASZNALO = "admin";
     public static final String ZENEKAR_1_FELHASZNALO = "zenekar1";
     public static final String ZENEKAR_2_FELHASZNALO = "zenekar2";
 
+
     public static final String DEMO_ZENEKAR = "Demo zenekar";
     public static final String DEMO_ESEMENY = "Demo esemény";
-
     public static final String DEMO_TAG = "Demo tag";
     public static final String DEMO_HANGULAT_TAG = "Hangulat tag";
     public static final String DEMO_ZENE = "Demo zene cím";
@@ -68,7 +67,7 @@ public class DemoService {
                     .jelszo2("guest")
                     .uuid(meghivo.getUuid())
                     .kreditMennyiseg(meghivo.getKredit().getKreditMennyiseg())
-                            .felhasznaloNev("guest")
+                            .felhasznaloNev(GUEST_FELHASZNALO)
                     .build());
             var securityContextHandler = new FakeAuthenticationHandler(authenticationConfiguration);
             securityContextHandler.loginAsUser(ADMIN_FELHASZNALO, "adminpass");

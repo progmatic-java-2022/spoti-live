@@ -19,10 +19,8 @@ class MeghivoServiceTest {
     private MeghivoService meghivoService;
     @Autowired
     private FelhasznaloService felhasznaloService;
-
-
     @Test
-    void MeghivoHozzaadasTest() {
+    void meghivoHozzaadasTest() {
         var meghivo = meghivoService.meghivoLetrehozasa(5);
         var meghivo2 = meghivoService.meghivoLetrehozasa(5);
         assertNull(meghivo.getFelhasznalo());
@@ -37,7 +35,7 @@ class MeghivoServiceTest {
 
     @Test
     @WithUserDetails(DemoService.ADMIN_FELHASZNALO)
-    void FelhasznalasaTest() {
+    void felhasznalasaTest() {
         var meghivo = meghivoService.meghivoLetrehozasa(5);
         assertNull(meghivo.getFelhasznalo());
         assertNotNull(meghivo.getUuid());

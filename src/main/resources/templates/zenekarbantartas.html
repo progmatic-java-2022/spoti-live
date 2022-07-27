@@ -98,7 +98,8 @@
         <td th:text="${zene.cim}">Nev</td>
         <td th:text="${zene.eloado}">Eloado</td>
         <td th:text="${zene.hosszMp}">Hossz</td>
-        <td th:text="${zene.tagStringList}">taglista valahogy</td>
+        <td th:if="${zene.tagStringList.size()} != 0" th:text="${zene.tagStringList}">taglista valahogy</td>
+        <td th:if="${zene.tagStringList.size()} == 0" th:text="'Nincs tag'">taglista valahogy</td>
         <td>
             <div class="row">
                 <div class="col">
