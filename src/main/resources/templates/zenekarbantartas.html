@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <!-- Required meta tags -->
@@ -18,15 +19,15 @@
 
 <table style="width: 100%">
     <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
+    <tr>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
     </thead>
     <tbody>
-        <td><h1>Zenék</h1></td>
-        <!-- Button trigger modal -->
-        <td></td>
+    <td><h1>Zenék</h1></td>
+    <!-- Button trigger modal -->
+    <td></td>
     </tbody>
 </table>
 <!-- Modal -->
@@ -35,8 +36,21 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5>Szűrés</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <table style="width: 100%">
+                    <tr>
+                        <td>
+                            <h5>Szűrés</h5>
+                        </td>
+                        <td style="text-align: right">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h7>Kijelölés megszüntetése CTRL + click</h7>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div class="modal-body">
                 <form action="#" th:action="@{/zenecontrol/filter}" th:object="${filterCommand}"
@@ -47,25 +61,25 @@
                             <th th:text="${tagTipus}">tag tipus</th>
                         </tr>
                         </thead>
+                    </table>
+                    <tbody>
+                    <td>
+                        <div class="container">
+                            <select class="form-control selectpicker" data-width="100%" id="multiple-hobbies"
+                                    th:field="*{tagLista}"
+                                    multiple="multiple">
 
-                        <tbody>
-                        <td>
-                            <div class="container">
-                                <select class="form-control selectpicker" data-width="100%" id="multiple-hobbies"
-                                        th:field="*{tagLista}"
-                                        multiple="multiple">
-
-                                    <option th:each="tag :${osszesTag}"
-                                            th:if="${tag.getTagKategoria().getTagKategoriaString() == tagTipus}"
-                                            th:value="${tag.tagNev}" th:text="${tag.tagNev}">
-                                </select>
-                            </div>
-                        </td>
-                        </tbody>
+                                <option th:each="tag :${osszesTag}"
+                                        th:if="${tag.getTagKategoria().getTagKategoriaString() == tagTipus}"
+                                        th:value="${tag.tagNev}" th:text="${tag.tagNev}">
+                            </select>
+                        </div>
+                    </td>
+                    </tbody>
                     </table>
                     <div class="modal-footer">
                         <form th:action="@{'/zene'}">
-                        <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
+                            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
                         </form>
                     </div>
                 </form>
@@ -121,8 +135,8 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Tagek</h5>
                                     <form th:action="@{'/zene'}">
-                                    <button type="submit" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                        <button type="submit" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                     </form>
                                 </div>
                                 <div class="modal-body" th:each="kategoria : ${zeneTagSzerkeztes.tagByKategoria}">
@@ -175,7 +189,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <form th:action="@{'/zene'}">
-                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
+                                        <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Bezárás
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -262,6 +277,7 @@
                 Szűrés tagek szerint
             </button>
         </div>
+    </div>
     </div>
 
 </form>
