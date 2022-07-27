@@ -33,7 +33,13 @@
         </td>
         <td>
             <div style="text-align: right">
-                <form th:action="@{'/guestindex'}" method="get">
+                <form th:if="${isAdmin} or ${isZenekar}" th:action="@{'/esemeny'}" method="get">
+                    <input style="text-align: right" type="submit" class="btn btn-primary"
+                           value="Vissza az eseményekre">
+                </form>
+            </div>
+            <div style="text-align: right">
+                <form th:if="${isOnlyGuest}" th:action="@{'/guestindex'}" method="get">
                     <input style="text-align: right" type="submit" class="btn btn-primary"
                            value="Vissza az eseményekre">
                 </form>

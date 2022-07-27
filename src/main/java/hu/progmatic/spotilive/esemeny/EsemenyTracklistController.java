@@ -127,6 +127,14 @@ public class EsemenyTracklistController {
         return felhasznaloService.isAdmin();
     }
 
+    @ModelAttribute("isZenekar")
+    public boolean isZenekar(){
+        return felhasznaloService.isZenekar();
+    }
+    @ModelAttribute("isOnlyGuest")
+    public boolean isOnlyGuest() {
+        return felhasznaloService.isGuest();
+    }
     @ModelAttribute("osszesTag")
     public List<TagDto> osszesTag() {
         return tagService.getAllTag();
