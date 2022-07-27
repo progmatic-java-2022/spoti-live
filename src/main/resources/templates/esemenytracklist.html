@@ -159,64 +159,6 @@
     </div>
 </div>
 
-
-<!--<table class="table table-dark table-striped">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        <th th:if="${isAdmin}" scope="col">Id</th>-->
-<!--        <th scope="col">Cim</th>-->
-<!--        <th scope="col">Szavazatok</th>-->
-<!--        <th scope="col">Saját szavazatok</th>-->
-<!--        <th scope="col"></th>-->
-<!--        <th scope="col"></th>-->
-<!--        <th scope="col"></th>-->
-<!--        <th scope="col"></th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr th:each="zene : ${esemenytracklist}">-->
-<!--        <td th:if="${isAdmin}" th:text="${zene.zeneId}">Id</td>-->
-<!--        <td th:text="${zene.szamCim}">Cím</td>-->
-<!--        <td th:text="${zene.osszSzavazat}">Szavazat</td>-->
-<!--        <td th:text="${zene.szavazatByFelhasznalo}">Szavazat</td>-->
-<!--        <td></td>-->
-<!--        <td></td>-->
-<!--        <td>-->
-<!--            <div class="row">-->
-<!--                <div class="col" th:if="${vanElegKredit}">-->
-<!--                    <form th:action="@{'/esemeny/{esemenyId}/zenelista/{zeneId}'-->
-<!--                (zeneId=${zene.zeneId}, esemenyId=${zene.esemenyId})}"-->
-<!--                          method="post">-->
-<!--                        <input type="submit" class="btn btn-success" value="Like">-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="row">-->
-<!--                <div class="col" th:if="${!vanElegKredit}">-->
-<!--                    <button type="button" class="btn btn-outline-success" disabled>Like</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </td>-->
-<!--        <td>-->
-<!--            <div class="row">-->
-<!--                <div class="col" th:if="${zene.szavazatByFelhasznalo != 0}">-->
-<!--                    <form th:action="@{'/esemeny/delete/{esemenyId}/zenelista/{zeneId}'-->
-<!--                (zeneId=${zene.zeneId}, esemenyId=${zene.esemenyId})}"-->
-<!--                          method="post">-->
-<!--                        <input type="submit" class="btn btn-danger" value="Like visszavonása">-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="row">-->
-<!--                <div class="col" th:if="${zene.szavazatByFelhasznalo == 0}">-->
-<!--                    <button type="button" class="btn btn-outline-danger" disabled>Like visszavonása</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--</table>-->
-
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (() => {
