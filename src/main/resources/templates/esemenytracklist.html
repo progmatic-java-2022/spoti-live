@@ -116,14 +116,14 @@
 </div>
 
 
-<div class="container text-center">
+<div class="container text-center" style="min-width: 350px; margin-top: 5%">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-        <div class="card mb-3" style="padding: 1%" th:each="zene : ${esemenytracklist}">
+        <div class="card mb-3" style="padding: 1%; min-width: 350px" th:each="zene : ${esemenytracklist}" >
             <h5 class="card-header bg-dark border-success text-success" th:text="${zene.szamCim}">Cím</h5>
             <div class="card-body">
                 <h5 class="card-title" th:text="'Szavazatok: '+${zene.osszSzavazat}">Szavazat</h5>
                 <p class="card-text" th:text="'Saját szavazatok: '+${zene.szavazatByFelhasznalo}">Saját szavazat</p>
-                <table style="margin-left: 11.5%; width: 80%">
+                <table style="margin-left: 11%">
                     <tbody>
                     <tr>
                         <td style="text-align: right">
