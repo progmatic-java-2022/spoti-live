@@ -20,15 +20,18 @@
     <thead>
     <tr>
         <th scope="col">Cím</th>
+        <th scope="col">Küldés állapota</th>
         <th scope="col">Kredit</th>
-        <th scope="col">Sikeres küldés</th>
+        <th scope="col">Hibaüzenet</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="mail : ${kikuldottMeghivokLista}">
         <td th:text="${mail.emailCim}">E-mail</td>
+        <td th:text="${mail.sikeresKuldes} ? 'Sikeres' : 'Sikertelen'" >Küldés állapota</td>
         <td th:text="${mail.kreditekSzama}">Kreditek száma</td>
-        <td th:text="${mail.sikeresKuldes}">Sikeres küldés</td>
+<!--        <td th:text="${mail.sikeresKuldes}">Sikeres küldés</td>-->
+        <td th:text="${mail.hibaUzenet}">Hibaüzenet</td>
     </tr>
     </tbody>
 </table>

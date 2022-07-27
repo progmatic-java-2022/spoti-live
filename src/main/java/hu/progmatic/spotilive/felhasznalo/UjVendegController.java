@@ -124,5 +124,8 @@ public class UjVendegController {
         return new ArrayList<>();
     }
 
-
+    @ModelAttribute("isSikeres")
+    public Boolean isSikeres() {
+        return null;
+    }
 }

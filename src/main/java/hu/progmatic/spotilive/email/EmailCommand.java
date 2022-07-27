@@ -9,7 +9,7 @@ import javax.validation.constraints.Email;
 @Builder
 public class EmailCommand {
 
-    @Email
+    @Email(message = "Nem helyes formátum")
     private String emailcim;
     @Builder.Default
     private String subject = "Meghívó";
