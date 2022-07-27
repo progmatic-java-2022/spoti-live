@@ -34,10 +34,21 @@
      aria-labelledby="filterModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5>Szűrés</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                        <h5>Szűrés</h5>
+                    </td>
+                    <td style="text-align: right">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h7>Kijelölés megszüntetése CTRL + click</h7>
+                    </td>
+                </tr>
+            </table>
             <div class="modal-body">
                 <form action="#" th:action="@{/zenecontrol/filter}" th:object="${filterCommand}"
                       method="POST">
