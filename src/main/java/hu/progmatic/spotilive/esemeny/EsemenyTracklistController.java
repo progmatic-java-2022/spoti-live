@@ -51,10 +51,12 @@ public class EsemenyTracklistController {
             .build();
 
         List<SzavazatTracklistDto> esemenyTrackList = szavazatService.getEsemenyTrackList(filterByTagCommand);
-
+        model.addAttribute("kreditek",esemenyService.getKreditekSzama());
+        model.addAttribute("kreditekSzamaInt",esemenyService.getKreditSzam());
         model.addAttribute("esemenytracklist", esemenyTrackList);
         model.addAttribute("esemenyDto", esemenyService.getEsemenyDtoById(esemenyId));
         model.addAttribute("filterCommand", filterByTagCommand);
+        model.addAttribute("vanElegKredit", vanElegKredit());
     }
 
     @PostMapping("/esemeny/{esemenyId}/zenelista/{zeneId}")
@@ -68,11 +70,12 @@ public class EsemenyTracklistController {
                     .esemenyId(esemenyId)
                     .zeneId(zeneId)
                     .build());
-            esemenyTrakclistModelEpites(model,esemenyId,filter);
+
         }
         catch (KreditException e) {
-            model.addAttribute("esemenytracklist", szavazatService.getEsemenyTrackList(FilterByTagCommand.builder().build()));
+            model.addAttribute("kreditError",e);
         }
+        esemenyTrakclistModelEpites(model,esemenyId,filter);
         return "/esemenytracklist";
     }
 
@@ -82,10 +85,15 @@ public class EsemenyTracklistController {
             @PathVariable("esemenyId") Integer esemenyId,
             @RequestParam("tagLista") Optional<List<String >> filter,
             Model model) {
-        esemenyService.deleteSzavazat(SzavazatCommand.builder()
-                .esemenyId(esemenyId)
-                .zeneId(zeneId)
-                .build());
+        var hibaUzenet = "Nincs többvisszavonható szavazat";
+        try {
+            esemenyService.deleteSzavazat(SzavazatCommand.builder()
+                    .esemenyId(esemenyId)
+                    .zeneId(zeneId)
+                    .build());
+        }catch (RuntimeException e){
+            model.addAttribute("kreditError",hibaUzenet);
+        }
         esemenyTrakclistModelEpites(model,esemenyId,filter);
         return "/esemenytracklist";
     }
