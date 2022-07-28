@@ -53,7 +53,6 @@ public class EsemenyTracklistController {
 
         List<SzavazatTracklistDto> esemenyTrackList = szavazatService.getEsemenyTrackList(filterByTagCommand);
         model.addAttribute("kreditek",esemenyService.getKreditekSzama());
-        model.addAttribute("kreditekSzamaInt",esemenyService.getKreditSzam());
         model.addAttribute("esemenytracklist", esemenyTrackList);
         model.addAttribute("esemenyDto", esemenyService.getEsemenyDtoById(esemenyId));
         model.addAttribute("filterCommand", filterByTagCommand);
@@ -123,9 +122,6 @@ public class EsemenyTracklistController {
     @ModelAttribute("kreditek")
     public String getKreditek() {
         return esemenyService.getKreditekSzama();}
- @ModelAttribute("kreditekSzamaInt")
-    public Integer getKreditSzam() {
-        return esemenyService.getKreditSzam();}
 
     @ModelAttribute("kreditError")
     public String getKreditError() {
