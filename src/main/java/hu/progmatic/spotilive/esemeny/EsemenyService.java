@@ -212,18 +212,8 @@ EsemenyService {
             var felhasznaloId = felhasznaloService.getFelhasznaloId();
             var felhasznalo = felhasznaloService.getById(felhasznaloId);
             Integer kreditek = felhasznalo.getKredit().getKreditMennyiseg();
-            return kreditek + "";
+             return kreditek + "";
         }
         return "Csak guestnek kell kredit!";
-    }
-
-    public Integer getKreditSzam() {
-        if (felhasznaloService.isGuest()) {
-            var felhasznaloId = felhasznaloService.getFelhasznaloId();
-            var felhasznalo = felhasznaloService.getById(felhasznaloId);
-            Integer kreditek = felhasznalo.getKredit().getKreditMennyiseg();
-            return kreditek;
-        }
-        return 0;
     }
 }

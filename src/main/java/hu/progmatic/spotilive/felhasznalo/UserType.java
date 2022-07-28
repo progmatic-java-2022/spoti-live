@@ -21,7 +21,9 @@ public enum UserType {
     ZENEKAR(
             Roles.ESEMENY_KEZELES_ROLE,
             Roles.ZENE_KEZELES_ROLE,
-            Roles.NEWGUEST_CREATE_ROLE
+            Roles.NEWGUEST_CREATE_ROLE,
+            Roles.NEWGUEST_INVITE_ROLE
+
     ),
     GUEST(Roles.GUEST_READ_ROLE);
 
@@ -52,6 +54,7 @@ public enum UserType {
         public static final String GUEST_READ_ROLE = "GUEST_READ";
         public static final String USER_CREATE_ROLE = "USER_CREATE";
         public static final String NEWGUEST_CREATE_ROLE = "NEWGUEST_CREATE";
+        public static final String NEWGUEST_INVITE_ROLE = "NEWGUEST_INVITE";
     }
 
 
