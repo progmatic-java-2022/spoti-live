@@ -38,6 +38,11 @@ public class KezdolapController {
     public boolean zenekarUjFelhasznalo(){
         return felhasznaloService.hasRole(UserType.Roles.NEWGUEST_CREATE_ROLE);
     }
+
+    @ModelAttribute("zenekarUjFelhasznaloMeghivas")
+    public boolean zenekarUjFelhasznaloMeghivas(){
+        return felhasznaloService.hasRole(UserType.Roles.NEWGUEST_INVITE_ROLE);
+    }
     @ModelAttribute("adminFelhasznalo")
     public boolean adminFelhasznalo(){
         return felhasznaloService.hasRole(UserType.Roles.ADMIN_ROLE);
