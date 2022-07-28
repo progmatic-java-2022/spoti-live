@@ -30,7 +30,7 @@
     </tbody>
 </table>
 
-<table class="table table-dark table-striped">
+<table class="table table-dark">
     <thead>
     <tr>
         <th scope="col">Cím</th>
@@ -42,9 +42,8 @@
     <tbody>
     <tr th:each="mail : ${kikuldottMeghivokLista}">
         <td th:text="${mail.emailCim}">E-mail</td>
-        <td th:text="${mail.sikeresKuldes} ? 'Sikeres' : 'Sikertelen'" >Küldés állapota</td>
+        <td th:text="${mail.sikeresKuldes} ? 'Sikeres' : 'Sikertelen'" th:style="${mail.sikeresKuldes} ? 'background-color: green' : 'background-color: red'">Küldés állapota</td>
         <td th:text="${mail.kreditekSzama}">Kreditek száma</td>
-<!--        <td th:text="${mail.sikeresKuldes}">Sikeres küldés</td>-->
         <td th:text="${mail.hibaUzenet}">Hibaüzenet</td>
     </tr>
     </tbody>
