@@ -143,9 +143,9 @@ public class ZeneService {
                     .toList();
         }
         Integer zenekarId = felhasznaloService.getZenekarId();
-        Zenekar zenekar = zenekarService.getZenekarEntityById(zenekarId);
-        return zeneRepository
-                .findAllByZenekar(zenekar)
+        List<Zene> allByZenekarId = zeneRepository
+            .findAllByZenekarId(zenekarId);
+        return allByZenekarId
                 .stream()
                 .map(ZeneDto::factory)
                 .sorted(Comparator.comparing(ZeneDto::getCim))

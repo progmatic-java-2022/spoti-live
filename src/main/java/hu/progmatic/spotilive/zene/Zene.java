@@ -17,6 +17,19 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@NamedEntityGraph(
+    name = "Zene.tagList",
+    attributeNodes = @NamedAttributeNode(
+        value = "tagToZeneEntityList",
+        subgraph = "tagList.tag"
+    ),
+    subgraphs = {
+        @NamedSubgraph(
+            name = "tagList.tag",
+            attributeNodes = @NamedAttributeNode("tag")
+        )
+    }
+)
 public class Zene {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
