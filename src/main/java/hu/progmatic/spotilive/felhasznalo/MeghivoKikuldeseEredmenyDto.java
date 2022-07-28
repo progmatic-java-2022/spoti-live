@@ -11,5 +11,5 @@ public class MeghivoKikuldeseEredmenyDto {
     Integer kreditekSzama;
     boolean sikeresKuldes;
     @Builder.Default
-    String hibaUzenet = "Sikeres küldés";
+    String hibaUzenet = "-";
 }
