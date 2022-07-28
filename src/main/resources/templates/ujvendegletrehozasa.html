@@ -36,7 +36,7 @@
                    name="nev"
                    placeholder="Felhasználónév"
                    th:field="*{felhasznaloNev}"
-                   th:classappend="${#fields.hasErrors('felhasznaloNev')} ? 'is-invalid' : 'is-valid'"/>
+                   th:classappend="${#fields.hasErrors('felhasznaloNev')} ? 'is-valid' : 'is-invalid'"/>
             <div class="invalid-feedback"
                  th:if="${#fields.hasErrors('felhasznaloNev')}"
                  th:errors="*{felhasznaloNev}">
@@ -51,7 +51,7 @@
                    name="jelszo"
                    placeholder="Jelszó"
                    th:field="*{jelszo1}"
-                   th:classappend="${#fields.hasErrors('jelszo1')} ? 'is-invalid' : 'is-valid'"/>
+                   th:classappend="${#fields.hasErrors('jelszo1')} ? 'is-valid' : 'is-invalid'"/>
             <div class="invalid-feedback"
                  th:if="${#fields.hasErrors('jelszo1')}"
                  th:errors="*{jelszo1}">
@@ -65,7 +65,7 @@
                    name="jelszoellenorzes"
                    placeholder="Jelszó még egyszer"
                    th:field="*{jelszo2}"
-                   th:classappend="${#fields.hasErrors('jelszo2')} ? 'is-invalid' : 'is-valid'"/>
+                   th:classappend="${#fields.hasErrors('jelszo2')} ? 'is-valid' : 'is-invalid'"/>
             <div class="invalid-feedback"
                  th:if="${#fields.hasErrors('jelszo2')}"
                  th:errors="*{jelszo2}">
