@@ -39,48 +39,55 @@ public class EsemenyTracklistController {
     public String esemenyTracklistBeltoltese(
             Model model, @PathVariable("esemenyId") Integer esemenyId,
             @RequestParam("tagLista") Optional<List<String >> filter) {
-      FilterByTagCommand filterByTagCommand = FilterByTagCommand.builder()
-          .esemenyId(esemenyId)
-          .tagLista(filter.orElse(List.of()))
-          .build();
+        esemenyTrakclistModelEpites(model, esemenyId, filter);
 
-      List<SzavazatTracklistDto> esemenyTrackList = szavazatService.getEsemenyTrackList(filterByTagCommand);
+        return "/esemenytracklist";
+    }
 
-      model.addAttribute("esemenytracklist", esemenyTrackList);
-      model.addAttribute("esemenyDto", esemenyService.getEsemenyDtoById(esemenyId));
-      model.addAttribute("filterCommand", filterByTagCommand);
+    private void esemenyTrakclistModelEpites(Model model, Integer esemenyId, Optional<List<String>> filter) {
+        FilterByTagCommand filterByTagCommand = FilterByTagCommand.builder()
+            .esemenyId(esemenyId)
+            .tagLista(filter.orElse(List.of()))
+            .build();
 
-      return "/esemenytracklist";
+        List<SzavazatTracklistDto> esemenyTrackList = szavazatService.getEsemenyTrackList(filterByTagCommand);
+
+        model.addAttribute("esemenytracklist", esemenyTrackList);
+        model.addAttribute("esemenyDto", esemenyService.getEsemenyDtoById(esemenyId));
+        model.addAttribute("filterCommand", filterByTagCommand);
     }
 
     @PostMapping("/esemeny/{esemenyId}/zenelista/{zeneId}")
     public String addSzavazat(
             @PathVariable("zeneId") Integer zeneId,
             @PathVariable("esemenyId") Integer esemenyId,
+            @RequestParam("tagLista") Optional<List<String >> filter,
             Model model) {
         try {
             esemenyService.addSzavazat(SzavazatCommand.builder()
                     .esemenyId(esemenyId)
                     .zeneId(zeneId)
                     .build());
-            return "redirect:/esemeny/zenelista/" + esemenyId;
+            esemenyTrakclistModelEpites(model,esemenyId,filter);
         }
         catch (KreditException e) {
             model.addAttribute("esemenytracklist", szavazatService.getEsemenyTrackList(FilterByTagCommand.builder().build()));
-            return "/esemenytracklist";
         }
+        return "/esemenytracklist";
     }
 
     @PostMapping("/esemeny/delete/{esemenyId}/zenelista/{zeneId}")
     public String deleteSzavazat(
             @PathVariable("zeneId") Integer zeneId,
             @PathVariable("esemenyId") Integer esemenyId,
+            @RequestParam("tagLista") Optional<List<String >> filter,
             Model model) {
         esemenyService.deleteSzavazat(SzavazatCommand.builder()
                 .esemenyId(esemenyId)
                 .zeneId(zeneId)
                 .build());
-        return "redirect:/esemeny/zenelista/" + esemenyId;
+        esemenyTrakclistModelEpites(model,esemenyId,filter);
+        return "/esemenytracklist";
     }
 
     @PostMapping("/tracklist/filter")

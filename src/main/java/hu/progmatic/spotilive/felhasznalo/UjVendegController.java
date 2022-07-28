@@ -41,8 +41,6 @@ public class UjVendegController {
         } else {
             var meghivoKikuldeseEredmenyDto = meghivoService.meghivokKikuldeseEmailben(meghivoKredittelCommand);
             model.addAttribute("kikuldottMeghivokLista", meghivoKikuldeseEredmenyDto);
-//            model.addAttribute("kikuldottMeghivokLista", meghivoKikuldeseEredmenyDto.getKikuldottMeghivok());
-//            meghivoService.meghivokKikuldeseEmailben(meghivoKredittelCommand);
             return "/sikeresemail";
         }
         return "/felhasznalo";
@@ -130,4 +128,8 @@ public class UjVendegController {
     }
 
 
+    @ModelAttribute("isSikeres")
+    public Boolean isSikeres() {
+        return null;
+    }
 }

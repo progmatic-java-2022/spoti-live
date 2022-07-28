@@ -83,26 +83,25 @@
                 <form action="#" th:action="@{'/esemeny/zenelista/{esemenyId}' (esemenyId=${esemenyId})}"
                       th:object="${filterCommand}"
                       method="get">
-                    <table style="width: 100%" th:each="tagTipus : ${tagTipusok}">
+                    <table th:each="tagTipus : ${tagTipusok}">
                         <thead>
                         <tr>
                             <th th:text="${tagTipus}">tag tipus</th>
                         </tr>
                         </thead>
+
                         <tbody>
-                        <td>
-                            <div class="container">
 
-                                <select class="form-control selectpicker" data-width="100%" id="multiple-hobbies"
-                                        th:field="*{tagLista}"
-                                        multiple="multiple">
+                        <div class="container">
 
-                                    <option th:each="tag :${osszesTag}"
-                                            th:if="${tag.getTagKategoria().getTagKategoriaString() == tagTipus}"
-                                            th:value="${tag.tagNev}" th:text="${tag.tagNev}">
-                                </select>
-                            </div>
-                        </td>
+                            <select class="form-control selectpicker" id="multiple-hobbies" th:field="*{tagLista}"
+                                    multiple="multiple">
+
+                                <option th:each="tag :${osszesTag}"
+                                        th:if="${tag.getTagKategoria().getTagKategoriaString() == tagTipus}"
+                                        th:value="${tag.tagNev}" th:text="${tag.tagNev}">
+                            </select>
+                        </div>
                         </tbody>
                     </table>
                     <div class="modal-footer">
@@ -119,7 +118,7 @@
 
 <div class="container text-center" style="min-width: 350px; margin-top: 5%">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-        <div class="card mb-3" style="padding: 1%; min-width: 350px" th:each="zene : ${esemenytracklist}" >
+        <div class="card mb-3" style="padding: 1%; min-width: 350px" th:each="zene : ${esemenytracklist}">
             <h5 class="card-header bg-dark border-success text-success" th:text="${zene.szamCim}">Cím</h5>
             <div class="card-body">
                 <h5 class="card-title" th:text="'Szavazatok: '+${zene.osszSzavazat}">Szavazat</h5>
@@ -131,8 +130,10 @@
                             <div class="col" th:if="${vanElegKredit}">
                                 <form th:action="@{'/esemeny/{esemenyId}/zenelista/{zeneId}'
                 (zeneId=${zene.zeneId}, esemenyId=${zene.esemenyId})}"
+                                      th:object="${filterCommand}"
                                       method="post">
                                     <input type="submit" class="btn btn-success" value="Like">
+                                    <input type="hidden" th:field="*{tagLista}">
                                 </form>
                             </div>
                             <div class="col" th:if="${!vanElegKredit}">
@@ -143,8 +144,10 @@
                             <div class="col" th:if="${zene.szavazatByFelhasznalo != 0}">
                                 <form th:action="@{'/esemeny/delete/{esemenyId}/zenelista/{zeneId}'
                 (zeneId=${zene.zeneId}, esemenyId=${zene.esemenyId})}"
+                                      th:object="${filterCommand}"
                                       method="post">
                                     <input type="submit" class="btn btn-danger" value="Like visszavonása">
+                                    <input type="hidden" th:field="*{tagLista}">
                                 </form>
                             </div>
                             <div class="col" th:if="${zene.szavazatByFelhasznalo == 0}">

@@ -10,4 +10,6 @@ public class MeghivoKikuldeseEredmenyDto {
     String emailCim;
     Integer kreditekSzama;
     boolean sikeresKuldes;
+    @Builder.Default
+    String hibaUzenet = "Sikeres küldés";
 }

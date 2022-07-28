@@ -7,6 +7,7 @@ import hu.progmatic.spotilive.email.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -99,6 +100,7 @@ public class MeghivoService {
                 emailSenderService.emailKuldes(emailCommand);
             } catch (EmailException emailException){
                 eredmeny.setSikeresKuldes(false);
+                eredmeny.setHibaUzenet(emailException.getMessage());
             }
 
            eredmenyDtoList.add(eredmeny);
