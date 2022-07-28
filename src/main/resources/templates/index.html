@@ -17,12 +17,61 @@
         crossorigin="anonymous"></script>
 
 
-<nav class="navbar navbar-dark bg-dark navbar-expand-lg sticky-top">
+<!--<nav class="navbar navbar-dark bg-dark navbar-expand-sm sticky-top">-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="navbar-brand"-->
+<!--           th:text="${'Hello ' + #authentication.getName() + '!'}">-->
+<!--            Helló ***</div>-->
+<!--        <div class="collapse navbar-collapse" id="navbarNav">-->
+<!--            <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+<!--                <li class="nav-item" th:if="${guestFelhasznalo} or ${zenekarFelhasznalo}">-->
+<!--                    <a class="nav-link"-->
+<!--                       href="esemenyek.html"-->
+<!--                       th:href="@{/esemeny}"-->
+<!--                       target="content_frame">Események</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item" th:if="${adminFelhasznalo}">-->
+<!--                    <a class="nav-link"-->
+<!--                       href="zenekar_admin.html"-->
+<!--                       th:href="@{/zenekarKarbantartas}"-->
+<!--                       target="content_frame">Zenekarok</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item" th:if="${zenekarFelhasznalo}">-->
+<!--                    <a class="nav-link"-->
+<!--                       href="zenekarbantartas.html"-->
+<!--                       th:href="@{/zene}"-->
+<!--                       target="content_frame">Zenék</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item" th:if="${adminFelhasznalo}">-->
+<!--                    <a class="nav-link"-->
+<!--                       href="tagkarbantartas.html"-->
+<!--                       th:href="@{/tag}"-->
+<!--                       target="content_frame">Tag karbantartas</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item" th:if="${adminFelhasznalo} or ${zenekarUjFelhasznalo}">-->
+<!--                    <a class="nav-link"-->
+<!--                       href="felhasznalo.html"-->
+<!--                       th:href="@{/felhasznalo}"-->
+<!--                       target="content_frame">Felhasználók szerkesztése</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <form th:action="@{/logout}" method="post">-->
+<!--            <input class="btn btn-primary" type="submit" value="Kijelentkezés"/>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</nav>-->
+
+<nav class="navbar navbar-dark bg-dark navbar-expand-sm sticky-top">
     <div class="container-fluid">
-        <div class="navbar-brand"
-           th:text="${'Hello ' + #authentication.getName() + '!'}">
-            Helló ***</div>
-        <div class="collapse navbar-collapse" id="navbarNav">
+       <div class="navbar-brand"
+        th:text="${'Hello ' + #authentication.getName() + '!'}">
+        Helló ***
+    </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item" th:if="${guestFelhasznalo} or ${zenekarFelhasznalo}">
                     <a class="nav-link"
@@ -62,9 +111,9 @@
                 </li>
             </ul>
         </div>
-        <form th:action="@{/logout}" method="post">
-            <input class="btn btn-primary" type="submit" value="Kijelentkezés"/>
-        </form>
+    <form th:action="@{/logout}" method="post">
+        <input class="btn btn-primary" type="submit" value="Kijelentkezés"/>
+    </form>
     </div>
 </nav>
 
