@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
@@ -64,6 +65,7 @@ public class EsemenyTracklistController {
             @PathVariable("zeneId") Integer zeneId,
             @PathVariable("esemenyId") Integer esemenyId,
             @RequestParam("tagLista") Optional<List<String >> filter,
+            RedirectAttributes attr,
             Model model) {
         try {
             esemenyService.addSzavazat(SzavazatCommand.builder()
@@ -73,10 +75,10 @@ public class EsemenyTracklistController {
 
         }
         catch (KreditException e) {
-            model.addAttribute("kreditError",e);
+            attr.addAttribute("kreditError",e);
         }
-        esemenyTrakclistModelEpites(model,esemenyId,filter);
-        return "/esemenytracklist";
+        attr.addAttribute("tagLista",filter.orElse(List.of()));
+        return "redirect:/esemeny/zenelista/" + esemenyId;
     }
 
     @PostMapping("/esemeny/delete/{esemenyId}/zenelista/{zeneId}")
@@ -84,18 +86,16 @@ public class EsemenyTracklistController {
             @PathVariable("zeneId") Integer zeneId,
             @PathVariable("esemenyId") Integer esemenyId,
             @RequestParam("tagLista") Optional<List<String >> filter,
+            RedirectAttributes attr,
             Model model) {
-        var hibaUzenet = "Nincs többvisszavonható szavazat";
-        try {
+
             esemenyService.deleteSzavazat(SzavazatCommand.builder()
                     .esemenyId(esemenyId)
                     .zeneId(zeneId)
                     .build());
-        }catch (RuntimeException e){
-            model.addAttribute("kreditError",hibaUzenet);
-        }
-        esemenyTrakclistModelEpites(model,esemenyId,filter);
-        return "/esemenytracklist";
+
+        attr.addAttribute("tagLista",filter.orElse(List.of()));
+        return "redirect:/esemeny/zenelista/" + esemenyId;
     }
 
     @PostMapping("/tracklist/filter")
