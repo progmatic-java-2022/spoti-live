@@ -32,8 +32,8 @@
         <tr th:each="zenekar : ${zenekarLista}">
             <td th:text = "${zenekar.nev}">Nev</td>
             <td th:text = "${zenekar.email}">Email</td>
-            <td th:if="${zenekar.telefonszam} != ''" th:text = "${zenekar.telefonszam}">Nincs Telefon</td>
-            <td th:if="${zenekar.telefonszam} == ''" th:text = "'Nincs telefonszám'">Telefon</td>
+            <td th:if="${zenekar.telefonszam} != null" th:text = "${zenekar.telefonszam}">Nincs Telefon</td>
+            <td th:if="${zenekar.telefonszam} == null" th:text = "'Nincs telefonszám'">Telefon</td>
             <td th:text = "${zenekar.varos}">Város</td>
             <td th:if="${zenekar.leiras} != ''" th:text = "${zenekar.leiras}">Leírás</td>
             <td th:if="${zenekar.leiras} == ''" th:text = "'Nincs leírás'">Leírás</td>

@@ -1,14 +1,13 @@
 package hu.progmatic.spotilive.zenekar;
 
 import hu.progmatic.spotilive.felhasznalo.UserType;
-import hu.progmatic.spotilive.zene.ZeneDto;
-import hu.progmatic.spotilive.zene.ZeneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -19,13 +18,16 @@ public class ZenekarService {
 
     @RolesAllowed(UserType.Roles.ZENEKAR_KEZELES_ROLE)
     public ZenekarDto createZenekar(ZenekarDto zenekarDto) {
-        if (zenekarRepository.findByNev(zenekarDto.getNev()).isPresent()) {
+        if (zenekarDto.getTelefonszam() != null && zenekarDto.getTelefonszam().equals("")) {
+            zenekarDto.setTelefonszam(null);
+        }
+        if (isNevHasznalt(zenekarDto)) {
             throw new AddZenekarExeption("Zenekar már létezik ilyen névvel!");
         }
-        if (zenekarRepository.findByEmail(zenekarDto.getEmail()).isPresent()) {
+        if (isEmailHasznalt(zenekarDto)) {
             throw new AddZenekarExeption("Zenekar már létezik ilyen email címmel!");
         }
-        if (zenekarDto.getTelefonszam() != null && zenekarRepository.findByTelefonszam(zenekarDto.getTelefonszam()).isPresent()) {
+        if (isTelefonszamHasznalt(zenekarDto)) {
             throw new AddZenekarExeption("Zenekar már létezik ilyen telefonszámmal'");
         }
         Zenekar zenekar = Zenekar.builder()
@@ -36,6 +38,24 @@ public class ZenekarService {
                 .varos(zenekarDto.getVaros())
                 .build();
         return ZenekarDto.factory(zenekarRepository.save(zenekar));
+    }
+
+    private boolean isNevHasznalt(ZenekarDto zenekarDto) {
+        return nevHasznalt(zenekarRepository.findByNev(zenekarDto.getNev()));
+    }
+
+    private boolean nevHasznalt(Optional<Zenekar> zenekarRepository) {
+        return zenekarRepository.isPresent();
+    }
+
+    private boolean isEmailHasznalt(ZenekarDto zenekarDto) {
+        return zenekarRepository.findByEmail(zenekarDto.getEmail()).isPresent();
+    }
+
+    private boolean isTelefonszamHasznalt(ZenekarDto zenekarDto) {
+        return zenekarDto.getTelefonszam() != null
+                && !zenekarDto.getTelefonszam().equals("")
+                && zenekarRepository.findByTelefonszam(zenekarDto.getTelefonszam()).isPresent();
     }
 
     public void deleteById(Integer id) {
@@ -58,16 +78,19 @@ public class ZenekarService {
     }
 
     public ZenekarDto editZenekar(ZenekarDto dto) {
-        if (zenekarRepository.findByNev(dto.getNev()).isPresent() &&
-        !zenekarRepository.getZenekarByNev(dto.getNev()).getId().equals(dto.getId())) {
+        if (dto.getTelefonszam() != null && dto.getTelefonszam().equals("")) {
+            dto.setTelefonszam(null);
+        }
+        if (isNevHasznalt(dto) &&
+                !zenekarRepository.getZenekarByNev(dto.getNev()).getId().equals(dto.getId())) {
             throw new AddZenekarExeption("Zenekar már létezik ilyen névvel!");
         }
-        if (zenekarRepository.findByEmail(dto.getEmail()).isPresent() &&
-        !zenekarRepository.getZenekarByEmail(dto.getEmail()).getId().equals(dto.getId())) {
+        if (isEmailHasznalt(dto) &&
+                !zenekarRepository.getZenekarByEmail(dto.getEmail()).getId().equals(dto.getId())) {
             throw new AddZenekarExeption("Zenekar már létezik ilyen email címmel!");
         }
-        if (dto.getTelefonszam() != null && zenekarRepository.findByTelefonszam(dto.getTelefonszam()).isPresent() &&
-        !zenekarRepository.getZenekarByTelefonszam(dto.getTelefonszam()).getId().equals(dto.getId())) {
+        if (isTelefonszamHasznalt(dto) &&
+                !zenekarRepository.getZenekarByTelefonszam(dto.getTelefonszam()).getId().equals(dto.getId())) {
             throw new AddZenekarExeption("Zenekar már létezik ilyen telefonszámmal'");
         }
         Zenekar zenekar = zenekarRepository.getReferenceById(dto.getId());
@@ -86,7 +109,6 @@ public class ZenekarService {
     public Zenekar getZenekarEntityById(Integer zenekarId) {
         return zenekarRepository.getReferenceById(zenekarId);
     }
-
 
 
 }
