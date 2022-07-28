@@ -64,8 +64,8 @@
                    th:field="*{jelszo}"/>
         </label>
         <label>
-            <select th:field="*{role}" class="form-select">
-                <option th:each="roleOption : ${allRole}" th:value="${roleOption}" th:text="${roleOption}"></option>
+            <select th:field="*{zenekarId}" class="form-select">
+                <option th:each="zenekar : ${osszesZenekar}" th:value="${zenekar.id}" th:text="${zenekar.nev}"></option>
             </select>
         </label>
         <input class="btn btn-primary" type="submit" value="Hozzáad"/>

@@ -1,5 +1,9 @@
 package hu.progmatic.spotilive.felhasznalo;
 
+import hu.progmatic.spotilive.zene.ZeneService;
+import hu.progmatic.spotilive.zenekar.ZenekarDto;
+import hu.progmatic.spotilive.zenekar.ZenekarService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +18,9 @@ import java.util.List;
 public class FelhasznaloController {
   private final FelhasznaloService felhasznaloService;
 
+  @Autowired
+  ZenekarService zenekarService;
+
   public FelhasznaloController(FelhasznaloService felhasznaloService) {
     this.felhasznaloService = felhasznaloService;
   }
@@ -26,6 +33,7 @@ public class FelhasznaloController {
   @PostMapping("/felhasznalo")
   public String add(@ModelAttribute UjFelhasznaloCommand command, Model model) {
     model.addAttribute("ujFelhasznaloError", null);
+    command.setRole(UserType.ZENEKAR);
     try {
       felhasznaloService.add(command);
     } catch (FelhasznaloLetrehozasException e) {
@@ -94,6 +102,11 @@ public class FelhasznaloController {
   @ModelAttribute("meghivoKredittelCommand")
   public MeghivoKredittelCommand kreditCommand() {
     return MeghivoKredittelCommand.builder().build();
+  }
+
+  @ModelAttribute("osszesZenekar")
+  public List<ZenekarDto> osszesZenekar(){
+    return zenekarService.findAllDto().stream().toList();
   }
 
 
