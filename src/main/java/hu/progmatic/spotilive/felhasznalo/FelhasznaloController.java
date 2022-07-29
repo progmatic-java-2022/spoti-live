@@ -99,6 +99,11 @@ public class FelhasznaloController {
     return felhasznaloService.isAdmin();
   }
 
+  @ModelAttribute("zenekarUjFelhasznaloMeghivas")
+  public boolean zenekarUjFelhasznaloMeghivas(){
+    return felhasznaloService.hasRole(UserType.Roles.NEWGUEST_INVITE_ROLE);
+  }
+
   @ModelAttribute("meghivoKredittelCommand")
   public MeghivoKredittelCommand kreditCommand() {
     return MeghivoKredittelCommand.builder().build();

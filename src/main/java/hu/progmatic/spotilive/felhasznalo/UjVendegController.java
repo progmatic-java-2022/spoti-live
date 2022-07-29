@@ -26,6 +26,8 @@ public class UjVendegController {
     MeghivoService meghivoService;
     @Autowired
     private EsemenyService esemenyService;
+    @Autowired
+    private FelhasznaloService felhasznaloService;
 
 
     @PostMapping("/public/ujmeghivo")
@@ -131,5 +133,10 @@ public class UjVendegController {
     @ModelAttribute("isSikeres")
     public Boolean isSikeres() {
         return null;
+    }
+
+    @ModelAttribute("zenekarUjFelhasznalo")
+    public boolean zenekarUjFelhasznalo(){
+        return felhasznaloService.hasRole(UserType.Roles.NEWGUEST_CREATE_ROLE);
     }
 }
