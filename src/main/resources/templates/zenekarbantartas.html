@@ -123,81 +123,81 @@
                     <form th:action="@{'/tagek/zene/{zeneid}'(zeneid=${zene.id})}" method="get">
                         <input type="submit" class="btn btn-primary" value="Tagek"/>
                     </form>
-                    <!-- Modal -->
-                    <div th:classappend="${showModal ? 'show' : ''}" class="modal fade" id="tagListaModal" tabindex="-1"
-                         aria-labelledby="tagListaModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Tagek</h5>
-                                    <form th:action="@{'/zene'}">
-                                    <button type="submit" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </form>
-                                </div>
-                                <div class="modal-body" th:each="kategoria : ${zeneTagSzerkeztes.tagByKategoria}">
-                                    <table class="table table-dark table-striped">
-                                        <thead class="table-dark">
-                                        <tr>
-                                            <th scope="col" th:text="${kategoria.getKey().getTagKategoriaString()}">
-                                                Name
-                                            </th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <div th:each="tag : ${kategoria.getValue().getHozzaadott()}">
-                                            <tr>
-                                                <th th:text="${tag.tagNev}">Teszt mufaj</th>
-                                                <td>
-                                                    <div class="col">
-                                                        <form th:action="@{'/zenekarbantartas/zene/{zeneid}/tag/{tagid}/remove'
-                                                        (zeneid=${zeneTagSzerkeztes.zeneId}, tagid=${tag.id})}"
-                                                              method="post">
-                                                            <input type="submit" class="btn btn-danger"
-                                                                   value="Törlés"/>
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </div>
-                                        </tbody>
-                                    </table>
-                                    <table class="table table-danger table-striped">
-                                        <tbody>
-                                        <div th:each="tag : ${kategoria.getValue().getNemHozzaadott()}">
-                                            <tr>
-                                                <th th:text="${tag.tagNev}">Teszt Mufaj</th>
-                                                <td>
-                                                    <div class="col">
-                                                        <form th:action="@{'/zenekarbantartas/zene/{zeneid}/tag/{tagid}/add'
-                                                        (zeneid=${zeneTagSzerkeztes.zeneId}, tagid=${tag.id})}"
-                                                              method="post">
-                                                            <input type="submit" class="btn btn-success"
-                                                                   value="Hozzáadás"/>
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </div>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="modal-footer">
-                                    <form th:action="@{'/zene'}">
-                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </td>
     </tr>
     </tbody>
 </table>
+<!-- Modal -->
+<div th:classappend="${showModal ? 'show' : ''}" class="modal fade" id="tagListaModal" tabindex="-1"
+     aria-labelledby="tagListaModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tagek</h5>
+                <form th:action="@{'/zene'}">
+                    <button type="submit" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </form>
+            </div>
+            <div class="modal-body" th:each="kategoria : ${zeneTagSzerkeztes.tagByKategoria}">
+                <table class="table table-dark table-striped">
+                    <thead class="table-dark">
+                    <tr>
+                        <th scope="col" th:text="${kategoria.getKey().getTagKategoriaString()}">
+                            Name
+                        </th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="tag : ${kategoria.getValue().getHozzaadott()}">
+                        <tr>
+                            <th th:text="${tag.tagNev}">Teszt mufaj</th>
+                            <td>
+                                <div class="col">
+                                    <form th:action="@{'/zenekarbantartas/zene/{zeneid}/tag/{tagid}/remove'
+                                                        (zeneid=${zeneTagSzerkeztes.zeneId}, tagid=${tag.id})}"
+                                          method="post">
+                                        <input type="submit" class="btn btn-danger"
+                                               value="Törlés"/>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
+                <table class="table table-danger table-striped">
+                    <tbody>
+                    <div th:each="tag : ${kategoria.getValue().getNemHozzaadott()}">
+                        <tr>
+                            <th th:text="${tag.tagNev}">Teszt Mufaj</th>
+                            <td>
+                                <div class="col">
+                                    <form th:action="@{'/zenekarbantartas/zene/{zeneid}/tag/{tagid}/add'
+                                                        (zeneid=${zeneTagSzerkeztes.zeneId}, tagid=${tag.id})}"
+                                          method="post">
+                                        <input type="submit" class="btn btn-success"
+                                               value="Hozzáadás"/>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <form th:action="@{'/zene'}">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div th:if="${zeneError != null}"
      class="alert alert-danger"
      th:text="${zeneError}">
