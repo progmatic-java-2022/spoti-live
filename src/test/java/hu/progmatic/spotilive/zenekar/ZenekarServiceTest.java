@@ -93,6 +93,31 @@ class ZenekarServiceTest {
         assertEquals("Zenekar már létezik ilyen telefonszámmal'", telefonszamHiba);
 
         zenekarService.deleteById(mentettDto.getId());
+
+        ZenekarDto uresTelefonszamteszt = ZenekarDto.builder()
+                .nev("Notelefon")
+                .email("tomi@gmail.com")
+                .varos("Budapest")
+                .build();
+
+        ZenekarDto uresTelefonszamteszt2 = ZenekarDto.builder()
+                .nev("Notelefonwatsoever")
+                .email("tomika@gmail.com")
+                .varos("Budapest")
+                .build();
+
+        ZenekarDto notelefon1 = zenekarService.createZenekar(uresTelefonszamteszt);
+        ZenekarDto notelefon2 = zenekarService.createZenekar(uresTelefonszamteszt2);
+
+        assertNull(notelefon2.getTelefonszam());
+        assertNull(notelefon1.getTelefonszam());
+
+        assertNotNull(notelefon1.getId());
+        assertNotNull(notelefon2.getId());
+
+        zenekarService.deleteById(notelefon1.getId());
+        zenekarService.deleteById(notelefon2.getId());
+
     }
 
     @Nested
