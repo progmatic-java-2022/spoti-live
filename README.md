@@ -74,3 +74,6 @@ Projekt tagok:
 - Takács Ákos : https://www.linkedin.com/in/%C3%A1kos-tak%C3%A1cs-99ba03240/
 - Horváth Márton : https://www.linkedin.com/in/m%C3%A1rton-antal-horv%C3%A1th-3a8a84240/
 - Nagy Andrea : -
+
+Qr kód forrás:
+https://www.callicoder.com/generate-qr-code-in-java-using-zxing/
